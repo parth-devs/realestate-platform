@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    
+  @page {
+    size: letter;
+    margin: 0;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    font-size: 8pt;
+    line-height: 1.36;
+  }
+  @media print {
+    body {
+      background: #ffffff;
+    }
+    .page {
+      margin: 0 !important;
+      box-shadow: none !important;
+      page-break-after: always !important;
+      break-after: page !important;
+    }
+  }
+
+  /* Page container */
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.48in 0.60in 0.42in 0.60in;
+    margin: 0 auto 30px auto;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Header & Footer */
+  .page-header {
+    height: 22px;
+    border-bottom: 1.5px solid #cbd5e1;
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .header-left {
+    color: #1e3a8a;
+  }
+  .header-right {
+    color: #64748b;
+  }
+  .page-footer {
+    height: 20px;
+    border-top: 1.5px solid #cbd5e1;
+    font-size: 6.8pt;
+    color: #64748b;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0.32in;
+    left: 0.60in;
+    right: 0.60in;
+  }
+
+  /* Page Content Area */
+  .page-content {
+    height: 9.75in;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Section Title Group */
+  .section-title-group {
+    margin-bottom: 8px;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-badge {
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 6.8pt;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+  .section-heading {
+    margin: 0;
+    font-size: 13pt;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+  }
+  .section-intro {
+    font-size: 7.8pt;
+    color: #475569;
+    line-height: 1.35;
+    margin: 0 0 8px 0;
+  }
+
+  /* Cover Page Styles */
+  .cover-page {
+    background: linear-gradient(135deg, #091224 0%, #0f172a 45%, #1e293b 100%) !important;
+    color: #ffffff !important;
+    padding: 0.70in 0.75in 0.60in 0.75in !important;
+  }
+  .cover-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .cover-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 8px;
+    font-size: 7.5pt;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: #93c5fd;
+  }
+  .cover-hero {
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  .cover-pill {
+    display: inline-block;
+    background: rgba(14, 165, 233, 0.2);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    font-size: 7pt;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .cover-main-title {
+    font-size: 26pt;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+  .cover-sub-title {
+    font-size: 13pt;
+    font-weight: 600;
+    color: #93c5fd;
+    line-height: 1.3;
+    margin: 0 0 16px 0;
+  }
+  .cover-line {
+    width: 60px;
+    height: 4px;
+    background: #f59e0b;
+    margin-bottom: 16px;
+    border-radius: 2px;
+  }
+  .cover-intro {
+    font-size: 8.8pt;
+    line-height: 1.45;
+    color: #cbd5e1;
+    max-width: 6.8in;
+    margin: 0;
+  }
+  .cover-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .meta-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 9px 12px;
+    border-radius: 4px;
+  }
+  .meta-label {
+    display: block;
+    font-size: 6.5pt;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .meta-val {
+    display: block;
+    font-size: 8pt;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .cover-callout {
+    background: rgba(30, 58, 138, 0.4);
+    border-left: 3.5px solid #38bdf8;
+    padding: 12px 14px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 20px;
+  }
+  .callout-title {
+    font-size: 8pt;
+    font-weight: 800;
+    color: #38bdf8;
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .cover-callout p {
+    font-size: 7.6pt;
+    line-height: 1.4;
+    color: #e2e8f0;
+    margin: 0;
+  }
+  .cover-bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 8px;
+    font-size: 7pt;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+
+  /* Table of Contents */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .toc-num {
+    font-size: 9pt;
+    font-weight: 900;
+    color: #1e3a8a;
+    width: 22px;
+    flex-shrink: 0;
+  }
+  .toc-text {
+    flex-grow: 1;
+  }
+  .toc-title {
+    display: block;
+    font-size: 8pt;
+    font-weight: 750;
+    color: #0f172a;
+  }
+  .toc-desc {
+    display: block;
+    font-size: 6.8pt;
+    color: #64748b;
+    line-height: 1.25;
+  }
+  .toc-page {
+    font-size: 7.5pt;
+    font-weight: 800;
+    color: #0d9488;
+    white-space: nowrap;
+  }
+  .guide-box {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 3.5px solid #1e3a8a;
+    padding: 10px 12px;
+    border-radius: 0 4px 4px 0;
+    margin-top: 10px;
+  }
+  .guide-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .guide-badge {
+    background: #1e3a8a;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .guide-title {
+    font-size: 8pt;
+    font-weight: 800;
+    color: #0f172a;
+  }
+  .guide-text {
+    font-size: 7.5pt;
+    color: #334155;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  /* Cards & Grids */
+  .callout-banner {
+    background: #eff6ff;
+    border-left: 3.5px solid #2563eb;
+    padding: 7px 10px;
+    font-size: 7.8pt;
+    line-height: 1.35;
+    color: #1e40af;
+    margin-bottom: 10px;
+    border-radius: 0 3px 3px 0;
+  }
+  .three-col-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .feature-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    padding: 8px 10px;
+    border-radius: 4px;
+  }
+  .card-tag {
+    font-size: 6.5pt;
+    font-weight: 800;
+    color: #0d9488;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+  .card-head {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+  }
+  .card-body {
+    font-size: 7.2pt;
+    color: #334155;
+    line-height: 1.32;
+    margin: 0;
+  }
+  .sub-section {
+    margin-top: 8px;
+  }
+  .sub-heading {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Tables */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.2pt;
+    line-height: 1.3;
+    margin: 4px 0 8px 0;
+  }
+  .data-table th {
+    background: #0f172a;
+    color: #ffffff;
+    font-weight: 750;
+    text-align: left;
+    padding: 4px 6px;
+    border: 1px solid #334155;
+    font-size: 7.2pt;
+  }
+  .data-table td {
+    padding: 3.5px 5px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+    color: #1e293b;
+  }
+  .data-table tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  /* Badges & Status */
+  .status-pill {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 6.5pt;
+    font-weight: 750;
+    text-transform: uppercase;
+  }
+  .status-conf {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+  }
+  .status-inf {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+  }
+  .status-unk {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
+  }
+  .status-fail {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+
+  .summary-stat-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-number {
+    display: block;
+    font-size: 14pt;
+    font-weight: 900;
+    color: #38bdf8;
+    line-height: 1;
+  }
+  .stat-label {
+    display: block;
+    font-size: 6.5pt;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .evidence-legend {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .legend-badge {
+    font-size: 6.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .conf-badge { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .inf-badge { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .unk-badge { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+
+  /* Persona Card */
+  .persona-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 10px;
+    margin-bottom: 7px;
+  }
+  .persona-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .persona-role {
+    font-size: 6.5pt;
+    font-weight: 800;
+    color: #0d9488;
+    letter-spacing: 0.05em;
+  }
+  .persona-name {
+    font-size: 9pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .persona-badge {
+    font-size: 6.5pt;
+    font-weight: 750;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 1.5px 6px;
+    border-radius: 3px;
+    border: 1px solid #bae6fd;
+  }
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .persona-subhead {
+    font-size: 6.8pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    text-transform: uppercase;
+  }
+  .persona-text {
+    font-size: 7.2pt;
+    color: #334155;
+    margin: 0 0 2px 0;
+    line-height: 1.3;
+  }
+  .persona-list {
+    margin: 1px 0 2px 12px;
+    padding: 0;
+    font-size: 7pt;
+    color: #334155;
+    line-height: 1.25;
+  }
+
+  .two-col-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .persona-mini-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+  .mini-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+  .mini-name {
+    font-size: 8pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 2px 0;
+  }
+  .mini-text {
+    font-size: 7pt;
+    color: #334155;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  /* User Journeys */
+  .journey-container {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 8px 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  .journey-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+  }
+  .journey-id {
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 6.8pt;
+    font-weight: 800;
+    padding: 1.5px 5px;
+    border-radius: 2px;
+  }
+  .journey-title {
+    font-size: 9pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .journey-user {
+    font-size: 6.8pt;
+    font-weight: 700;
+    color: #0d9488;
+  }
+  .journey-desc {
+    font-size: 7.2pt;
+    color: #64748b;
+    margin: 0 0 6px 0;
+  }
+  .journey-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .step-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 3px;
+    padding: 5px 6px;
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+  }
+  .step-num {
+    background: #1e3a8a;
+    color: #ffffff;
+    font-size: 6.8pt;
+    font-weight: 800;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content {
+    font-size: 6.8pt;
+    line-height: 1.25;
+    color: #334155;
+  }
+  .journey-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    background: #f1f5f9;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 6.8pt;
+    line-height: 1.25;
+    color: #334155;
+  }
+
+  /* Feature Suite Box */
+  .feature-suite-box {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+  .suite-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+  }
+  .suite-num {
+    background: #0d9488;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .suite-title {
+    font-size: 8.8pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .suite-desc {
+    font-size: 7.2pt;
+    color: #64748b;
+    margin: 0 0 4px 0;
+    line-height: 1.25;
+  }
+
+  /* Lifecycles & Rules */
+  .lifecycle-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .lifecycle-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+  .lifecycle-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .lifecycle-badge {
+    background: #1e3a8a;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .lifecycle-title {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+    font-size: 7pt;
+    color: #64748b;
+  }
+  .flow-node {
+    display: inline-block;
+    padding: 1.5px 5px;
+    border-radius: 2px;
+    font-size: 6.5pt;
+    font-weight: 750;
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+  }
+  .node-active {
+    background: #ecfdf5;
+    color: #047857;
+    border-color: #6ee7b7;
+  }
+  .node-fail {
+    background: #fef2f2;
+    color: #b91c1c;
+    border-color: #fca5a5;
+  }
+  .lifecycle-rules {
+    font-size: 7pt;
+    line-height: 1.32;
+    color: #334155;
+    margin: 0;
+  }
+
+  /* Statute Boxes */
+  .statute-box {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+  .statute-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .statute-tag {
+    background: #b45309;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .statute-title {
+    font-size: 8.8pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .statute-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .statute-sub {
+    font-size: 7.2pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin: 0 0 2px 0;
+    text-transform: uppercase;
+  }
+  .statute-text {
+    font-size: 7.2pt;
+    line-height: 1.35;
+    color: #334155;
+    margin: 0;
+  }
+
+  /* Roadmap Phases */
+  .phase-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .phase-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+  .phase-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .phase-badge {
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1.5px 6px;
+    border-radius: 2px;
+  }
+  .badge-p1 { background: #1e3a8a; }
+  .badge-p2 { background: #0d9488; }
+  .badge-p3 { background: #b45309; }
+  .badge-p4 { background: #4f46e5; }
+  .phase-title {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .phase-details {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 8px;
+  }
+  .phase-list {
+    margin: 2px 0 2px 12px;
+    padding: 0;
+    font-size: 7pt;
+    line-height: 1.25;
+    color: #334155;
+  }
+  .phase-gate {
+    font-size: 6.8pt;
+    line-height: 1.3;
+    color: #475569;
+    background: #f1f5f9;
+    padding: 5px 6px;
+    border-radius: 3px;
+    border-left: 2.5px solid #0f172a;
+    margin: 0;
+  }
+
+  /* Gaps & Glossary */
+  .gaps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .gap-card {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 3px;
+    padding: 6px 8px;
+    font-size: 6.8pt;
+    line-height: 1.28;
+    color: #78350f;
+  }
+  .gap-card strong {
+    display: block;
+    font-size: 7.2pt;
+    color: #92400e;
+    margin-bottom: 2px;
+  }
+  .action-list {
+    margin: 4px 0 0 12px;
+    padding: 0;
+    font-size: 7.2pt;
+    line-height: 1.3;
+    color: #334155;
+  }
+
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .glossary-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 3px;
+    padding: 4px 6px;
+    font-size: 6.8pt;
+    line-height: 1.28;
+    color: #334155;
+  }
+  .glossary-item strong {
+    display: block;
+    color: #0f172a;
+    font-size: 7.2pt;
+    margin-bottom: 1px;
+  }
+
+  .concluding-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 3.5px solid #16a34a;
+    padding: 8px 10px;
+    border-radius: 0 4px 4px 0;
+  }
+  .concluding-title {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #15803d;
+    margin: 0 0 3px 0;
+  }
+  .concluding-text {
+    font-size: 7.2pt;
+    line-height: 1.32;
+    color: #166534;
+    margin: 0 0 4px 0;
+  }
+
+  .callout-box-blue {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-left: 3.5px solid #2563eb;
+    padding: 8px 10px;
+    border-radius: 0 4px 4px 0;
+  }
+
+    body { background: white; margin: 0; padding: 0; }
+    .page { margin: 0; box-shadow: none; }
+  </style>
+</head>
+<body>
+
+    <div class="page" id="page-16">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 6: PERMISSIONS MATRIX & OPERATIONAL EDGE CASES</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 06 CONTINUED</div>
+        <h2 class="section-heading">System Permissions Matrix &amp; Operational Edge Cases</h2>
+      </div>
+
+      <div class="sub-section">
+        <h3 class="sub-heading">Role-Based Access Control (RBAC) Permissions Matrix</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Platform Capability</th>
+              <th style="width: 12%;">Public Visitor</th>
+              <th style="width: 12%;">Registered Buyer</th>
+              <th style="width: 12%;">Verified Tenant</th>
+              <th style="width: 13%;">Independent Landlord</th>
+              <th style="width: 13%;">Licensed Agent</th>
+              <th style="width: 13%;">Enterprise Field Team</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Browse Listings &amp; Parcels</td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+            </tr>
+            <tr>
+              <td>View CAD Tax Assessments</td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+            </tr>
+            <tr>
+              <td>Save Homes &amp; Custom Polygons</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+            </tr>
+            <tr>
+              <td>Submit Reusable Application</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>Access Credit/Eviction Reports</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-inf">Own Only</span></td>
+              <td><span class="status-pill status-conf">Applicants</span></td>
+              <td><span class="status-pill status-inf">With Consent</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>Publish Rental Listing</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>Draft &amp; Sign Digital Leases</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-inf">Sign Only</span></td>
+              <td><span class="status-pill status-conf">Create/Sign</span></td>
+              <td><span class="status-pill status-conf">Authorized</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>ACH Rent Collection</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-inf">Pay Only</span></td>
+              <td><span class="status-pill status-conf">Collect</span></td>
+              <td><span class="status-pill status-inf">Managed</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>Live GPS Field Tracking</td>
+              <td><span class="status-pill status-inf">Basic</span></td>
+              <td><span class="status-pill status-conf">Standard</span></td>
+              <td><span class="status-pill status-inf">Standard</span></td>
+              <td><span class="status-pill status-conf">Standard</span></td>
+              <td><span class="status-pill status-conf">Advanced</span></td>
+              <td><span class="status-pill status-conf">Advanced</span></td>
+            </tr>
+            <tr>
+              <td>Bulk GIS Data Export (KML/CSV)</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-inf">Licensed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-section" style="margin-top: 8px;">
+        <h3 class="sub-heading">Operational Edge Cases &amp; Exception Handling Protocols</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Operational Scenario</th>
+              <th style="width: 40%;">Root Cause / Business Condition</th>
+              <th style="width: 35%;">System Mitigation &amp; Exception Workflow</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Unmapped Rural Parcel Geometry</strong></td>
+              <td>Remote Texas county CAD lacks digitized GIS vector boundaries; property only exists as a paper tax roll card.</td>
+              <td>Renders an informational card with tax assessments and legal deed description; displays banner: <em>"Geometry pending county digital survey."</em></td>
+            </tr>
+            <tr>
+              <td><strong>Disputed Ownership Claim</strong></td>
+              <td>Two competing users attempt to claim the private owner dashboard for the same residential address.</td>
+              <td>System instantly locks property dashboard; freezes private data edits; prompts both parties to upload recorded deed or closing statement for admin audit.</td>
+            </tr>
+            <tr>
+              <td><strong>ACH Rent Payment Default (NSF)</strong></td>
+              <td>Tenant bank account has insufficient funds during automated monthly rent draft.</td>
+              <td>System issues automated alert to tenant; reverses ledger credit; issues retry link; calculates and adds late fee if unsettled after grace period.</td>
+            </tr>
+            <tr>
+              <td><strong>Split Parcel Undivided Interests</strong></td>
+              <td>Rural Texas acreage owned by multiple fractional heirs (undivided estate interests).</td>
+              <td>Displays all recorded fractional owners and their percentage interests from CAD rolls; alerts buyers that sale requires unanimous partition agreement.</td>
+            </tr>
+            <tr>
+              <td><strong>Unassigned Rural Addresses</strong></td>
+              <td>Raw unimproved acreage tracts lacking a formal USPS postal street number.</td>
+              <td>Enables geocoding and search indexing via County Appraisal District Property ID (APN), GPS coordinates, and road name references.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 16 of 22</span>
+      </div>
+    </div>
+</body>
+</html>

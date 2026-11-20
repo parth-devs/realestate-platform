@@ -1,0 +1,36 @@
+{
+  "states": [
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+    "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+  ],
+  "top_us_metros": [
+    {"city": "New York", "state": "NY"},
+    {"city": "Los Angeles", "state": "CA"},
+    {"city": "Chicago", "state": "IL"},
+    {"city": "Houston", "state": "TX"},
+    {"city": "Phoenix", "state": "AZ"},
+    {"city": "Philadelphia", "state": "PA"},
+    {"city": "San Antonio", "state": "TX"},
+    {"city": "San Diego", "state": "CA"},
+    {"city": "Dallas", "state": "TX"},
+    {"city": "Austin", "state": "TX"},
+    {"city": "Jacksonville", "state": "FL"},
+    {"city": "San Jose", "state": "CA"},
+    {"city": "Fort Worth", "state": "TX"},
+    {"city": "Columbus", "state": "OH"},
+    {"city": "Charlotte", "state": "NC"},
+    {"city": "Indianapolis", "state": "IN"},
+    {"city": "San Francisco", "state": "CA"},
+    {"city": "Seattle", "state": "WA"},
+    {"city": "Denver", "state": "CO"},
+    {"city": "Miami", "state": "FL"},
+    {"city": "Atlanta", "state": "GA"},
+    {"city": "Tampa", "state": "FL"},
+    {"city": "Orlando", "state": "FL"},
+    {"city": "Nashville", "state": "TN"},
+    {"city": "Las Vegas", "state": "NV"}
+  ]
+}

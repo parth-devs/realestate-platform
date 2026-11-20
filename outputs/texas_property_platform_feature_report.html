@@ -1,0 +1,3353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Texas Property Search and Management Platform — Feature and Delivery Plan</title>
+  <style>
+    
+  @page {
+    size: letter;
+    margin: 0;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    font-size: 8pt;
+    line-height: 1.36;
+  }
+  @media print {
+    body {
+      background: #ffffff;
+    }
+    .page {
+      margin: 0 !important;
+      box-shadow: none !important;
+      page-break-after: always !important;
+      break-after: page !important;
+    }
+  }
+
+  /* Page container */
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.48in 0.60in 0.42in 0.60in;
+    margin: 0 auto 30px auto;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Header & Footer */
+  .page-header {
+    height: 22px;
+    border-bottom: 1.5px solid #cbd5e1;
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .header-left {
+    color: #1e3a8a;
+  }
+  .header-right {
+    color: #64748b;
+  }
+  .page-footer {
+    height: 20px;
+    border-top: 1.5px solid #cbd5e1;
+    font-size: 6.8pt;
+    color: #64748b;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0.32in;
+    left: 0.60in;
+    right: 0.60in;
+  }
+
+  /* Page Content Area */
+  .page-content {
+    height: 9.75in;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Section Title Group */
+  .section-title-group {
+    margin-bottom: 8px;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-badge {
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 6.8pt;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+  .section-heading {
+    margin: 0;
+    font-size: 13pt;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+  }
+  .section-intro {
+    font-size: 7.8pt;
+    color: #475569;
+    line-height: 1.35;
+    margin: 0 0 8px 0;
+  }
+
+  /* Cover Page Styles */
+  .cover-page {
+    background: linear-gradient(135deg, #091224 0%, #0f172a 45%, #1e293b 100%) !important;
+    color: #ffffff !important;
+    padding: 0.70in 0.75in 0.60in 0.75in !important;
+  }
+  .cover-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .cover-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 8px;
+    font-size: 7.5pt;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: #93c5fd;
+  }
+  .cover-hero {
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  .cover-pill {
+    display: inline-block;
+    background: rgba(14, 165, 233, 0.2);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    font-size: 7pt;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .cover-main-title {
+    font-size: 26pt;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+  .cover-sub-title {
+    font-size: 13pt;
+    font-weight: 600;
+    color: #93c5fd;
+    line-height: 1.3;
+    margin: 0 0 16px 0;
+  }
+  .cover-line {
+    width: 60px;
+    height: 4px;
+    background: #f59e0b;
+    margin-bottom: 16px;
+    border-radius: 2px;
+  }
+  .cover-intro {
+    font-size: 8.8pt;
+    line-height: 1.45;
+    color: #cbd5e1;
+    max-width: 6.8in;
+    margin: 0;
+  }
+  .cover-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .meta-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 9px 12px;
+    border-radius: 4px;
+  }
+  .meta-label {
+    display: block;
+    font-size: 6.5pt;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .meta-val {
+    display: block;
+    font-size: 8pt;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .cover-callout {
+    background: rgba(30, 58, 138, 0.4);
+    border-left: 3.5px solid #38bdf8;
+    padding: 12px 14px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 20px;
+  }
+  .callout-title {
+    font-size: 8pt;
+    font-weight: 800;
+    color: #38bdf8;
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .cover-callout p {
+    font-size: 7.6pt;
+    line-height: 1.4;
+    color: #e2e8f0;
+    margin: 0;
+  }
+  .cover-bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 8px;
+    font-size: 7pt;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+
+  /* Table of Contents */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .toc-num {
+    font-size: 9pt;
+    font-weight: 900;
+    color: #1e3a8a;
+    width: 22px;
+    flex-shrink: 0;
+  }
+  .toc-text {
+    flex-grow: 1;
+  }
+  .toc-title {
+    display: block;
+    font-size: 8pt;
+    font-weight: 750;
+    color: #0f172a;
+  }
+  .toc-desc {
+    display: block;
+    font-size: 6.8pt;
+    color: #64748b;
+    line-height: 1.25;
+  }
+  .toc-page {
+    font-size: 7.5pt;
+    font-weight: 800;
+    color: #0d9488;
+    white-space: nowrap;
+  }
+  .guide-box {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 3.5px solid #1e3a8a;
+    padding: 10px 12px;
+    border-radius: 0 4px 4px 0;
+    margin-top: 10px;
+  }
+  .guide-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .guide-badge {
+    background: #1e3a8a;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .guide-title {
+    font-size: 8pt;
+    font-weight: 800;
+    color: #0f172a;
+  }
+  .guide-text {
+    font-size: 7.5pt;
+    color: #334155;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  /* Cards & Grids */
+  .callout-banner {
+    background: #eff6ff;
+    border-left: 3.5px solid #2563eb;
+    padding: 7px 10px;
+    font-size: 7.8pt;
+    line-height: 1.35;
+    color: #1e40af;
+    margin-bottom: 10px;
+    border-radius: 0 3px 3px 0;
+  }
+  .three-col-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .feature-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    padding: 8px 10px;
+    border-radius: 4px;
+  }
+  .card-tag {
+    font-size: 6.5pt;
+    font-weight: 800;
+    color: #0d9488;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+  .card-head {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+  }
+  .card-body {
+    font-size: 7.2pt;
+    color: #334155;
+    line-height: 1.32;
+    margin: 0;
+  }
+  .sub-section {
+    margin-top: 8px;
+  }
+  .sub-heading {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Tables */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.2pt;
+    line-height: 1.3;
+    margin: 4px 0 8px 0;
+  }
+  .data-table th {
+    background: #0f172a;
+    color: #ffffff;
+    font-weight: 750;
+    text-align: left;
+    padding: 4px 6px;
+    border: 1px solid #334155;
+    font-size: 7.2pt;
+  }
+  .data-table td {
+    padding: 3.5px 5px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+    color: #1e293b;
+  }
+  .data-table tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  /* Badges & Status */
+  .status-pill {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 6.5pt;
+    font-weight: 750;
+    text-transform: uppercase;
+  }
+  .status-conf {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+  }
+  .status-inf {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+  }
+  .status-unk {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
+  }
+  .status-fail {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+
+  .summary-stat-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-number {
+    display: block;
+    font-size: 14pt;
+    font-weight: 900;
+    color: #38bdf8;
+    line-height: 1;
+  }
+  .stat-label {
+    display: block;
+    font-size: 6.5pt;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .evidence-legend {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .legend-badge {
+    font-size: 6.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .conf-badge { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .inf-badge { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .unk-badge { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+
+  /* Persona Card */
+  .persona-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 10px;
+    margin-bottom: 7px;
+  }
+  .persona-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .persona-role {
+    font-size: 6.5pt;
+    font-weight: 800;
+    color: #0d9488;
+    letter-spacing: 0.05em;
+  }
+  .persona-name {
+    font-size: 9pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .persona-badge {
+    font-size: 6.5pt;
+    font-weight: 750;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 1.5px 6px;
+    border-radius: 3px;
+    border: 1px solid #bae6fd;
+  }
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .persona-subhead {
+    font-size: 6.8pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    text-transform: uppercase;
+  }
+  .persona-text {
+    font-size: 7.2pt;
+    color: #334155;
+    margin: 0 0 2px 0;
+    line-height: 1.3;
+  }
+  .persona-list {
+    margin: 1px 0 2px 12px;
+    padding: 0;
+    font-size: 7pt;
+    color: #334155;
+    line-height: 1.25;
+  }
+
+  .two-col-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .persona-mini-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+  .mini-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+  .mini-name {
+    font-size: 8pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 2px 0;
+  }
+  .mini-text {
+    font-size: 7pt;
+    color: #334155;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  /* User Journeys */
+  .journey-container {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 8px 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  .journey-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+  }
+  .journey-id {
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 6.8pt;
+    font-weight: 800;
+    padding: 1.5px 5px;
+    border-radius: 2px;
+  }
+  .journey-title {
+    font-size: 9pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .journey-user {
+    font-size: 6.8pt;
+    font-weight: 700;
+    color: #0d9488;
+  }
+  .journey-desc {
+    font-size: 7.2pt;
+    color: #64748b;
+    margin: 0 0 6px 0;
+  }
+  .journey-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .step-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 3px;
+    padding: 5px 6px;
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+  }
+  .step-num {
+    background: #1e3a8a;
+    color: #ffffff;
+    font-size: 6.8pt;
+    font-weight: 800;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content {
+    font-size: 6.8pt;
+    line-height: 1.25;
+    color: #334155;
+  }
+  .journey-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    background: #f1f5f9;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 6.8pt;
+    line-height: 1.25;
+    color: #334155;
+  }
+
+  /* Feature Suite Box */
+  .feature-suite-box {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+  .suite-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+  }
+  .suite-num {
+    background: #0d9488;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .suite-title {
+    font-size: 8.8pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .suite-desc {
+    font-size: 7.2pt;
+    color: #64748b;
+    margin: 0 0 4px 0;
+    line-height: 1.25;
+  }
+
+  /* Lifecycles & Rules */
+  .lifecycle-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .lifecycle-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+  .lifecycle-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .lifecycle-badge {
+    background: #1e3a8a;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .lifecycle-title {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+    font-size: 7pt;
+    color: #64748b;
+  }
+  .flow-node {
+    display: inline-block;
+    padding: 1.5px 5px;
+    border-radius: 2px;
+    font-size: 6.5pt;
+    font-weight: 750;
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+  }
+  .node-active {
+    background: #ecfdf5;
+    color: #047857;
+    border-color: #6ee7b7;
+  }
+  .node-fail {
+    background: #fef2f2;
+    color: #b91c1c;
+    border-color: #fca5a5;
+  }
+  .lifecycle-rules {
+    font-size: 7pt;
+    line-height: 1.32;
+    color: #334155;
+    margin: 0;
+  }
+
+  /* Statute Boxes */
+  .statute-box {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+  .statute-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .statute-tag {
+    background: #b45309;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .statute-title {
+    font-size: 8.8pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .statute-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .statute-sub {
+    font-size: 7.2pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin: 0 0 2px 0;
+    text-transform: uppercase;
+  }
+  .statute-text {
+    font-size: 7.2pt;
+    line-height: 1.35;
+    color: #334155;
+    margin: 0;
+  }
+
+  /* Roadmap Phases */
+  .phase-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .phase-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+  .phase-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .phase-badge {
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1.5px 6px;
+    border-radius: 2px;
+  }
+  .badge-p1 { background: #1e3a8a; }
+  .badge-p2 { background: #0d9488; }
+  .badge-p3 { background: #b45309; }
+  .badge-p4 { background: #4f46e5; }
+  .phase-title {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .phase-details {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 8px;
+  }
+  .phase-list {
+    margin: 2px 0 2px 12px;
+    padding: 0;
+    font-size: 7pt;
+    line-height: 1.25;
+    color: #334155;
+  }
+  .phase-gate {
+    font-size: 6.8pt;
+    line-height: 1.3;
+    color: #475569;
+    background: #f1f5f9;
+    padding: 5px 6px;
+    border-radius: 3px;
+    border-left: 2.5px solid #0f172a;
+    margin: 0;
+  }
+
+  /* Gaps & Glossary */
+  .gaps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .gap-card {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 3px;
+    padding: 6px 8px;
+    font-size: 6.8pt;
+    line-height: 1.28;
+    color: #78350f;
+  }
+  .gap-card strong {
+    display: block;
+    font-size: 7.2pt;
+    color: #92400e;
+    margin-bottom: 2px;
+  }
+  .action-list {
+    margin: 4px 0 0 12px;
+    padding: 0;
+    font-size: 7.2pt;
+    line-height: 1.3;
+    color: #334155;
+  }
+
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .glossary-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 3px;
+    padding: 4px 6px;
+    font-size: 6.8pt;
+    line-height: 1.28;
+    color: #334155;
+  }
+  .glossary-item strong {
+    display: block;
+    color: #0f172a;
+    font-size: 7.2pt;
+    margin-bottom: 1px;
+  }
+
+  .concluding-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 3.5px solid #16a34a;
+    padding: 8px 10px;
+    border-radius: 0 4px 4px 0;
+  }
+  .concluding-title {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #15803d;
+    margin: 0 0 3px 0;
+  }
+  .concluding-text {
+    font-size: 7.2pt;
+    line-height: 1.32;
+    color: #166534;
+    margin: 0 0 4px 0;
+  }
+
+  .callout-box-blue {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-left: 3.5px solid #2563eb;
+    padding: 8px 10px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  </style>
+</head>
+<body>
+
+    <div class="page cover-page" id="page-1">
+      
+      <div class="cover-wrapper">
+        <div class="cover-top-bar">
+          <span class="cover-org">TEXAS PROPERTY INTELLIGENCE INITIATIVE</span>
+          <span class="cover-doc-id">DOC-TX-PROP-2026-V1</span>
+        </div>
+        <div class="cover-hero">
+          <div class="cover-pill">STRATEGIC PRODUCT SPECIFICATION &amp; SYSTEM BLUEPRINT</div>
+          <h1 class="cover-main-title">Texas Property Search and Management Platform</h1>
+          <h2 class="cover-sub-title">A Unified Ecosystem for Cadastral Parcel Intelligence, Residential Discovery, and Rental Portfolio Automation</h2>
+          <div class="cover-line"></div>
+          <p class="cover-intro">
+            A comprehensive, plain-language product proposal and operational delivery roadmap designed from first principles 
+            for the State of Texas. Integrates 254-county land boundary mapping, MLS residential search, digital tenant screening, 
+            e-signature lease management, and automated rent collection into an all-in-one property ecosystem.
+          </p>
+        </div>
+
+        <div class="cover-meta-grid">
+          <div class="meta-box">
+            <span class="meta-label">TARGET JURISDICTION</span>
+            <span class="meta-val">State of Texas (254 Counties &amp; 253 Appraisal Districts)</span>
+          </div>
+          <div class="meta-box">
+            <span class="meta-label">DOCUMENT AUDIENCE</span>
+            <span class="meta-val">Executive Leadership, Strategic Clients &amp; Operations</span>
+          </div>
+          <div class="meta-box">
+            <span class="meta-label">PREPARED BY</span>
+            <span class="meta-val">Senior Product Analyst &amp; Software System Designer</span>
+          </div>
+          <div class="meta-box">
+            <span class="meta-label">PUBLICATION DATE</span>
+            <span class="meta-val">November 2026 | Version 1.0 Final</span>
+          </div>
+        </div>
+
+        <div class="cover-callout">
+          <div class="callout-title">Executive Briefing &amp; Strategic Purpose</div>
+          <p>
+            Texas real estate operates under unique legal, geographic, and institutional conditions—including strict non-disclosure 
+            statutes, decentralized county appraisal districts, overlapping special taxing jurisdictions (MUDs), dominant mineral estates, 
+            and extensive agricultural valuations. This document outlines how a modern, independent technology platform can address 
+            these realities by fusing deep land mapping intelligence with consumer marketplace discovery and full-cycle property management.
+          </p>
+        </div>
+
+        <div class="cover-bottom-bar">
+          <span>Confidential &amp; Proprietary</span>
+          <span>Prepared for Executive Planning</span>
+          <span>Texas Real Estate Innovation</span>
+        </div>
+      </div>
+    
+    </div>
+
+    <div class="page" id="page-2">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">TABLE OF CONTENTS & DOCUMENT ARCHITECTURE</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">NAVIGATION</div>
+        <h2 class="section-heading">Table of Contents &amp; Executive Reading Guide</h2>
+      </div>
+
+      <div class="toc-grid">
+        <div class="toc-column">
+          <div class="toc-item">
+            <span class="toc-num">01</span>
+            <div class="toc-text">
+              <span class="toc-title">Executive Summary &amp; Product Purpose</span>
+              <span class="toc-desc">Market opportunity, dual-paradigm problem, unified vision, and high-level value proposition.</span>
+            </div>
+            <span class="toc-page">Page 3</span>
+          </div>
+
+          <div class="toc-item">
+            <span class="toc-num">02</span>
+            <div class="toc-text">
+              <span class="toc-title">Research Methodology &amp; Evidence Log</span>
+              <span class="toc-desc">Evaluation of public platforms, evidence classification (Confirmed, Inferred, Unknown), and findings log.</span>
+            </div>
+            <span class="toc-page">Page 4</span>
+          </div>
+
+          <div class="toc-item">
+            <span class="toc-num">03</span>
+            <div class="toc-text">
+              <span class="toc-title">User Types, Personas &amp; Operational Goals</span>
+              <span class="toc-desc">Profiles, permissions, and goals for buyers, renters, land seekers, landlords, agents, field teams, and admins.</span>
+            </div>
+            <span class="toc-page">Pages 5–6</span>
+          </div>
+
+          <div class="toc-item">
+            <span class="toc-num">04</span>
+            <div class="toc-text">
+              <span class="toc-title">End-to-End Step-by-Step User Journeys</span>
+              <span class="toc-desc">Six complete workflows covering urban search, rural parcel inspection, tenant screening, leasing, and team tools.</span>
+            </div>
+            <span class="toc-page">Pages 7–9</span>
+          </div>
+
+          <div class="toc-item">
+            <span class="toc-num">05</span>
+            <div class="toc-text">
+              <span class="toc-title">Comprehensive Feature Inventory by Product Area</span>
+              <span class="toc-desc">Nine core capability suites: mapping, search, listing showcase, valuations, screening, payments, and compliance.</span>
+            </div>
+            <span class="toc-page">Pages 10–14</span>
+          </div>
+        </div>
+
+        <div class="toc-column">
+          <div class="toc-item">
+            <span class="toc-num">06</span>
+            <div class="toc-text">
+              <span class="toc-title">Business Rules, Permissions &amp; Edge Cases</span>
+              <span class="toc-desc">Status lifecycles, role-based permission matrix, system validations, and critical operational failure states.</span>
+            </div>
+            <span class="toc-page">Pages 15–16</span>
+          </div>
+
+          <div class="toc-item">
+            <span class="toc-num">07</span>
+            <div class="toc-text">
+              <span class="toc-title">Texas-Specific Data &amp; Regulatory Landscape</span>
+              <span class="toc-desc">Non-disclosure rules, 254-county appraisal aggregation, ag valuations, mineral rights, MUDs, and coastal hazards.</span>
+            </div>
+            <span class="toc-page">Pages 17–18</span>
+          </div>
+
+          <div class="toc-item">
+            <span class="toc-num">08</span>
+            <div class="toc-text">
+              <span class="toc-title">Build vs. Buy / Outside Service Provider Matrix</span>
+              <span class="toc-desc">Assessment of internal development versus licensed external service provider categories.</span>
+            </div>
+            <span class="toc-page">Page 19</span>
+          </div>
+
+          <div class="toc-item">
+            <span class="toc-num">09</span>
+            <div class="toc-text">
+              <span class="toc-title">Phased Implementation &amp; Delivery Roadmap</span>
+              <span class="toc-desc">Four execution phases ordered by user value, operational dependencies, milestones, and risk mitigations.</span>
+            </div>
+            <span class="toc-page">Page 20</span>
+          </div>
+
+          <div class="toc-item">
+            <span class="toc-num">10</span>
+            <div class="toc-text">
+              <span class="toc-title">Key Assumptions, Research Gaps &amp; Confirmation Items</span>
+              <span class="toc-desc">Commercial, legal, and operational assumptions, public research limitations, and decisions for kickoff.</span>
+            </div>
+            <span class="toc-page">Page 21</span>
+          </div>
+
+          <div class="toc-item">
+            <span class="toc-num">11</span>
+            <div class="toc-text">
+              <span class="toc-title">Plain-Language Product Glossary &amp; Assessment</span>
+              <span class="toc-desc">Definitions of essential real estate, legal, and cadastral concepts, followed by concluding strategic guidance.</span>
+            </div>
+            <span class="toc-page">Page 22</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-box">
+        <div class="guide-header">
+          <span class="guide-badge">HOW TO USE THIS PROPOSAL</span>
+          <span class="guide-title">Executive &amp; Operational Reader Orientation</span>
+        </div>
+        <p class="guide-text">
+          <strong>Non-Technical Product Orientation:</strong> This document is intentionally authored in plain business and product management 
+          language. It defines <em>what</em> the platform must do, <em>who</em> uses each capability, <em>how</em> data records progress through 
+          operational lifecycles, and <em>what</em> legal and commercial partnerships are necessary. Technical implementation details—such as code, 
+          underlying databases, and specific engineering protocols—are purposefully omitted so that executive sponsors, business leaders, 
+          and operations teams can focus entirely on customer value, market fit, and delivery sequencing.
+        </p>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 2 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-3">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 1: EXECUTIVE SUMMARY & PRODUCT PURPOSE</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 01</div>
+        <h2 class="section-heading">Executive Summary &amp; Strategic Product Purpose</h2>
+      </div>
+
+      <div class="callout-banner">
+        <strong>The Strategic Vision:</strong> To create Texas's definitive all-in-one property intelligence and transaction ecosystem, 
+        bridging the historical divide between specialized land-boundary GIS tools and consumer-focused residential marketplaces.
+      </div>
+
+      <div class="three-col-cards">
+        <div class="feature-card">
+          <div class="card-tag">THE MARKET OPPORTUNITY</div>
+          <h4 class="card-head">A Vast, Diverse Territory</h4>
+          <p class="card-body">
+            Spanning 268,597 square miles and 254 counties, Texas is a fast-growing economic powerhouse. Rapidly expanding urban centres 
+            (Dallas-Fort Worth, Houston, Austin, San Antonio) sit alongside expansive rural ranchlands, timber acreage, and energy-producing properties. 
+            Property transactions range from suburban tract homes to multi-thousand-acre working cattle ranches.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-tag">THE STRUCTURAL PROBLEM</div>
+          <h4 class="card-head">The Fragmented Tool Silo</h4>
+          <p class="card-body">
+            Consumers and professionals currently juggle two disjointed software types: residential search portals that offer slick home listings 
+            but lack parcel boundary data, ownership records, or rural tax details; and niche parcel viewers built for field surveyors that offer 
+            boundary polygons but lack active listings, tenant screening, leasing tools, or rent processing.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="card-tag">THE UNIFIED SOLUTION</div>
+          <h4 class="card-head">An Integrated Platform</h4>
+          <p class="card-body">
+            Our proposed platform combines cadastral parcel intelligence (boundaries, owners, appraisal values, agricultural valuations) with 
+            an active residential marketplace, tenant screening, digital leasing, automated rent collection, and corporate team collaboration—built 
+            expressly to navigate Texas's unique statutory environment.
+          </p>
+        </div>
+      </div>
+
+      <div class="sub-section">
+        <h3 class="sub-heading">Core Product Value Proposition: The Four Pillars</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 22%;">Product Pillar</th>
+              <th style="width: 38%;">Target User Capabilities</th>
+              <th style="width: 40%;">Texas Operational Advantage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Cadastral Parcel Intelligence</strong></td>
+              <td>Interactive map overlays displaying exact legal property boundaries, County Appraisal District (CAD) property identification numbers, deed book and page references, acreage calculations, and recorded owner details.</td>
+              <td>Aggregates standardized parcel boundaries across 254 independent Texas counties, linking appraisal roll records to parcel geometries for urban subdivisions and rural acreage.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Unified Property Marketplace</strong></td>
+              <td>Multi-channel search for residential sales, rental vacancies, off-market acreage, and recently deeded transfers. Granular filters for price, bedrooms, square footage, acreage, and specialized land uses.</td>
+              <td>Navigates Texas's strict non-disclosure status by providing transparent County Appraisal District assessed valuations and active MLS asking prices without misrepresenting confidential closed sales data.</td>
+            </tr>
+            <tr>
+              <td><strong>3. Independent Landlord Suite</strong></td>
+              <td>End-to-end self-service tools for small-to-midsize property owners: vacancy syndication, standardized digital rental applications, credit and criminal screening, state-compliant digital leases, and online rent payments.</td>
+              <td>Implements Texas Property Code Chapter 92 requirements, including 30-day security deposit accounting workflows, statutory repair notices, and standard Texas residential lease terms.</td>
+            </tr>
+            <tr>
+              <td><strong>4. Enterprise Field &amp; Team Collaboration</strong></td>
+              <td>Multi-seat corporate accounts, centralized billing, role-based user management, live mobile GPS location tracking, map annotation sharing, and bulk export of parcel records (KML, CSV, GeoJSON).</td>
+              <td>Empowers Texas land agents, energy rights-of-way specialists, agricultural appraisers, and municipal teams to inspect rural boundaries live in the field and collaborate securely across offices.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="summary-stat-bar">
+        <div class="stat-item"><span class="stat-number">254</span><span class="stat-label">Texas Counties Covered</span></div>
+        <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Non-Disclosure Compliance</span></div>
+        <div class="stat-item"><span class="stat-number">1-Click</span><span class="stat-label">Reusable Tenant Screening</span></div>
+        <div class="stat-item"><span class="stat-number">Zero-Fee</span><span class="stat-label">Automated ACH Rent Rail</span></div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 3 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-4">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 2: RESEARCH METHODOLOGY & EVIDENCE LOG</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 02</div>
+        <h2 class="section-heading">Research Methodology &amp; Public Evidence Log</h2>
+      </div>
+
+      <p class="section-intro">
+        To design a competitive, robust platform, we conducted an exhaustive public review of two prevailing market archetypes:
+        <strong>Archetype A (Cadastral Parcel &amp; Field Intelligence Tool)</strong> and <strong>Archetype B (Residential Marketplace &amp; Rental Management Suite)</strong>.
+        The investigation strictly utilized publicly accessible browser interfaces, published pricing schedules, user documentation, 
+        and visible operational workflows without circumventing access controls, paywalls, or private credentials.
+      </p>
+
+      <div class="evidence-legend">
+        <span class="legend-badge conf-badge">CONFIRMED: Observed directly on public web/mobile screens, help docs, or published pricing.</span>
+        <span class="legend-badge inf-badge">INFERRED: Operational deduction based on visible inputs, state transitions, and business logic.</span>
+        <span class="legend-badge unk-badge">UNKNOWN / UNVERIFIED: Private backend systems, closed algorithms, or undisclosed terms.</span>
+      </div>
+
+      <table class="data-table evidence-table">
+        <thead>
+          <tr>
+            <th style="width: 20%;">Functional Area</th>
+            <th style="width: 35%;">Observed Public Behavior &amp; Feature Mechanics</th>
+            <th style="width: 15%;">Evidence Status</th>
+            <th style="width: 30%;">Operational Translation for Texas Build</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cadastral Map &amp; Parcels</strong></td>
+            <td>Vector polygon boundaries overlaid on satellite, street, and topo imagery. Tapping parcel reveals owner name, APN, acreage, and assessed tax values.</td>
+            <td><span class="status-pill status-conf">CONFIRMED</span></td>
+            <td>Build vector parcel tile pipeline integrating Texas Geographic Information Office (TxGIO) and county CAD files.</td>
+          </tr>
+          <tr>
+            <td><strong>Live GPS Field Tracking</strong></td>
+            <td>Mobile GPS crosshairs locate user relative to property boundary lines in real time; drive mode centers map dynamically during transit.</td>
+            <td><span class="status-pill status-conf">CONFIRMED</span></td>
+            <td>Implement native browser/mobile geolocation with orientation compass for on-site Texas acreage and ranch evaluations.</td>
+          </tr>
+          <tr>
+            <td><strong>Multi-User Corporate Tier</strong></td>
+            <td>Centralized admin dashboard with volume pricing tiers (10% off for 2–5 seats scaling to 50% for 101+ seats); seat invitation workflows.</td>
+            <td><span class="status-pill status-conf">CONFIRMED</span></td>
+            <td>Create self-service team management console with multi-seat volume billing and shared parcel folder workspaces.</td>
+          </tr>
+          <tr>
+            <td><strong>Residential Listing Discovery</strong></td>
+            <td>Omni-search supporting city, zip, address, or custom-drawn polygon boundaries. Granular filters for beds, baths, price, home type, and amenities.</td>
+            <td><span class="status-pill status-conf">CONFIRMED</span></td>
+            <td>Integrate regional Texas MLS feeds with cadastral polygon boundaries to allow cross-filtering of acreage and residential specs.</td>
+          </tr>
+          <tr>
+            <td><strong>Valuation Modeling</strong></td>
+            <td>Automated market value estimates and rental yield estimates with confidence bands and historical trend charts.</td>
+            <td><span class="status-pill status-conf">CONFIRMED</span></td>
+            <td>In Texas's non-disclosure environment, valuation estimates must derive from CAD records, active listings, and macroeconomic indicators.</td>
+          </tr>
+          <tr>
+            <td><strong>Tenant Screening Workflow</strong></td>
+            <td>Applicant completes single reusable profile ($35 fee range) granting landlord access to soft-pull credit check, criminal history, and eviction record.</td>
+            <td><span class="status-pill status-conf">CONFIRMED</span></td>
+            <td>Integrate FCRA-compliant screening bureau; ensure soft inquiries do not depress applicant credit scores.</td>
+          </tr>
+          <tr>
+            <td><strong>Digital Lease Execution</strong></td>
+            <td>Online lease builder using standardized state templates, custom rules, automated signature routing, and PDF storage.</td>
+            <td><span class="status-pill status-conf">CONFIRMED</span></td>
+            <td>Incorporate Texas-promulgated lease forms with Texas Property Code Chapter 92 statutory tenant and landlord disclosures.</td>
+          </tr>
+          <tr>
+            <td><strong>Automated Rent Collection</strong></td>
+            <td>Zero-fee ACH bank transfers for landlords and tenants; convenience fee for card payments; recurring auto-pay and late fee automation.</td>
+            <td><span class="status-pill status-conf">CONFIRMED</span></td>
+            <td>Partner with banking-as-a-service provider to handle Automated Clearing House (ACH) transfers, tenant ledgering, and split payments.</td>
+          </tr>
+          <tr>
+            <td><strong>Backend Fraud Moderation</strong></td>
+            <td>Automated algorithms flag suspicious listings, duplicate photos, and discriminatory phrasing; manual review queues for escalated disputes.</td>
+            <td><span class="status-pill status-inf">INFERRED</span></td>
+            <td>Deploy automated Fair Housing text scanners and CAD deed cross-referencing to prevent fraudulent listing creation.</td>
+          </tr>
+          <tr>
+            <td><strong>Cadastral Data Latency</strong></td>
+            <td>County tax records reflect varying update cadences depending on local county appraisal district cycles (typically quarterly to annual).</td>
+            <td><span class="status-pill status-inf">INFERRED</span></td>
+            <td>Establish automated monthly ETL pipelines for large urban Texas CADs and quarterly/annual cycles for rural counties.</td>
+          </tr>
+          <tr>
+            <td><strong>Proprietary Search Ranking</strong></td>
+            <td>Internal algorithms determine sort order for featured listings, agent advertising distribution, and search result relevance.</td>
+            <td><span class="status-pill status-unk">UNKNOWN</span></td>
+            <td>Establish an open, merit-based relevance algorithm based strictly on geographic proximity, listing completeness, and user filter match.</td>
+          </tr>
+        </tbody>
+      </table>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 4 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-5">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 3: USER PERSONAS & OPERATIONAL GOALS (PART 1)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 03</div>
+        <h2 class="section-heading">User Types, Personas &amp; Operational Goals (Part 1)</h2>
+      </div>
+
+      <p class="section-intro">
+        The platform serves a broad spectrum of real estate stakeholders across Texas. To ensure operational excellence, 
+        system features are mapped directly to defined user personas, their primary goals, pain points, and required permissions.
+      </p>
+
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-title-group">
+            <span class="persona-role">PERSONA 01: RESIDENTIAL HOMEBUYER</span>
+            <h3 class="persona-name">Elena Rodriguez — Suburban Home Seeker</h3>
+          </div>
+          <span class="persona-badge">CONSUMER TIER — FREE ACCESS</span>
+        </div>
+        <div class="persona-grid">
+          <div class="persona-col">
+            <div class="persona-subhead">PROFILE &amp; CONTEXT</div>
+            <p class="persona-text">First-time or move-up buyer exploring suburban homes in major Texas metros (e.g., Katy, Frisco, Round Rock). Balances home prices against property taxes, school quality, commute times, and flood risks.</p>
+            <div class="persona-subhead">CORE OPERATIONAL GOALS</div>
+            <ul class="persona-list">
+              <li>Discover active homes for sale matching granular criteria (price, bedrooms, garage, lot size).</li>
+              <li>Simulate all-in monthly payments including local Texas property taxes, HOA fees, and MUD assessments.</li>
+              <li>Save favorite properties, draw custom search polygons, and receive instant alerts on new listings.</li>
+              <li>Schedule physical tours directly with licensed Texas real estate agents.</li>
+            </ul>
+          </div>
+          <div class="persona-col">
+            <div class="persona-subhead">CRITICAL PAIN POINTS IN TEXAS</div>
+            <p class="persona-text">Stickershock from high Texas ad valorem property taxes and undisclosed MUD bond rates; confusion over flood zones and hurricane risk in coastal and low-lying river areas.</p>
+            <div class="persona-subhead">SYSTEM PERMISSIONS &amp; ACCESS</div>
+            <ul class="persona-list">
+              <li>Read access to public listing details, CAD assessment rolls, school ratings, and hazard overlays.</li>
+              <li>Write access to personal saved homes, custom search collections, private notes, and tour inquiries.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-title-group">
+            <span class="persona-role">PERSONA 02: RESIDENTIAL RENTER</span>
+            <h3 class="persona-name">Marcus Vance — Metro Apartment &amp; Single-Family Renter</h3>
+          </div>
+          <span class="persona-badge">CONSUMER TIER — FREE BROWSING / PAID SCREENING</span>
+        </div>
+        <div class="persona-grid">
+          <div class="persona-col">
+            <div class="persona-subhead">PROFILE &amp; CONTEXT</div>
+            <p class="persona-text">Relocating professional or young family seeking single-family rental homes, townhomes, or apartments in Austin, Dallas, or Houston. Values quick screening and transparent fee structures.</p>
+            <div class="persona-subhead">CORE OPERATIONAL GOALS</div>
+            <ul class="persona-list">
+              <li>Search verified rental vacancies with transparent monthly rent and pet fee disclosures.</li>
+              <li>Complete a single, reusable digital rental application including credit, criminal, and eviction reports.</li>
+              <li>Submit applications to multiple participating Texas landlords without paying repetitive $50+ fees.</li>
+              <li>Electronically sign residential leases and set up automated, zero-fee monthly ACH rent payments.</li>
+            </ul>
+          </div>
+          <div class="persona-col">
+            <div class="persona-subhead">CRITICAL PAIN POINTS IN TEXAS</div>
+            <p class="persona-text">High application fees wasted on unavailable rentals; slow background checks; opaque lease terms regarding Texas statutory repair notice requirements and deposit deductions.</p>
+            <div class="persona-subhead">SYSTEM PERMISSIONS &amp; ACCESS</div>
+            <ul class="persona-list">
+              <li>Read access to rental listings, neighborhood data, and personal application status.</li>
+              <li>Write access to personal profile, uploaded identity documents, rental history, and banking info.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-title-group">
+            <span class="persona-role">PERSONA 03: RURAL LAND &amp; ACREAGE SEEKER</span>
+            <h3 class="persona-name">Caleb Sterling — Hill Country Ranch &amp; Recreational Land Buyer</h3>
+          </div>
+          <span class="persona-badge">CONSUMER / PRO TIER — FREEMIUM &amp; FIELD TOOLS</span>
+        </div>
+        <div class="persona-grid">
+          <div class="persona-col">
+            <div class="persona-subhead">PROFILE &amp; CONTEXT</div>
+            <p class="persona-text">Investor, hunter, or retiree looking for unimproved acreage, hunting tracts, or working cattle ranches across Central and West Texas. Focused heavily on boundaries, topography, and property tax exemptions.</p>
+            <div class="persona-subhead">CORE OPERATIONAL GOALS</div>
+            <ul class="persona-list">
+              <li>Inspect legal cadastral boundaries, acreage calculations, and access easements across rural counties.</li>
+              <li>Verify existing 1-d-1 Agricultural or Wildlife property tax valuations to gauge ongoing tax carrying costs.</li>
+              <li>Use live mobile GPS in the field to walk fence lines and identify parcel corners in remote areas.</li>
+              <li>Export parcel boundary files (KML/CSV) for use with GPS devices, GIS tools, and fence contractors.</li>
+            </ul>
+          </div>
+          <div class="persona-col">
+            <div class="persona-subhead">CRITICAL PAIN POINTS IN TEXAS</div>
+            <p class="persona-text">Severe lack of boundary clarity on rural properties; surprise rollback taxes when changing agricultural land use; split-estate risks where surface owner does not own subsurface mineral/oil rights.</p>
+            <div class="persona-subhead">SYSTEM PERMISSIONS &amp; ACCESS</div>
+            <ul class="persona-list">
+              <li>Read access to 254-county parcel geometries, CAD valuation histories, topography, and RRC well overlays.</li>
+              <li>Write access to field pins, distance and area measurements, parcel folders, and GPS track logs.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 5 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-6">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 3: USER PERSONAS & OPERATIONAL GOALS (PART 2)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 03 CONTINUED</div>
+        <h2 class="section-heading">User Types, Personas &amp; Operational Goals (Part 2)</h2>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-title-group">
+            <span class="persona-role">PERSONA 04: INDEPENDENT LANDLORD</span>
+            <h3 class="persona-name">David &amp; Sarah Chen — Small-Scale Residential Investors (1–10 Units)</h3>
+          </div>
+          <span class="persona-badge">LANDLORD TIER — FREE LISTINGS &amp; RENT RAILS</span>
+        </div>
+        <div class="persona-grid">
+          <div class="persona-col">
+            <div class="persona-subhead">PROFILE &amp; CONTEXT</div>
+            <p class="persona-text">Self-managing owners of residential rental properties in Texas suburban hubs (e.g., Plano, Pearland, New Braunfels). Seek professional vacancy marketing and compliant tenant screening without hiring property managers.</p>
+            <div class="persona-subhead">CORE OPERATIONAL GOALS</div>
+            <ul class="persona-list">
+              <li>Publish verified rental listings with automated syndication to major consumer search channels.</li>
+              <li>Review complete applicant screening packages (credit score, criminal background, eviction record).</li>
+              <li>Draft and execute Texas-specific residential lease agreements with compliant digital signatures.</li>
+              <li>Collect monthly rent via automated ACH direct deposit with automated late fee calculation.</li>
+            </ul>
+          </div>
+          <div class="persona-col">
+            <div class="persona-subhead">CRITICAL PAIN POINTS &amp; TEXAS RISKS</div>
+            <p class="persona-text">Tenant defaults and non-payment; non-compliance with Texas Property Code Chapter 92 (strict 30-day security deposit accounting and statutory repair response deadlines).</p>
+            <div class="persona-subhead">SYSTEM PERMISSIONS &amp; ACCESS</div>
+            <ul class="persona-list">
+              <li>Read/Write access to owned property listings, tenant applications, credit reports, lease agreements, and payment ledgers.</li>
+              <li>Administrative ability to invite tenants, adjust rent schedules, and log manual maintenance entries.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-title-group">
+            <span class="persona-role">PERSONA 05: REAL ESTATE AGENT &amp; LAND BROKER</span>
+            <h3 class="persona-name">Javier Morales — Residential &amp; Acreage Specialist</h3>
+          </div>
+          <span class="persona-badge">PROFESSIONAL / AGENT TIER — PAID PROMOTIONS</span>
+        </div>
+        <div class="persona-grid">
+          <div class="persona-col">
+            <div class="persona-subhead">PROFILE &amp; CONTEXT</div>
+            <p class="persona-text">Licensed Texas broker or sales agent representing residential buyers, home sellers, and rural acreage clients. Operates between suburban subdivisions and rural ranches.</p>
+            <div class="persona-subhead">CORE OPERATIONAL GOALS</div>
+            <ul class="persona-list">
+              <li>Promote active MLS listings with high-visibility badges and agent contact cards.</li>
+              <li>Verify boundary lines, ownership history, and CAD assessments during client field tours.</li>
+              <li>Receive qualified buyer inquiries and tour scheduling requests directly into a dedicated inbox.</li>
+              <li>Share curated property collections with clients, complete with private agent notes.</li>
+            </ul>
+          </div>
+          <div class="persona-col">
+            <div class="persona-subhead">CRITICAL PAIN POINTS &amp; TEXAS RISKS</div>
+            <p class="persona-text">Unqualified leads; outdated county tax data during client negotiations; compliance with Texas Real Estate Commission (TREC) mandatory consumer notice postings (IABS and Consumer Protection Notice).</p>
+            <div class="persona-subhead">SYSTEM PERMISSIONS &amp; ACCESS</div>
+            <ul class="persona-list">
+              <li>Read/Write access to professional profile, claimed listings, lead management inbox, and client collaboration folders.</li>
+              <li>Enhanced cadastral mapping tools with high-resolution aerial and topographical layers.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col-cards" style="margin-top: 6px;">
+        <div class="persona-mini-card">
+          <div class="mini-header">
+            <span class="persona-role">PERSONA 06: CORPORATE FIELD PROFESSIONAL</span>
+            <span class="persona-badge">ENTERPRISE TIER</span>
+          </div>
+          <h4 class="mini-name">Field Surveyors, Energy Right-of-Way &amp; Ag Appraisers</h4>
+          <p class="mini-text">Requires multi-seat corporate accounts, centralized billing, offline mobile boundary caching, CAD parcel record bulk exports (KML/CSV/GeoJSON), and shared team annotations for land acquisition and utility corridors.</p>
+        </div>
+
+        <div class="persona-mini-card">
+          <div class="mini-header">
+            <span class="persona-role">PERSONA 07: PLATFORM ADMINISTRATOR</span>
+            <span class="persona-badge">INTERNAL ROLE</span>
+          </div>
+          <h4 class="mini-name">Trust, Safety, Data Stewards &amp; Compliance Officers</h4>
+          <p class="mini-text">Oversees statewide county parcel syncs, monitors listing fraud, enforces Fair Housing Act compliance, reviews disputed ownership claims, audits payment exception queues, and ensures Texas regulatory alignment.</p>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 6 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-7">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 4: END-TO-END USER JOURNEYS (PART 1)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 04</div>
+        <h2 class="section-heading">End-to-End User Journeys (Part 1)</h2>
+      </div>
+
+      <div class="journey-container">
+        <div class="journey-header">
+          <span class="journey-id">JOURNEY 01</span>
+          <h3 class="journey-title">Suburban Residential Home Search, Saved Alert &amp; Tour Scheduling</h3>
+          <span class="journey-user">Primary Actor: Elena Rodriguez (Homebuyer)</span>
+        </div>
+        <p class="journey-desc">Covers the discovery, evaluation, dynamic cost modeling, search alert subscription, and physical tour booking flow for residential properties in Texas metropolitan areas.</p>
+
+        <div class="journey-steps">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Discovery &amp; Location Query:</strong> Enters target metro, neighborhood, or zip code (e.g., "Frisco, TX") into omni-search bar. Toggles to "For Sale" view. Map renders interactive clusters and individual listing pins with asking prices.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Granular Filter Application:</strong> Filters for $450k–$650k, 4+ beds, 2.5+ baths, 2+ garage spaces, and minimum 0.25-acre lot size. Uses the interactive polygon tool to encircle a specific school attendance boundary.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Property Evaluation &amp; Cost Modeling:</strong> Opens Property Detail Page. Reviews high-res gallery, CAD assessed tax value, and school ratings. Adjusts the Texas Payment Calculator to factor local 2.2% property tax rate and $125/mo MUD bond assessment.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Search Subscription &amp; Favoriting:</strong> Clicks "Save Property" and writes private note ("Great backyard, need to check MUD taxes"). Saves the custom polygon search with "Instant Push &amp; Email Alert" selected for new matching inventory.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>Tour Scheduling Request:</strong> Selects "Request a Tour" button. Selects preferred date and time slot (Saturday at 10:00 AM). Inputs contact info and confirms pre-approval status. System validates phone via SMS code.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <strong>Confirmation &amp; Agent Routing:</strong> System routes request to listing agent or participating premier partner. Sends calendar confirmation to buyer. System prompts user to review mandatory TREC Information About Brokerage Services (IABS) disclosure.
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-meta-grid">
+          <div class="j-meta-box"><strong>Expected Outcomes:</strong> Search saved, instant notification schedule active, tour inquiry logged in CRM, buyer receives email confirmation with agent contact details.</div>
+          <div class="j-meta-box"><strong>Failure &amp; Edge States:</strong> Zero results in polygon (prompts filter expansion); agent unavailable for requested time (suggests alternate slots); SMS verification timeout (resend code prompt).</div>
+        </div>
+      </div>
+
+      <div class="journey-container" style="margin-top: 10px;">
+        <div class="journey-header">
+          <span class="journey-id">JOURNEY 02</span>
+          <h3 class="journey-title">Rural Parcel Lookup, GPS Field Boundary Walk &amp; Acreage Analysis</h3>
+          <span class="journey-user">Primary Actor: Caleb Sterling (Acreage Seeker) / Field Professional</span>
+        </div>
+        <p class="journey-desc">Examines the cadastral parcel lookup, aerial boundary review, on-site mobile GPS walking, agricultural exemption check, and project export workflow across Texas rural counties.</p>
+
+        <div class="journey-steps">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Cadastral Search:</strong> Enters County Appraisal District Property ID (APN) or recorded owner surname into search bar (e.g., "Gillespie County, Parcel 14209"). Platform zooms map directly to parcel centroid with boundaries highlighted in gold.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Attribute &amp; Ag Valuation Inspection:</strong> Inspects parcel slide-out card: confirms 48.65 surveyed acres, recorded deed reference, legal description, and current 1-d-1 Agricultural Exemption status (cattle grazing valuation vs. market value).
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Layer Exploration:</strong> Toggles base map from street map to USGS High-Resolution Topographic layer to inspect elevation contours, seasonal creek beds, and potential flood draw areas. Toggles Railroad Commission (RRC) pipeline overlay.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>On-Site Live GPS Walking:</strong> Arrives at physical property. Launches mobile app and taps "Locate Me". Live blue location dot with directional compass appears inside parcel boundary. Walks northern fence line to verify physical corners against digital boundary.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>Measurement &amp; Waypoint Drop:</strong> Uses interactive measurement tool to measure road frontage (1,320 feet) and drops a custom waypoint pin labeled "Potential Barn Site / Water Well Needed" with attached field photograph.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <strong>Project Save &amp; Data Export:</strong> Saves parcel into custom folder "2026 Hill Country Ranch Candidates". Clicks "Export Data" to generate a standardized KML and CSV file containing boundary coordinates, APN, and CAD assessment data for offline use.
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-meta-grid">
+          <div class="j-meta-box"><strong>Expected Outcomes:</strong> Parcel boundary verified on-site, field pins and photos synced to cloud, agricultural tax risk noted, export file delivered for surveying team.</div>
+          <div class="j-meta-box"><strong>Failure &amp; Edge States:</strong> Cellular dead zone (triggers offline cached map view); unmapped rural parcel geometry (displays CAD tax card with "Boundary geometry pending county update").</div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 7 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-8">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 4: END-TO-END USER JOURNEYS (PART 2)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 04 CONTINUED</div>
+        <h2 class="section-heading">End-to-End User Journeys (Part 2)</h2>
+      </div>
+
+      <div class="journey-container">
+        <div class="journey-header">
+          <span class="journey-id">JOURNEY 03</span>
+          <h3 class="journey-title">Tenant Discovery, Reusable Screening Profile &amp; Application Submission</h3>
+          <span class="journey-user">Primary Actor: Marcus Vance (Prospective Renter)</span>
+        </div>
+        <p class="journey-desc">Details the step-by-step path of a renter finding a vacancy, completing an FCRA-compliant background and credit check, and submitting a reusable application package to a Texas landlord.</p>
+
+        <div class="journey-steps">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Rental Discovery:</strong> Browses rental listings in Dallas-Fort Worth. Identifies a 3-bedroom single-family rental in Plano listed at $2,450/month with an "Apply with Portable Screening" badge.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Profile Assembly:</strong> Clicks "Apply Now". Enters personal identity info, employment history, declared monthly income ($8,500/mo), vehicle details, and uploads two recent paystubs and government photo ID.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Screening Authorization &amp; Payment:</strong> Authorizes a soft-pull credit report, 50-state criminal record check, and nationwide eviction history. Pays one-time $35 platform fee providing 30 days of unlimited applications.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Verification Processing:</strong> Background verification service generates report within 2 minutes. Credit score (740), payment history, zero criminal records, and clean eviction history populated into private profile.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>Application Submission:</strong> Reviews assembled application package. Clicks "Submit Application to Landlord". Adds an optional personal introduction note explaining move-in timeline and pet documentation.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <strong>Status Tracking &amp; Notice:</strong> Dashboard status updates to "Under Landlord Review". System triggers notification when landlord opens the report. Displays expected decision timeline (typically 24–48 hours).
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-meta-grid">
+          <div class="j-meta-box"><strong>Expected Outcomes:</strong> Landlord receives instant notification of completed screening package; renter retains reusable report valid across all platform listings for 30 days.</div>
+          <div class="j-meta-box"><strong>Failure &amp; Edge States:</strong> Credit bureau identity mismatch (prompts knowledge-based authentication questions); screening incomplete (blocks submission until mandatory fields verified).</div>
+        </div>
+      </div>
+
+      <div class="journey-container" style="margin-top: 10px;">
+        <div class="journey-header">
+          <span class="journey-id">JOURNEY 04</span>
+          <h3 class="journey-title">Landlord Listing Setup, Application Review, Lease Execution &amp; Rent Rail</h3>
+          <span class="journey-user">Primary Actor: David &amp; Sarah Chen (Independent Landlords)</span>
+        </div>
+        <p class="journey-desc">Walks through the landlord's complete lifecycle from vacancy marketing and applicant screening review to digital lease generation and automated ACH rent collection.</p>
+
+        <div class="journey-steps">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Listing Creation &amp; Verification:</strong> Enters property address in Landlord Portal. System pulls CAD property records to verify ownership. Enters rent ($2,450), deposit ($2,450), pet rules, and uploads 15 photos. Listing syndicates live.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Application &amp; Screening Review:</strong> Receives email alert: "New Application Received from Marcus Vance". Opens Landlord Dashboard. Reviews income verification, credit score (740), criminal, and eviction reports in structured view.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Applicant Acceptance:</strong> Clicks "Accept Applicant". System automatically updates application status and triggers an automated notification to applicant. System offers option to send adverse action notices to declined applicants.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Texas Digital Lease Creation:</strong> Launches digital lease builder. System auto-populates tenant info, property address, rent amount, and default Texas Property Code Chapter 92 statutory rules (smoke detectors, repair procedures, 30-day deposit return).
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>Electronic Signature Routing:</strong> Landlord reviews draft and clicks "Send for Signatures". Tenant receives secure e-sign link, reviews, and signs. Landlord countersigns digitally. System seals PDF and archives in both dashboards.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <strong>Automated ACH Rent Setup:</strong> Landlord links checking account via micro-deposit/instant verification. Tenant sets up recurring auto-pay on the 1st of each month. Move-in deposit and first month's rent schedule initiated with zero transaction fees.
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-meta-grid">
+          <div class="j-meta-box"><strong>Expected Outcomes:</strong> Vacancy filled, compliant Texas lease archived, recurring banking rail established, automatic late fees configured for grace period expiration on the 4th.</div>
+          <div class="j-meta-box"><strong>Failure &amp; Edge States:</strong> Ownership name mismatch against CAD (requires manual deed upload); tenant fails to sign within 48 hours (triggers automated expiration warning).</div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 8 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-9">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 4: END-TO-END USER JOURNEYS (PART 3)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 04 CONTINUED</div>
+        <h2 class="section-heading">End-to-End User Journeys (Part 3)</h2>
+      </div>
+
+      <div class="journey-container">
+        <div class="journey-header">
+          <span class="journey-id">JOURNEY 05</span>
+          <h3 class="journey-title">Homeowner Property Claim, Assessment Tracking &amp; Home Fact Editing</h3>
+          <span class="journey-user">Primary Actor: Residential Homeowner</span>
+        </div>
+        <p class="journey-desc">Demonstrates how an existing homeowner claims their residence, tracks property tax assessments, edits private home facts, and monitors neighborhood sales activity.</p>
+
+        <div class="journey-steps">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Property Lookup &amp; Claim Request:</strong> Navigates to home address. Clicks "Claim This Home" link on property detail page. System prompts user to log in or create a verified homeowner account.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Identity &amp; Ownership Verification:</strong> User enters full legal name and mailing address. Platform cross-checks user credentials against the official County Appraisal District tax roll and recorded deed grantee records.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Two-Factor Ownership Validation:</strong> If identity matches CAD records, system triggers instant phone/email verification code. If name differs (e.g., recent purchase or trust ownership), prompts upload of closing statement or deed.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Private Owner Dashboard Access:</strong> Upon verification, user gains private administrative access. Views estimated market value trends, local rental yield estimate, and historical County Appraisal District tax assessment history.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>Home Facts &amp; Upgrade Adjustments:</strong> Edits home facts: updates finished square footage from 2,400 to 2,650 following a permitted patio enclosure, adds custom pool specification, and updates HVAC replacement year.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <strong>Market Tracking &amp; Off-Market Alerts:</strong> Sets off-market status to "Not Currently for Sale". Subscribes to monthly neighborhood digest tracking nearby listing activity, CAD protest deadlines, and tax rate changes.
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-meta-grid">
+          <div class="j-meta-box"><strong>Expected Outcomes:</strong> Ownership locked to verified user account; home facts updated in public showcase; homeowner receives automated alerts regarding property tax appraisal notices.</div>
+          <div class="j-meta-box"><strong>Failure &amp; Edge States:</strong> Competing claim on same property (triggers admin dispute lock and document audit); unverified document upload (notifies user with specific deficiency reasons).</div>
+        </div>
+      </div>
+
+      <div class="journey-container" style="margin-top: 10px;">
+        <div class="journey-header">
+          <span class="journey-id">JOURNEY 06</span>
+          <h3 class="journey-title">Corporate Multi-Seat Provisioning, Collaborative Tagging &amp; GIS Export</h3>
+          <span class="journey-user">Primary Actor: Enterprise Team Administrator / Field Project Manager</span>
+        </div>
+        <p class="journey-desc">Details how an enterprise organization (e.g., land brokerage, pipeline survey firm, appraisal practice) subscribes, manages team seats, and collaborates on field parcel projects.</p>
+
+        <div class="journey-steps">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Corporate Plan Selection:</strong> Account manager visits Enterprise Pricing page. Selects "Corporate Team Plan" with 12 team seats on annual billing (receiving a 25% tiered volume discount). Enters company billing info.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Team Member Provisioning:</strong> Enters corporate email addresses for 11 field agents and surveyors. System dispatches automated invitation emails with secure account association links.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Role &amp; Permission Allocation:</strong> Assigns role-based permissions: assigns 2 Senior Surveyors as "Team Managers" (able to invite seats and view billing) and 9 staff members as "Field Operators" (field mapping and data entry only).
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Shared Workspace Configuration:</strong> Admin creates a shared team folder: "Brazos River Basin Pipeline Corridor A". Tags 145 contiguous rural parcels across three Texas counties with project-specific status labels ("Acquisition Pending").
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>Field Collaboration &amp; Sync:</strong> Field agents access the shared folder on mobile devices. They inspect fence lines, verify landowner contact details on-site, add geotagged field photos, and mark boundary survey markers.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <strong>Centralized Reporting &amp; GIS Export:</strong> Admin views consolidated team activity in real time. Exports the entire 145-parcel corridor dataset in standardized Shapefile and CSV format for engineering and legal review.
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-meta-grid">
+          <div class="j-meta-box"><strong>Expected Outcomes:</strong> Centralized billing invoice generated; team seats active; shared field data synchronizes across mobile and desktop; full audit log of field changes preserved.</div>
+          <div class="j-meta-box"><strong>Failure &amp; Edge States:</strong> User seat limit exceeded (prompts instant seat add with prorated billing); team member departs company (one-click admin revokes seat and reassigns to new hire).</div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 9 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-10">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 5: FEATURE INVENTORY (MAP & SEARCH ENGINES)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 05</div>
+        <h2 class="section-heading">Comprehensive Feature Inventory (Areas 1 &amp; 2)</h2>
+      </div>
+
+      <p class="section-intro">
+        The platform features nine core capability suites designed for seamless consumer discovery, land inspection, and property management. 
+        Each capability is defined below in functional, non-technical business terms.
+      </p>
+
+      <div class="feature-suite-box">
+        <div class="suite-header">
+          <span class="suite-num">AREA 01</span>
+          <h3 class="suite-title">Interactive Cadastral Map &amp; Parcel Boundary Engine</h3>
+        </div>
+        <p class="suite-desc">Delivers fluid, statewide spatial visualization uniting cadastral land boundary vectors, satellite imagery, topographical data, and active real estate marketplace listings across Texas.</p>
+        
+        <div class="feature-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Capability</th>
+                <th style="width: 45%;">Functional Description &amp; Operational Behavior</th>
+                <th style="width: 30%;">Texas Operational Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Statewide Vector Parcel Overlay</strong></td>
+                <td>High-performance rendering of discrete property boundary polygons across all 254 Texas counties. Parcels highlight on tap or hover with gold boundary strokes.</td>
+                <td>Standardizes fragmented county parcel boundaries into a single continuous statewide map.</td>
+              </tr>
+              <tr>
+                <td><strong>Multi-Layer Base Map Switching</strong></td>
+                <td>Allows users to toggle instantly between: High-Resolution Aerial/Satellite Imagery, Clean Street Map, USGS Topographic Contours, and Terrain Hybrid.</td>
+                <td>Vital for evaluating rural terrain, elevation contours, tree cover, water features, and access roads across Texas ranches.</td>
+              </tr>
+              <tr>
+                <td><strong>Real-Time Mobile GPS Tracking</strong></td>
+                <td>Integrates device GPS to position user with a pulsating location indicator and directional compass orientation relative to legal parcel lines.</td>
+                <td>Enables field agents and acreage buyers to walk fence lines and identify parcel corners directly on-site in remote areas.</td>
+              </tr>
+              <tr>
+                <td><strong>Interactive Polygon Search</strong></td>
+                <td>Enables users to draw freehand lasso or polygon boundaries around specific neighborhoods, school attendance zones, or rural corridors.</td>
+                <td>Allows buyers to isolate specific subdivision sections or rural school districts, bypassing rigid city limits.</td>
+              </tr>
+              <tr>
+                <td><strong>Parcel Measurement Suite</strong></td>
+                <td>On-screen geometric measurement tools calculating linear perimeter distance (feet/miles) and enclosed polygon surface area (square feet/acres).</td>
+                <td>Critical for measuring road frontage, fence requirements, and prospective building footprints on Texas acreage.</td>
+              </tr>
+              <tr>
+                <td><strong>Offline Map Caching</strong></td>
+                <td>Allows users to pre-download parcel geometries and aerial base maps for selected counties or bounding boxes prior to field travel.</td>
+                <td>Ensures uninterrupted navigation across rural West, South, and Central Texas counties with spotty cellular coverage.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="feature-suite-box" style="margin-top: 8px;">
+        <div class="suite-header">
+          <span class="suite-num">AREA 02</span>
+          <h3 class="suite-title">Search, Multi-Attribute Filtering &amp; Discovery Engine</h3>
+        </div>
+        <p class="suite-desc">A flexible omni-channel search framework enabling rapid discovery of residential sales, rental vacancies, rural acreage, and unlisted cadastral parcels.</p>
+
+        <div class="feature-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Capability</th>
+                <th style="width: 45%;">Functional Description &amp; Operational Behavior</th>
+                <th style="width: 30%;">Texas Operational Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Omni-Search Bar</strong></td>
+                <td>Unified search field with intelligent auto-complete parsing: Street Addresses, City/Metro names, Zip Codes, County + APN/Parcel ID, Owner Surnames, and MLS IDs.</td>
+                <td>Supports both consumer home shopping (e.g., "Austin, TX") and professional parcel inquiry (e.g., "Harris County Parcel 104-582").</td>
+              </tr>
+              <tr>
+                <td><strong>Standard Marketplace Filters</strong></td>
+                <td>Multi-criteria filtering: Price range, monthly rent range, bedrooms, bathrooms, home type (single-family, condo, townhome, multi-family, manufactured, land), and garage spaces.</td>
+                <td>Reflects Texas housing stock variations from suburban master-planned developments to downtown high-rises.</td>
+              </tr>
+              <tr>
+                <td><strong>Land &amp; Acreage Filters</strong></td>
+                <td>Granular land criteria: Acreage range (e.g., 5–20 acres, 50–100 acres, 500+ acres), road access type, water well availability, perimeter fencing, and outbuildings.</td>
+                <td>Allows rural buyers to isolate functional farm, ranch, and recreational parcels from standard residential lots.</td>
+              </tr>
+              <tr>
+                <td><strong>Texas-Specific Tax &amp; District Filters</strong></td>
+                <td>Filters by: Active 1-d-1 Agricultural Exemption status, Municipal Utility District (MUD) presence/absence, and Independent School District (ISD).</td>
+                <td>Empowers buyers to filter out properties with high MUD tax burdens or locate parcels with qualified agricultural tax valuations.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 10 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-11">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 5: FEATURE INVENTORY (SHOWCASE & VALUATIONS)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 05 CONTINUED</div>
+        <h2 class="section-heading">Comprehensive Feature Inventory (Areas 3 &amp; 4)</h2>
+      </div>
+
+      <div class="feature-suite-box">
+        <div class="suite-header">
+          <span class="suite-num">AREA 03</span>
+          <h3 class="suite-title">Listing Showcase &amp; Comprehensive Property Detail Experience</h3>
+        </div>
+        <p class="suite-desc">Presents an exhaustive digital dossier for every property in Texas, uniting visual marketing with legal deed records, appraisal district tax assessments, and community context.</p>
+
+        <div class="feature-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Capability</th>
+                <th style="width: 45%;">Functional Description &amp; Operational Behavior</th>
+                <th style="width: 30%;">Texas Operational Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rich Media Showcase</strong></td>
+                <td>High-resolution photo galleries with full-screen viewer, interactive 3D virtual walkthroughs, floor plans, and drone video tours.</td>
+                <td>Showcases sprawling Texas properties, architectural finishes, acreage boundaries, and outdoor entertaining spaces.</td>
+              </tr>
+              <tr>
+                <td><strong>Cadastral &amp; Deed Dossier</strong></td>
+                <td>Displays official County Appraisal District Parcel ID (APN), legal lot/block/subdivision description, recorded acreage, deed book/page, and instrument date.</td>
+                <td>Provides buyers and professionals with transparent legal reference data verified against official county records.</td>
+              </tr>
+              <tr>
+                <td><strong>County Tax Assessment History</strong></td>
+                <td>Itemized 5-year appraisal district breakdown: Land Assessed Value, Improvement Value, Total Market Value, and Active Exemptions (Homestead, Over 65, Ag).</td>
+                <td>Provides property tax transparency in a state without personal income tax where property taxes fund local public services.</td>
+              </tr>
+              <tr>
+                <td><strong>School District &amp; Rating Context</strong></td>
+                <td>Integrated school attendance boundaries, GreatSchools academic ratings, parent reviews, and distance for Elementary, Middle, and High schools.</td>
+                <td>Independent School Districts (ISDs) are major drivers of Texas real estate values and property tax rates.</td>
+              </tr>
+              <tr>
+                <td><strong>Environmental &amp; Climate Hazard Overlays</strong></td>
+                <td>Displays FEMA flood zone classifications (Zone X, AE, 500-Year), coastal hurricane storm surge zones, and Texas Windstorm (TWIA) eligibility.</td>
+                <td>Essential for Houston/Gulf Coast flood risk and coastal windstorm insurance mandates across 14 Tier 1 coastal counties.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="feature-suite-box" style="margin-top: 8px;">
+        <div class="suite-header">
+          <span class="suite-num">AREA 04</span>
+          <h3 class="suite-title">Valuation &amp; Financial Estimation Engine</h3>
+        </div>
+        <p class="suite-desc">Delivers transparent valuation modeling and an all-in Texas monthly payment calculator to eliminate hidden closing and ownership surprises.</p>
+
+        <div class="feature-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Capability</th>
+                <th style="width: 45%;">Functional Description &amp; Operational Behavior</th>
+                <th style="width: 30%;">Texas Operational Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Platform Valuation Indicator</strong></td>
+                <td>Modeled estimated market valuation and estimated rental yield with historical valuation trend graphs and peer confidence bands.</td>
+                <td>Designed specifically for Texas's non-disclosure environment, modeling values from active listings, CAD trends, and regional economics.</td>
+              </tr>
+              <tr>
+                <td><strong>All-In Texas Payment Calculator</strong></td>
+                <td>Dynamic interactive monthly cost simulator factoring: Mortgage Principal &amp; Interest, Property Taxes, Homeowner Insurance, Windstorm Insurance, HOA, and MUD Fees.</td>
+                <td>Crucial in Texas: automatically populates actual local County, City, ISD, and MUD tax rates rather than generic national averages.</td>
+              </tr>
+              <tr>
+                <td><strong>Property Tax Impact Simulator</strong></td>
+                <td>Projects post-purchase tax adjustments: illustrates potential property tax increases when CAD reassesses purchase price, and models Homestead Exemption caps.</td>
+                <td>Prevents the common Texas "second-year tax shock" where new homeowners face massive tax jumps after losing the previous owner's capped value.</td>
+              </tr>
+              <tr>
+                <td><strong>Agricultural Rollback Estimator</strong></td>
+                <td>Calculates potential 3-year rollback tax penalties plus statutory interest if a buyer discontinues qualified 1-d-1 agricultural land use.</td>
+                <td>Protects rural buyers from unexpected five-figure tax bills when converting working pasture into residential or commercial uses.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 11 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-12">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 5: FEATURE INVENTORY (SCREENING & RENT COLLECTION)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 05 CONTINUED</div>
+        <h2 class="section-heading">Comprehensive Feature Inventory (Areas 5 &amp; 6)</h2>
+      </div>
+
+      <div class="feature-suite-box">
+        <div class="suite-header">
+          <span class="suite-num">AREA 05</span>
+          <h3 class="suite-title">Tenant Screening, Application &amp; Lease Management Suite</h3>
+        </div>
+        <p class="suite-desc">A self-service leasing suite empowering independent landlords and renters with standardized digital screening, Texas-compliant leases, and electronic signatures.</p>
+
+        <div class="feature-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Capability</th>
+                <th style="width: 45%;">Functional Description &amp; Operational Behavior</th>
+                <th style="width: 30%;">Texas Operational Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Reusable 30-Day Renter Profile</strong></td>
+                <td>Renter completes a single standardized digital application with verified identity, employment, and rental references, valid for 30 days across all platform listings.</td>
+                <td>Eliminates repetitive $50+ application fees across competitive Texas rental markets (Austin, Dallas, Houston).</td>
+              </tr>
+              <tr>
+                <td><strong>Credit, Criminal &amp; Eviction Screening</strong></td>
+                <td>FCRA-compliant soft-pull credit check (no score impact), 50-state criminal search, sex offender registry, and national eviction record check.</td>
+                <td>Provides Texas landlords with verified risk metrics while adhering to federal Fair Credit Reporting Act standards.</td>
+              </tr>
+              <tr>
+                <td><strong>Texas Statutory Lease Builder</strong></td>
+                <td>Digital lease creation tool pre-populated with standard residential lease clauses, pet addenda, parking rules, and mandatory statutory notices.</td>
+                <td>Embeds Texas Property Code Chapter 92 mandates: smoke detector testing, keyless deadbolts, window latches, and strict repair notice protocols.</td>
+              </tr>
+              <tr>
+                <td><strong>Integrated Electronic Signatures</strong></td>
+                <td>Legally binding digital signature routing for all adult tenants and landlords with audit-trail timestamping and encrypted PDF delivery.</td>
+                <td>Enables contactless lease execution compliant with the Texas Uniform Electronic Transactions Act (UETA).</td>
+              </tr>
+              <tr>
+                <td><strong>Move-In Condition Inventory</strong></td>
+                <td>Digital move-in inspection checklist allowing tenants and landlords to document existing conditions with date-stamped mobile photos.</td>
+                <td>Reduces security deposit disputes, supporting Texas's strict 30-day statutory deposit return and deduction accounting rule.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="feature-suite-box" style="margin-top: 8px;">
+        <div class="suite-header">
+          <span class="suite-num">AREA 06</span>
+          <h3 class="suite-title">Digital Rent Collection &amp; Payment Automation Suite</h3>
+        </div>
+        <p class="suite-desc">Automated, transparent banking rails facilitating direct rent transfers, automated auto-pay, deposit handling, and immutable ledger accounting.</p>
+
+        <div class="feature-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Capability</th>
+                <th style="width: 45%;">Functional Description &amp; Operational Behavior</th>
+                <th style="width: 30%;">Texas Operational Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Automated ACH Bank Rails</strong></td>
+                <td>Direct Automated Clearing House (ACH) bank-to-bank transfers with zero processing fees for both landlords and tenants.</td>
+                <td>Lowers operating costs for Texas independent landlords managing small portfolios of single-family rentals.</td>
+              </tr>
+              <tr>
+                <td><strong>Card &amp; Alternative Payment Options</strong></td>
+                <td>Optional credit card and debit card processing with a transparent, pass-through convenience fee paid by the tenant.</td>
+                <td>Provides flexibility for tenants while ensuring landlords receive 100% of the agreed contract rent.</td>
+              </tr>
+              <tr>
+                <td><strong>Automated Auto-Pay &amp; Split Rent</strong></td>
+                <td>Tenants configure recurring automated payments on scheduled dates; supports roommate split-rent allocations directly from separate bank accounts.</td>
+                <td>Prevents accidental defaults and accommodates multi-tenant households in university towns (College Station, Austin, Lubbock).</td>
+              </tr>
+              <tr>
+                <td><strong>Grace Period &amp; Late Fee Automation</strong></td>
+                <td>Automated calculation and enforcement of late fees based on statutory rules: late fees apply only after full 2-day statutory grace period expires.</td>
+                <td>Strictly complies with Texas Property Code § 92.019 (late fees must be reasonable and cannot be charged before the 3rd or 4th day).</td>
+              </tr>
+              <tr>
+                <td><strong>Exportable Accounting Ledger</strong></td>
+                <td>Real-time income and expense tracking with one-click export (CSV/PDF) for tax preparation and property accounting.</td>
+                <td>Simplifies federal Schedule E reporting and Texas local franchise tax accounting for property owners.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 12 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-13">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 5: FEATURE INVENTORY (ACCOUNTS & TEAMS)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 05 CONTINUED</div>
+        <h2 class="section-heading">Comprehensive Feature Inventory (Areas 7 &amp; 8)</h2>
+      </div>
+
+      <div class="feature-suite-box">
+        <div class="suite-header">
+          <span class="suite-num">AREA 07</span>
+          <h3 class="suite-title">User Accounts, Saved Items &amp; Notification System</h3>
+        </div>
+        <p class="suite-desc">Personalized curation tools, customizable notification delivery channels, and private property collections for buyers, renters, and professionals.</p>
+
+        <div class="feature-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Capability</th>
+                <th style="width: 45%;">Functional Description &amp; Operational Behavior</th>
+                <th style="width: 30%;">Texas Operational Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Saved Properties &amp; Custom Folders</strong></td>
+                <td>One-click favoriting of listings and parcels into categorized folders (e.g., "Austin Suburban", "Hill Country Ranches", "Rental Prospects").</td>
+                <td>Enables users to manage distinct residential, acreage, and investment searches within a single unified account.</td>
+              </tr>
+              <tr>
+                <td><strong>Private Property Notes &amp; Tags</strong></td>
+                <td>Users attach private, non-public text notes, custom tags, and uploaded documents to any saved listing or cadastral parcel.</td>
+                <td>Allows buyers and agents to record private field observations (e.g., "Visited 10/12: fence repaired, well pump needs service").</td>
+              </tr>
+              <tr>
+                <td><strong>Saved Searches &amp; Geographic Alerts</strong></td>
+                <td>Save any complex search filter or drawn polygon boundary with user-selected alert frequencies: Instant Push, Daily Digest, or Weekly Summary.</td>
+                <td>Notifies buyers immediately when new listings or deed changes occur in fast-moving Texas real estate corridors.</td>
+              </tr>
+              <tr>
+                <td><strong>Multi-Channel Preference Center</strong></td>
+                <td>Granular notification toggles across Email, SMS Text Messages, and In-App Mobile Push for price drops, open houses, status changes, and lease alerts.</td>
+                <td>Ensures critical operational updates (e.g., lease signing requests, rent receipts) are delivered via user-preferred channels.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="feature-suite-box" style="margin-top: 8px;">
+        <div class="suite-header">
+          <span class="suite-num">AREA 08</span>
+          <h3 class="suite-title">Enterprise Team Collaboration &amp; Multi-Seat Console</h3>
+        </div>
+        <p class="suite-desc">Centralized administration, tiered volume seat licensing, and collaborative field mapping tools for corporate real estate firms, land brokerages, and field teams.</p>
+
+        <div class="feature-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Capability</th>
+                <th style="width: 45%;">Functional Description &amp; Operational Behavior</th>
+                <th style="width: 30%;">Texas Operational Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tiered Volume Seat Licensing</strong></td>
+                <td>Centralized billing console supporting multi-user subscriptions with automatic volume discount tiers (10% off for 2–5 seats scaling up to 50% for 100+ seats).</td>
+                <td>Provides cost-effective enterprise licensing for Texas land brokerages, pipeline acquisition teams, and regional appraisal firms.</td>
+              </tr>
+              <tr>
+                <td><strong>Seat Management &amp; Provisioning</strong></td>
+                <td>Administrator dashboard for one-click team invitations, instant seat reassignment upon employee departure, and license audit tracking.</td>
+                <td>Maintains corporate control over licensed seats without requiring manual support intervention or billing disruptions.</td>
+              </tr>
+              <tr>
+                <td><strong>Shared Team Folders &amp; Pins</strong></td>
+                <td>Collaborative map folders where field agents and office analysts share parcel pins, photos, boundary annotations, and landowner contact logs.</td>
+                <td>Accelerates commercial land assembly, utility right-of-way routing, and rural ranch portfolio marketing across distributed teams.</td>
+              </tr>
+              <tr>
+                <td><strong>Bulk Cadastral GIS Data Export</strong></td>
+                <td>One-click bulk export of selected parcels and project boundaries in industry-standard formats: KML, CSV, GeoJSON, and ESRI Shapefiles.</td>
+                <td>Integrates platform parcel data directly into professional surveying, engineering, and GIS workflows.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 13 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-14">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 5: FEATURE INVENTORY (TRUST, SAFETY & COMPLIANCE)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 05 CONTINUED</div>
+        <h2 class="section-heading">Comprehensive Feature Inventory (Area 9)</h2>
+      </div>
+
+      <div class="feature-suite-box">
+        <div class="suite-header">
+          <span class="suite-num">AREA 09</span>
+          <h3 class="suite-title">Platform Moderation, Trust, Safety &amp; Fair Housing Console</h3>
+        </div>
+        <p class="suite-desc">Comprehensive administrative safeguards, automated fraud detection, Fair Housing text auditing, and regulatory compliance monitoring.</p>
+
+        <div class="feature-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Capability</th>
+                <th style="width: 45%;">Functional Description &amp; Operational Behavior</th>
+                <th style="width: 30%;">Texas Operational Relevance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Automated Listing Fraud Detection</strong></td>
+                <td>Algorithmic scanner screening rental listings for: price-to-market anomalies, duplicate photo hashes across multiple addresses, and suspicious out-of-area IP logins.</td>
+                <td>Protects Texas consumers from widespread rental deposit wire scams and fraudulent off-market listings.</td>
+              </tr>
+              <tr>
+                <td><strong>Fair Housing Language Scanner</strong></td>
+                <td>Real-time textual analysis auditing listing descriptions and landlord messages for prohibited discriminatory phrasing regarding race, religion, familial status, or disability.</td>
+                <td>Enforces strict compliance with the federal Fair Housing Act and the Texas Fair Housing Act (Texas Property Code Chapter 301).</td>
+              </tr>
+              <tr>
+                <td><strong>Owner &amp; Landlord Verification Queue</strong></td>
+                <td>Multi-factor verification matching listing creator identity against official County Appraisal District tax rolls and County Clerk deed grantee records.</td>
+                <td>Prevents unauthorized parties from creating fake rental listings or illicitly claiming property ownership dashboards.</td>
+              </tr>
+              <tr>
+                <td><strong>Mandatory TREC Regulatory Notices</strong></td>
+                <td>Automated injection and display of mandatory Texas Real Estate Commission (TREC) Consumer Protection Notice and Information About Brokerage Services (IABS) links.</td>
+                <td>Ensures licensed Texas agents and brokerage displays remain fully compliant with TREC Rule § 531.18 and § 531.20.</td>
+              </tr>
+              <tr>
+                <td><strong>Administrative Dispute &amp; Escalation Queue</strong></td>
+                <td>Centralized console for staff compliance officers to review flagged listings, disputed homeowner claims, payment chargebacks, and user reports.</td>
+                <td>Provides clear operational escalation workflows with complete time-stamped audit trails for regulatory and legal defense.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout-box-blue" style="margin-top: 10px;">
+        <h4 style="margin: 0 0 4px 0; color: #1e3a8a; font-size: 8.5pt;">Operational Architecture Summary Across Nine Functional Areas</h4>
+        <p style="margin: 0; font-size: 7.8pt; line-height: 1.35;">
+          Together, these nine feature areas create a closed-loop operational ecosystem. Consumers, landlords, rural seekers, and enterprise 
+          field teams operate within a unified, authoritative map interface. Rather than treating parcel data as a separate academic tool, 
+          the platform grounds every active listing, rental application, tax assessment, and transaction in verified county cadastral geometry.
+        </p>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 14 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-15">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 6: BUSINESS RULES & STATUS LIFECYCLES</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 06</div>
+        <h2 class="section-heading">Business Rules, Permissions &amp; Status Lifecycles</h2>
+      </div>
+
+      <p class="section-intro">
+        Robust platforms depend on clear, deterministic business rules. Below are the operational lifecycles governing the core transaction objects: 
+        Property Listings, Tenant Applications, Lease Agreements, Payment Transactions, and Property Ownership Claims.
+      </p>
+
+      <div class="lifecycle-container">
+        <div class="lifecycle-card">
+          <div class="lifecycle-header">
+            <span class="lifecycle-badge">LIFECYCLE 01</span>
+            <h4 class="lifecycle-title">Property Listing Lifecycle</h4>
+          </div>
+          <div class="flow-steps">
+            <span class="flow-node">DRAFT</span> &rarr;
+            <span class="flow-node">PENDING VERIFICATION</span> &rarr;
+            <span class="flow-node node-active">ACTIVE / PUBLISHED</span> &rarr;
+            <span class="flow-node">UNDER CONTRACT</span> &rarr;
+            <span class="flow-node">CLOSED / OFF-MARKET</span>
+          </div>
+          <p class="lifecycle-rules">
+            <strong>Business Rules:</strong> A draft listing requires verified street address, monthly rent/price, minimum 5 photos, and contact info. Listing moves to "Pending Verification" where CAD ownership or agent MLS ID is verified. Once verified, listing transitions to "Active". While Active, inquiries and applications are routed. When landlord/agent accepts an offer, status shifts to "Under Contract" (pausing new inquiries). Upon lease execution or sale closing, listing moves to "Closed/Off-Market".
+          </p>
+        </div>
+
+        <div class="lifecycle-card">
+          <div class="lifecycle-header">
+            <span class="lifecycle-badge">LIFECYCLE 02</span>
+            <h4 class="lifecycle-title">Rental Application &amp; Screening Lifecycle</h4>
+          </div>
+          <div class="flow-steps">
+            <span class="flow-node">STARTED / INCOMPLETE</span> &rarr;
+            <span class="flow-node">SCREENING AUTHORIZED</span> &rarr;
+            <span class="flow-node">READY FOR REVIEW</span> &rarr;
+            <span class="flow-node node-active">ACCEPTED / APPROVED</span> &rarr;
+            <span class="flow-node node-fail">DECLINED / ADVERSE ACTION</span>
+          </div>
+          <p class="lifecycle-rules">
+            <strong>Business Rules:</strong> Tenant completes identity, income, and vehicle data. User pays $35 fee and authorizes soft credit pull. Background service delivers reports within 120 seconds. Application status becomes "Ready for Review" in Landlord Portal. Landlord may Accept or Decline. Declining triggers an automated, FCRA-compliant digital Adverse Action Notice specifying credit bureau contact details.
+          </p>
+        </div>
+
+        <div class="lifecycle-card">
+          <div class="lifecycle-header">
+            <span class="lifecycle-badge">LIFECYCLE 03</span>
+            <h4 class="lifecycle-title">Digital Lease Agreement Lifecycle</h4>
+          </div>
+          <div class="flow-steps">
+            <span class="flow-node">DRAFTING</span> &rarr;
+            <span class="flow-node">OUT FOR SIGNATURES</span> &rarr;
+            <span class="flow-node">PARTIALLY SIGNED</span> &rarr;
+            <span class="flow-node node-active">FULLY EXECUTED</span> &rarr;
+            <span class="flow-node">ACTIVE TENANCY</span> &rarr;
+            <span class="flow-node">TERMINATED / EXPIRED</span>
+          </div>
+          <p class="lifecycle-rules">
+            <strong>Business Rules:</strong> Landlord configures lease parameters and Texas statutory disclosures. Sent simultaneously to all adult tenants. Tenants have 72 hours to sign before link expires. Once all tenants sign, landlord countersigns. Upon countersignature, PDF is sealed with tamper-evident digital certificate, archived in both accounts, and triggers automated rent collection schedule.
+          </p>
+        </div>
+
+        <div class="lifecycle-card">
+          <div class="lifecycle-header">
+            <span class="lifecycle-badge">LIFECYCLE 04</span>
+            <h4 class="lifecycle-title">Automated Rent Payment Lifecycle</h4>
+          </div>
+          <div class="flow-steps">
+            <span class="flow-node">SCHEDULED</span> &rarr;
+            <span class="flow-node">PROCESSING (ACH HOLD)</span> &rarr;
+            <span class="flow-node node-active">SETTLED / DEPOSITED</span> &rarr;
+            <span class="flow-node node-fail">RETURNED / NSF FAILED</span> &rarr;
+            <span class="flow-node">LATE FEE APPLIED</span>
+          </div>
+          <p class="lifecycle-rules">
+            <strong>Business Rules:</strong> Auto-pay initiates 2 business days prior to due date. ACH clearing window requires 1–3 business days. If funds clear, status is "Settled" and ledger updates. If ACH returns (insufficient funds / NSF), system notifies tenant, reverses ledger credit, and issues retry invoice. If unpaid after Texas statutory 2-day grace period, automated late fee is assessed on the 4th day.
+          </p>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 15 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-16">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 6: PERMISSIONS MATRIX & OPERATIONAL EDGE CASES</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 06 CONTINUED</div>
+        <h2 class="section-heading">System Permissions Matrix &amp; Operational Edge Cases</h2>
+      </div>
+
+      <div class="sub-section">
+        <h3 class="sub-heading">Role-Based Access Control (RBAC) Permissions Matrix</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Platform Capability</th>
+              <th style="width: 12%;">Public Visitor</th>
+              <th style="width: 12%;">Registered Buyer</th>
+              <th style="width: 12%;">Verified Tenant</th>
+              <th style="width: 13%;">Independent Landlord</th>
+              <th style="width: 13%;">Licensed Agent</th>
+              <th style="width: 13%;">Enterprise Field Team</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Browse Listings &amp; Parcels</td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+            </tr>
+            <tr>
+              <td>View CAD Tax Assessments</td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+            </tr>
+            <tr>
+              <td>Save Homes &amp; Custom Polygons</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+            </tr>
+            <tr>
+              <td>Submit Reusable Application</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>Access Credit/Eviction Reports</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-inf">Own Only</span></td>
+              <td><span class="status-pill status-conf">Applicants</span></td>
+              <td><span class="status-pill status-inf">With Consent</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>Publish Rental Listing</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>Draft &amp; Sign Digital Leases</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-inf">Sign Only</span></td>
+              <td><span class="status-pill status-conf">Create/Sign</span></td>
+              <td><span class="status-pill status-conf">Authorized</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>ACH Rent Collection</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-inf">Pay Only</span></td>
+              <td><span class="status-pill status-conf">Collect</span></td>
+              <td><span class="status-pill status-inf">Managed</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+            </tr>
+            <tr>
+              <td>Live GPS Field Tracking</td>
+              <td><span class="status-pill status-inf">Basic</span></td>
+              <td><span class="status-pill status-conf">Standard</span></td>
+              <td><span class="status-pill status-inf">Standard</span></td>
+              <td><span class="status-pill status-conf">Standard</span></td>
+              <td><span class="status-pill status-conf">Advanced</span></td>
+              <td><span class="status-pill status-conf">Advanced</span></td>
+            </tr>
+            <tr>
+              <td>Bulk GIS Data Export (KML/CSV)</td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-fail">Denied</span></td>
+              <td><span class="status-pill status-inf">Licensed</span></td>
+              <td><span class="status-pill status-conf">Allowed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-section" style="margin-top: 8px;">
+        <h3 class="sub-heading">Operational Edge Cases &amp; Exception Handling Protocols</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Operational Scenario</th>
+              <th style="width: 40%;">Root Cause / Business Condition</th>
+              <th style="width: 35%;">System Mitigation &amp; Exception Workflow</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Unmapped Rural Parcel Geometry</strong></td>
+              <td>Remote Texas county CAD lacks digitized GIS vector boundaries; property only exists as a paper tax roll card.</td>
+              <td>Renders an informational card with tax assessments and legal deed description; displays banner: <em>"Geometry pending county digital survey."</em></td>
+            </tr>
+            <tr>
+              <td><strong>Disputed Ownership Claim</strong></td>
+              <td>Two competing users attempt to claim the private owner dashboard for the same residential address.</td>
+              <td>System instantly locks property dashboard; freezes private data edits; prompts both parties to upload recorded deed or closing statement for admin audit.</td>
+            </tr>
+            <tr>
+              <td><strong>ACH Rent Payment Default (NSF)</strong></td>
+              <td>Tenant bank account has insufficient funds during automated monthly rent draft.</td>
+              <td>System issues automated alert to tenant; reverses ledger credit; issues retry link; calculates and adds late fee if unsettled after grace period.</td>
+            </tr>
+            <tr>
+              <td><strong>Split Parcel Undivided Interests</strong></td>
+              <td>Rural Texas acreage owned by multiple fractional heirs (undivided estate interests).</td>
+              <td>Displays all recorded fractional owners and their percentage interests from CAD rolls; alerts buyers that sale requires unanimous partition agreement.</td>
+            </tr>
+            <tr>
+              <td><strong>Unassigned Rural Addresses</strong></td>
+              <td>Raw unimproved acreage tracts lacking a formal USPS postal street number.</td>
+              <td>Enables geocoding and search indexing via County Appraisal District Property ID (APN), GPS coordinates, and road name references.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 16 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-17">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 7: TEXAS-SPECIFIC DATA & REGULATION (PART 1)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 07</div>
+        <h2 class="section-heading">Texas-Specific Data Architecture &amp; Regulatory Landscape (Part 1)</h2>
+      </div>
+
+      <p class="section-intro">
+        Building a viable real estate and land platform in Texas requires solving for distinct state statutes, tax structures, 
+        and institutional frameworks that do not exist in standard national software templates.
+      </p>
+
+      <div class="statute-box">
+        <div class="statute-header">
+          <span class="statute-tag">STATUTORY REALITY 01</span>
+          <h3 class="statute-title">Texas is a Strict Non-Disclosure State</h3>
+        </div>
+        <div class="statute-grid">
+          <div class="statute-col">
+            <h4 class="statute-sub">The Legal Framework</h4>
+            <p class="statute-text">
+              Texas is one of 12 non-disclosure states in the U.S. In Texas, actual real estate sales transaction prices are <strong>not public record</strong>. 
+              When a deed is recorded with the County Clerk, it documents the legal transfer of title, grantor, grantee, and legal property description, 
+              but does not disclose the financial purchase price.
+            </p>
+          </div>
+          <div class="statute-col">
+            <h4 class="statute-sub">Platform Operational Solution</h4>
+            <p class="statute-text">
+              The platform clearly differentiates between <em>Active MLS Asking Prices</em>, <em>County Appraisal District (CAD) Assessed Values</em>, 
+              and <em>Modeled Market Estimates</em>. Public deed transfer histories display deed date, instrument type, and parties, with an educational notice: 
+              <em>"Texas is a non-disclosure state; recorded deeds do not reflect confidential transaction prices."</em> Closed MLS prices are restricted to compliant VOW client views.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statute-box" style="margin-top: 8px;">
+        <div class="statute-header">
+          <span class="statute-tag">DATA AGGREGATION REALITY 02</span>
+          <h3 class="statute-title">The 254-County &amp; 253-Appraisal District Landscape</h3>
+        </div>
+        <div class="statute-grid">
+          <div class="statute-col">
+            <h4 class="statute-sub">Decentralization &amp; Vendor Fragmentation</h4>
+            <p class="statute-text">
+              Texas consists of 254 counties served by 253 independent County Appraisal Districts (CADs). There is no single statewide database 
+              or mandated parcel schema. Counties utilize diverse Computer-Assisted Mass Appraisal (CAMA) software vendors (e.g., Pritchard &amp; Abbott, 
+              Tyler Technologies, Harris Gover, True Automation) with varying update cycles.
+            </p>
+          </div>
+          <div class="statute-col">
+            <h4 class="statute-sub">Hybrid Aggregation Strategy</h4>
+            <p class="statute-text">
+              The platform utilizes a two-tier data pipeline: (1) Partner with the <strong>Texas Geographic Information Office (TxGIO / TNRIS StratMap)</strong> 
+              to ingest standardized statewide parcel boundary geometry covering 245+ counties; and (2) Establish direct automated ETL pipelines with the 
+              top 25 metropolitan CADs (representing 80%+ of the Texas population) for real-time tax rolls and ownership synchronizations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statute-box" style="margin-top: 8px;">
+        <div class="statute-header">
+          <span class="statute-tag">PROPERTY TAX REALITY 03</span>
+          <h3 class="statute-title">1-d-1 Agricultural, Timber &amp; Wildlife Valuations</h3>
+        </div>
+        <div class="statute-grid">
+          <div class="statute-col">
+            <h4 class="statute-sub">Productivity vs. Market Valuation</h4>
+            <p class="statute-text">
+              Under Article VIII, Section 1-d-1 of the Texas Constitution, qualified rural land devoted to agriculture, timber, or wildlife management 
+              is taxed based on productive agricultural capacity rather than speculative market value. A 100-acre ranch worth $1,500,000 may have an 
+              agricultural productivity valuation of just $15,000, dramatically lowering property taxes.
+            </p>
+          </div>
+          <div class="statute-col">
+            <h4 class="statute-sub">Rollback Tax Liability Alerts</h4>
+            <p class="statute-text">
+              If a buyer changes the use of agricultural land (e.g., subdividing for residential development), Texas law imposes a mandatory 
+              <strong>3-Year Rollback Tax</strong> plus 5% annual statutory interest, recapturing the difference between market taxes and agricultural taxes. 
+              The platform provides a built-in <em>Rollback Tax Calculator</em> to warn buyers of potential liabilities before purchase.
+            </p>
+          </div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 17 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-18">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 7: TEXAS-SPECIFIC DATA & REGULATION (PART 2)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 07 CONTINUED</div>
+        <h2 class="section-heading">Texas-Specific Data Architecture &amp; Regulatory Landscape (Part 2)</h2>
+      </div>
+
+      <div class="statute-box">
+        <div class="statute-header">
+          <span class="statute-tag">LEGAL DOCTRINE 04</span>
+          <h3 class="statute-title">The Split Estate: Dominant Mineral Rights &amp; Surface Rights</h3>
+        </div>
+        <div class="statute-grid">
+          <div class="statute-col">
+            <h4 class="statute-sub">Texas Mineral Estate Supremacy</h4>
+            <p class="statute-text">
+              In Texas, real estate is severed into the <em>Surface Estate</em> and the <em>Mineral Estate</em>. Under Texas legal doctrine, the mineral 
+              estate is <strong>dominant</strong>. The mineral owner or their oil/gas lessee has the legal right to use as much of the surface as reasonably 
+              necessary to extract oil, gas, and minerals without the surface owner's permission.
+            </p>
+          </div>
+          <div class="statute-col">
+            <h4 class="statute-sub">Railroad Commission (RRC) GIS Overlays</h4>
+            <p class="statute-text">
+              The platform integrates open public GIS data layers from the <strong>Railroad Commission of Texas (RRC)</strong>, displaying: 
+              active and permitted oil/gas wells, plugged dry holes, gathering pipelines, and major transmission corridors across every parcel. 
+              This alerts surface buyers to active drilling rigs, pipeline easements, and mineral operations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statute-box" style="margin-top: 8px;">
+        <div class="statute-header">
+          <span class="statute-tag">TAXING ENTITIES 05</span>
+          <h3 class="statute-title">Municipal Utility Districts (MUDs) &amp; Mandatory Notices</h3>
+        </div>
+        <div class="statute-grid">
+          <div class="statute-col">
+            <h4 class="statute-sub">Overlapping Infrastructure Debt</h4>
+            <p class="statute-text">
+              Texas contains over 1,200 active Municipal Utility Districts (MUDs), Emergency Service Districts (ESDs), and Fresh Water Supply Districts. 
+              MUDs issue voter-approved bonds to finance water, sewer, and drainage infrastructure in suburban subdivisions, levying substantial 
+              additional property taxes (often adding 0.5% to 1.5% to the annual tax rate).
+            </p>
+          </div>
+          <div class="statute-col">
+            <h4 class="statute-sub">Statutory MUD Notice Generation</h4>
+            <p class="statute-text">
+              Under Texas Water Code § 49.452, sellers must provide buyers with a statutory MUD disclosure notice detailing tax rates, outstanding bond debt, 
+              and standby fees prior to contract execution. Failure to disclose grants the buyer rescission rights. The platform automatically identifies 
+              MUD boundaries and auto-generates the required statutory disclosure notice.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statute-box" style="margin-top: 8px;">
+        <div class="statute-header">
+          <span class="statute-tag">COASTAL HAZARDS &amp; HOUSING STATUTES 06</span>
+          <h3 class="statute-title">Coastal Windstorm (TWIA) &amp; Texas Residential Tenancies</h3>
+        </div>
+        <div class="statute-grid">
+          <div class="statute-col">
+            <h4 class="statute-sub">Texas Windstorm Insurance (TWIA)</h4>
+            <p class="statute-text">
+              Properties in Texas's 14 coastal counties and portions of Harris County (east of Hwy 146) are excluded from standard private hurricane wind 
+              coverage. They must obtain coverage through the <strong>Texas Windstorm Insurance Association (TWIA)</strong>, requiring WPI-8 building code 
+              certificates. The platform displays coastal catastrophe zone designations and TWIA certification indicators.
+            </p>
+          </div>
+          <div class="statute-col">
+            <h4 class="statute-sub">Texas Property Code Chapter 92</h4>
+            <p class="statute-text">
+              Residential leasing in Texas is strictly governed by Texas Property Code Chapter 92. Key mandates include: strict 30-day security deposit 
+              accounting deadlines with treble damages for bad-faith retention; mandatory keyless deadbolts and window latches; and certified mail repair 
+              notice protocols. The platform's digital lease suite builds these exact statutory protections into every digital agreement.
+            </p>
+          </div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 18 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-19">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 8: BUILD VS. BUY / OUTSIDE PROVIDER MATRIX</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 08</div>
+        <h2 class="section-heading">Build vs. Buy / Outside Service Provider Matrix</h2>
+      </div>
+
+      <p class="section-intro">
+        To maximize capital efficiency and time-to-market, the platform strictly delineates between core proprietary capabilities built internally 
+        and commoditized external datasets or regulated financial services licensed from specialized service provider categories.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 24%;">Platform Capability</th>
+            <th style="width: 14%;">Strategy</th>
+            <th style="width: 32%;">Service Provider Category</th>
+            <th style="width: 30%;">Operational Rationale &amp; Integration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cadastral Vector Mapping Tiles</strong></td>
+            <td><span class="status-pill status-conf">Licensed Partner</span></td>
+            <td>Commercial Cadastral Parcel Aggregator &amp; State GIS Bureau (TxGIO)</td>
+            <td>Avoids negotiating 254 individual county parcel licenses; leverages pre-standardized geometry while syncing directly with top Texas metro CADs.</td>
+          </tr>
+          <tr>
+            <td><strong>Base Map &amp; Aerial Tiles</strong></td>
+            <td><span class="status-pill status-conf">Licensed Partner</span></td>
+            <td>Commercial Map Tile Provider &amp; USGS Topographic Repositories</td>
+            <td>Global satellite and street tile infrastructure is capital-intensive to build; license vector street tiles and satellite raster tiles via monthly active user tiers.</td>
+          </tr>
+          <tr>
+            <td><strong>Active Residential MLS Feeds</strong></td>
+            <td><span class="status-pill status-conf">Licensed Partner</span></td>
+            <td>MLS Data Aggregator &amp; Regional Real Estate Board Feeds (RESO Web API)</td>
+            <td>Aggregates active listings across major Texas MLSs (HAR, ACTRIS, MetroTex, SABOR) via standardized data feeds and broker participant agreements.</td>
+          </tr>
+          <tr>
+            <td><strong>Tenant Screening Reports</strong></td>
+            <td><span class="status-pill status-conf">Licensed Partner</span></td>
+            <td>FCRA-Certified Consumer Reporting Agency &amp; Credit Bureau Gateway</td>
+            <td>Handling raw credit files requires specialized Fair Credit Reporting Act compliance; partner with certified bureau to deliver instant soft-pull scores.</td>
+          </tr>
+          <tr>
+            <td><strong>ACH &amp; Card Rent Rails</strong></td>
+            <td><span class="status-pill status-conf">Licensed Partner</span></td>
+            <td>Licensed Banking-as-a-Service (BaaS) &amp; Payment Processing Gateway</td>
+            <td>Avoids state money-transmitter licensing by routing funds through an authorized banking partner handling direct ACH transfers and card processing.</td>
+          </tr>
+          <tr>
+            <td><strong>Electronic Signatures</strong></td>
+            <td><span class="status-pill status-conf">Licensed Partner</span></td>
+            <td>Legally Binding E-Signature Gateway &amp; Audit Trail Seal Provider</td>
+            <td>Provides cryptographic tamper-evident sealing, timestamping, and compliance with the Texas Uniform Electronic Transactions Act (UETA).</td>
+          </tr>
+          <tr>
+            <td><strong>School Boundaries &amp; Ratings</strong></td>
+            <td><span class="status-pill status-conf">Licensed Partner</span></td>
+            <td>National Educational Rating &amp; Boundary Provider</td>
+            <td>Licenses geocoded school attendance zones and academic performance metrics updated annually for all Texas Independent School Districts.</td>
+          </tr>
+          <tr>
+            <td><strong>Hazard &amp; Flood Data Layers</strong></td>
+            <td><span class="status-pill status-inf">Hybrid Direct</span></td>
+            <td>FEMA Digital Flood Insurance Rate Maps (NFIP) &amp; State Water Board (TWDB)</td>
+            <td>Direct ingestion of open federal FEMA flood hazard layers combined with proprietary modeling of Texas coastal windstorm zones and river drainage basins.</td>
+          </tr>
+          <tr>
+            <td><strong>Texas Payment Calculator</strong></td>
+            <td><span class="status-pill status-conf">Internal Build</span></td>
+            <td>Proprietary Internal Development</td>
+            <td>Core competitive differentiator: internal engine linking active listings to exact county/city/ISD/MUD tax rates to calculate transparent all-in payments.</td>
+          </tr>
+          <tr>
+            <td><strong>Digital Lease Builder</strong></td>
+            <td><span class="status-pill status-conf">Internal Build</span></td>
+            <td>Proprietary Internal Development (Legal Counsel Approved)</td>
+            <td>Built internally using Texas-promulgated standard lease clauses, custom landlord rules, and statutory Chapter 92 disclosures.</td>
+          </tr>
+          <tr>
+            <td><strong>Search &amp; Filter Architecture</strong></td>
+            <td><span class="status-pill status-conf">Internal Build</span></td>
+            <td>Proprietary Internal Development</td>
+            <td>Proprietary multi-attribute search linking geospatial parcel boundaries, residential listing attributes, and agricultural tax statuses into a single index.</td>
+          </tr>
+        </tbody>
+      </table>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 19 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-20">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 9: PHASED IMPLEMENTATION & DELIVERY ROADMAP</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 09</div>
+        <h2 class="section-heading">Phased Implementation &amp; Delivery Roadmap</h2>
+      </div>
+
+      <p class="section-intro">
+        The platform execution plan is organized into four sequential delivery phases over 16 months, prioritized by foundational data dependencies, 
+        core user value, and commercial revenue generation.
+      </p>
+
+      <div class="phase-container">
+        <div class="phase-card">
+          <div class="phase-top">
+            <span class="phase-badge badge-p1">PHASE 01: MONTHS 1–4</span>
+            <h4 class="phase-title">Core Cadastral Engine &amp; Texas County Data Foundation</h4>
+          </div>
+          <div class="phase-details">
+            <div class="phase-col">
+              <strong>Core Deliverables:</strong>
+              <ul class="phase-list">
+                <li>Deploy interactive vector map engine with street, satellite, and USGS topo base layers.</li>
+                <li>Ingest standardized statewide parcel boundary geometry covering 254 Texas counties.</li>
+                <li>Build automated CAD tax assessment sync pipelines for top 25 metropolitan counties.</li>
+                <li>Deliver omni-search (address, APN, owner name) and real-time mobile GPS tracking.</li>
+                <li>Launch user account registration, saved properties, and individual subscription billing.</li>
+              </ul>
+            </div>
+            <div class="phase-col">
+              <strong>Milestone Gate &amp; Risk:</strong>
+              <p class="phase-gate">Gate: 98%+ parcel rendering reliability across top 10 metros; sub-second parcel attribute slide-out response. Risk: CAD schema discrepancies in rural counties (mitigated by TxGIO standard schema mapping).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-top">
+            <span class="phase-badge badge-p2">PHASE 02: MONTHS 5–8</span>
+            <h4 class="phase-title">Residential Marketplace &amp; MLS Listing Integration</h4>
+          </div>
+          <div class="phase-details">
+            <div class="phase-col">
+              <strong>Core Deliverables:</strong>
+              <ul class="phase-list">
+                <li>Integrate regional Texas MLS syndication feeds (HAR, ACTRIS, MetroTex, SABOR).</li>
+                <li>Deliver residential search filtering (price, beds, baths, lot size, property type).</li>
+                <li>Deploy interactive polygon and lasso boundary drawing tools.</li>
+                <li>Launch Property Detail Page showcase with high-res media, school data, and flood zones.</li>
+                <li>Release Texas All-In Payment Calculator factoring local ISD and MUD property tax rates.</li>
+                <li>Deploy tour scheduling request engine and licensed agent lead routing.</li>
+              </ul>
+            </div>
+            <div class="phase-col">
+              <strong>Milestone Gate &amp; Risk:</strong>
+              <p class="phase-gate">Gate: Certified MLS syndication compliance across all major Texas boards; 100% adherence to non-disclosure display rules. Risk: MLS approval delays (mitigated by early broker sponsorship engagement).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-top">
+            <span class="phase-badge badge-p3">PHASE 03: MONTHS 9–12</span>
+            <h4 class="phase-title">Tenant Screening, Digital Leasing &amp; Automated Rent Collection</h4>
+          </div>
+          <div class="phase-details">
+            <div class="phase-col">
+              <strong>Core Deliverables:</strong>
+              <ul class="phase-list">
+                <li>Launch reusable 30-day digital rental application with FCRA-certified credit/criminal/eviction screening.</li>
+                <li>Deploy self-service Landlord Portal for listing creation, applicant review, and adverse action delivery.</li>
+                <li>Build digital Texas residential lease builder with Chapter 92 statutory disclosures.</li>
+                <li>Integrate legally binding e-signature routing with tamper-evident PDF archiving.</li>
+                <li>Deploy zero-fee automated ACH rent rails, auto-pay scheduling, and automated late fee enforcement.</li>
+              </ul>
+            </div>
+            <div class="phase-col">
+              <strong>Milestone Gate &amp; Risk:</strong>
+              <p class="phase-gate">Gate: Successful end-to-end lease execution and automated ACH settlement test; banking compliance sign-off. Risk: Banking underwriting hold periods (mitigated by early BaaS onboarding).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-top">
+            <span class="phase-badge badge-p4">PHASE 04: MONTHS 13–16</span>
+            <h4 class="phase-title">Enterprise Field Tools, Texas Special Overlays &amp; Advanced Analytics</h4>
+          </div>
+          <div class="phase-details">
+            <div class="phase-col">
+              <strong>Core Deliverables:</strong>
+              <ul class="phase-list">
+                <li>Deploy Railroad Commission of Texas (RRC) oil/gas wells and pipeline GIS overlays.</li>
+                <li>Integrate Municipal Utility District (MUD) boundaries and automated statutory notice generation.</li>
+                <li>Launch 1-d-1 Agricultural Exemption analysis and Agricultural Rollback Tax liability simulator.</li>
+                <li>Deploy Multi-Seat Corporate Management Console with volume billing and shared parcel folders.</li>
+                <li>Release bulk GIS export tools (KML, CSV, GeoJSON, Shapefiles) and offline mobile map caching.</li>
+              </ul>
+            </div>
+            <div class="phase-col">
+              <strong>Milestone Gate &amp; Risk:</strong>
+              <p class="phase-gate">Gate: Enterprise corporate pilot sign-offs from Texas land brokerages and utility surveying teams. Risk: RRC data alignment latency (mitigated by direct state open-data GIS synchronization).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 20 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-21">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 10: ASSUMPTIONS, GAPS & CONFIRMATION ITEMS</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 10</div>
+        <h2 class="section-heading">Key Assumptions, Research Gaps &amp; Open Confirmation Items</h2>
+      </div>
+
+      <p class="section-intro">
+        In accordance with senior product analysis standards, this proposal distinguishes verified facts from operational assumptions, 
+        acknowledges public research limitations, and defines specific decisions requiring resolution prior to engineering execution.
+      </p>
+
+      <div class="sub-section">
+        <h3 class="sub-heading">Foundational Operational Assumptions</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Domain</th>
+              <th style="width: 45%;">Operational Assumption</th>
+              <th style="width: 30%;">Validation &amp; Impact if Invalid</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Commercial Parcel Licensing</strong></td>
+              <td>Statewide parcel aggregators provide commercially licensable vector geometry covering 250+ Texas counties at predictable annual per-seat costs.</td>
+              <td>If unavailable, platform must license TxGIO StratMap open data directly and handle in-house schema normalization across CAMA vendors.</td>
+            </tr>
+            <tr>
+              <td><strong>MLS Broker Sponsorship</strong></td>
+              <td>Platform can secure broker-of-record sponsorship or MLS participant status to receive direct RESO Web API IDX and VOW syndication feeds.</td>
+              <td>If delayed, initial launch focuses on cadastral parcel search, landlord direct listings, and off-market acreage discovery.</td>
+            </tr>
+            <tr>
+              <td><strong>BaaS Payment Underwriting</strong></td>
+              <td>Banking-as-a-service partners permit independent residential landlords to collect tenant rent via automated ACH without merchant processor reserve holds.</td>
+              <td>If underwriting is restrictive, platform will introduce standard 2-day micro-deposit verification and identity screening for landlords.</td>
+            </tr>
+            <tr>
+              <td><strong>County Appraisal Cadence</strong></td>
+              <td>Major urban CADs publish open electronic appraisal rolls annually in the spring with interim certified roll updates in late summer.</td>
+              <td>Automated sync pipelines will run quarterly for metropolitan counties and annually for rural districts.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-section" style="margin-top: 8px;">
+        <h3 class="sub-heading">Explicit Research Gaps (Public Evaluation Boundaries)</h3>
+        <div class="gaps-grid">
+          <div class="gap-card">
+            <strong>Proprietary Search Ranking Algorithms:</strong>
+            <p>The exact mathematical weights used by commercial platforms to rank search listings, distribute sponsored agent leads, and order search results are proprietary and invisible from public screens. In our build, ranking will be transparently determined by geographic proximity, filter match quality, and listing completeness.</p>
+          </div>
+          <div class="gap-card">
+            <strong>Automated Fraud &amp; Scam Scoring Thresholds:</strong>
+            <p>The internal statistical thresholds used to automatically suspend fraudulent listings, flag stolen photos, or block high-risk IP addresses operate in closed backend systems. Our platform will deploy standard Fair Housing text filters and cross-reference creator identity with County Clerk deed rolls.</p>
+          </div>
+          <div class="gap-card">
+            <strong>Credit Bureau Scoring Logic:</strong>
+            <p>Third-party credit reporting bureaus calculate credit scores and background risk indicators using proprietary models. Our platform relies on certified consumer reporting agencies delivering FCRA-compliant standardized scoring packages.</p>
+          </div>
+          <div class="gap-card">
+            <strong>Enterprise Custom Contract Terms:</strong>
+            <p>Published pricing covers 2 to 100 seats; pricing terms for custom enterprise accounts with 500+ users are negotiated under private corporate contracts. Our roadmap establishes clear tiered volume discounts up to 100+ seats with custom pricing for larger fleets.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-section" style="margin-top: 8px;">
+        <h3 class="sub-heading">Actionable Confirmation Items Prior to Phase 1 Kickoff</h3>
+        <ul class="action-list">
+          <li><strong>Legal Counsel Review:</strong> Retain Texas real estate legal counsel to review the standardized digital residential lease template and verify compliance with Texas Property Code Chapter 92 and TREC advertising rules.</li>
+          <li><strong>Banking Partner Selection:</strong> Solicit RFPs from three leading banking-as-a-service providers to finalize ACH transaction fees, float timelines, and underwriting criteria for independent landlords.</li>
+          <li><strong>TxGIO Data Alignment:</strong> Finalize technical alignment with the Texas Geographic Information Office (TxGIO) to confirm StratMap Land Parcel update cadences and licensing agreements for commercial redistribution.</li>
+        </ul>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 21 of 22</span>
+      </div>
+    </div>
+
+    <div class="page" id="page-22">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 11: GLOSSARY & CONCLUDING ASSESSMENT</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 11</div>
+        <h2 class="section-heading">Plain-Language Product Glossary &amp; Concluding Assessment</h2>
+      </div>
+
+      <p class="section-intro">
+        To maintain total clarity across non-technical stakeholders, the definitions below explain essential real estate, legal, 
+        and cadastral concepts utilized throughout this proposal in plain, everyday language.
+      </p>
+
+      <div class="glossary-grid">
+        <div class="glossary-item">
+          <strong>1-d-1 Agricultural Valuation:</strong>
+          A special Texas property tax provision allowing working farmland, timber tracts, and wildlife management acreage to be taxed based on agricultural productive capacity rather than fair market value, substantially reducing annual property taxes.
+        </div>
+        <div class="glossary-item">
+          <strong>Cadastral Parcel:</strong>
+          A legally defined piece of land with precise, recorded geometric boundary lines, a unique County Appraisal District property identification number (APN), and registered ownership records.
+        </div>
+        <div class="glossary-item">
+          <strong>County Appraisal District (CAD):</strong>
+          The official Texas county government agency responsible for identifying, mapping, and determining the appraised taxable value of all real and personal property within that county.
+        </div>
+        <div class="glossary-item">
+          <strong>Homestead Exemption:</strong>
+          A statutory tax exemption for a Texas homeowner's primary residence that removes a portion of the home's value from taxation and caps annual assessment increases to 10%.
+        </div>
+        <div class="glossary-item">
+          <strong>Municipal Utility District (MUD):</strong>
+          A specialized political subdivision created under Texas law to finance municipal infrastructure (water, sewer, drainage) in developing suburban areas via property tax levies and voter-approved bonds.
+        </div>
+        <div class="glossary-item">
+          <strong>Non-Disclosure State:</strong>
+          A state, such as Texas, where final real estate transaction sales prices are private between buyer and seller and are not recorded in public government documents or county deed filings.
+        </div>
+        <div class="glossary-item">
+          <strong>Parcel Identification Number (APN):</strong>
+          A unique numeric or alphanumeric code assigned by a county tax assessor to identify a specific parcel of land for taxation and recordkeeping purposes.
+        </div>
+        <div class="glossary-item">
+          <strong>Railroad Commission of Texas (RRC):</strong>
+          The state regulatory agency that oversees oil and gas exploration, drilling operations, pipeline infrastructure, and surface energy activity across Texas.
+        </div>
+        <div class="glossary-item">
+          <strong>Rollback Tax:</strong>
+          A mandatory statutory penalty imposed by Texas law when the use of land qualified for agricultural valuation is changed to non-agricultural use, recapturing the prior 3 years of tax savings plus interest.
+        </div>
+        <div class="glossary-item">
+          <strong>Split Estate:</strong>
+          A legal doctrine in Texas where ownership of the surface land is severed from ownership of the underlying mineral, oil, and gas rights, with the mineral estate holding legal dominance.
+        </div>
+        <div class="glossary-item">
+          <strong>Texas Real Estate Commission (TREC):</strong>
+          The state agency that regulates and licenses real estate brokers, sales agents, inspectors, and residential service companies across Texas, enforcing consumer protection standards.
+        </div>
+        <div class="glossary-item">
+          <strong>Texas Windstorm Insurance Association (TWIA):</strong>
+          The state's insurer of last resort providing windstorm and hail coverage for properties located in 14 designated coastal counties and parts of Harris County vulnerable to hurricanes.
+        </div>
+      </div>
+
+      <div class="concluding-box" style="margin-top: 10px;">
+        <h3 class="concluding-title">Concluding Strategic Assessment &amp; Recommendation</h3>
+        <p class="concluding-text">
+          The Texas real estate market represents an exceptional commercial opportunity for a unified property intelligence and management platform. 
+          By bridging the gap between cadastral land mapping utilities and residential consumer portals, the platform solves real, daily frustrations 
+          experienced by suburban homebuyers, rural acreage seekers, independent landlords, and enterprise field teams. 
+        </p>
+        <p class="concluding-text">
+          Rather than imposing a generic national template, designing specifically for Texas's legal and geographic conditions—non-disclosure transparency, 
+          254-county appraisal district aggregation, agricultural rollback protection, dominant mineral rights overlays, and MUD tax disclosures—creates 
+          an enduring, defensible competitive advantage. The phased delivery roadmap outlines a measured, risk-managed progression from core cadastral 
+          mapping to a full-cycle real estate marketplace and rental management ecosystem. Executive approval is recommended to proceed with 
+          Phase 1 data alignment and partner onboarding.
+        </p>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 22 of 22</span>
+      </div>
+    </div>
+
+</body>
+</html>

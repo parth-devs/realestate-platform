@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    
+  @page {
+    size: letter;
+    margin: 0;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    font-size: 8pt;
+    line-height: 1.36;
+  }
+  @media print {
+    body {
+      background: #ffffff;
+    }
+    .page {
+      margin: 0 !important;
+      box-shadow: none !important;
+      page-break-after: always !important;
+      break-after: page !important;
+    }
+  }
+
+  /* Page container */
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.48in 0.60in 0.42in 0.60in;
+    margin: 0 auto 30px auto;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Header & Footer */
+  .page-header {
+    height: 22px;
+    border-bottom: 1.5px solid #cbd5e1;
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .header-left {
+    color: #1e3a8a;
+  }
+  .header-right {
+    color: #64748b;
+  }
+  .page-footer {
+    height: 20px;
+    border-top: 1.5px solid #cbd5e1;
+    font-size: 6.8pt;
+    color: #64748b;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0.32in;
+    left: 0.60in;
+    right: 0.60in;
+  }
+
+  /* Page Content Area */
+  .page-content {
+    height: 9.75in;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Section Title Group */
+  .section-title-group {
+    margin-bottom: 8px;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-badge {
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 6.8pt;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+  .section-heading {
+    margin: 0;
+    font-size: 13pt;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+  }
+  .section-intro {
+    font-size: 7.8pt;
+    color: #475569;
+    line-height: 1.35;
+    margin: 0 0 8px 0;
+  }
+
+  /* Cover Page Styles */
+  .cover-page {
+    background: linear-gradient(135deg, #091224 0%, #0f172a 45%, #1e293b 100%) !important;
+    color: #ffffff !important;
+    padding: 0.70in 0.75in 0.60in 0.75in !important;
+  }
+  .cover-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .cover-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 8px;
+    font-size: 7.5pt;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: #93c5fd;
+  }
+  .cover-hero {
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  .cover-pill {
+    display: inline-block;
+    background: rgba(14, 165, 233, 0.2);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    font-size: 7pt;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .cover-main-title {
+    font-size: 26pt;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+  .cover-sub-title {
+    font-size: 13pt;
+    font-weight: 600;
+    color: #93c5fd;
+    line-height: 1.3;
+    margin: 0 0 16px 0;
+  }
+  .cover-line {
+    width: 60px;
+    height: 4px;
+    background: #f59e0b;
+    margin-bottom: 16px;
+    border-radius: 2px;
+  }
+  .cover-intro {
+    font-size: 8.8pt;
+    line-height: 1.45;
+    color: #cbd5e1;
+    max-width: 6.8in;
+    margin: 0;
+  }
+  .cover-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .meta-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 9px 12px;
+    border-radius: 4px;
+  }
+  .meta-label {
+    display: block;
+    font-size: 6.5pt;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .meta-val {
+    display: block;
+    font-size: 8pt;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .cover-callout {
+    background: rgba(30, 58, 138, 0.4);
+    border-left: 3.5px solid #38bdf8;
+    padding: 12px 14px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 20px;
+  }
+  .callout-title {
+    font-size: 8pt;
+    font-weight: 800;
+    color: #38bdf8;
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .cover-callout p {
+    font-size: 7.6pt;
+    line-height: 1.4;
+    color: #e2e8f0;
+    margin: 0;
+  }
+  .cover-bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 8px;
+    font-size: 7pt;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+
+  /* Table of Contents */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .toc-num {
+    font-size: 9pt;
+    font-weight: 900;
+    color: #1e3a8a;
+    width: 22px;
+    flex-shrink: 0;
+  }
+  .toc-text {
+    flex-grow: 1;
+  }
+  .toc-title {
+    display: block;
+    font-size: 8pt;
+    font-weight: 750;
+    color: #0f172a;
+  }
+  .toc-desc {
+    display: block;
+    font-size: 6.8pt;
+    color: #64748b;
+    line-height: 1.25;
+  }
+  .toc-page {
+    font-size: 7.5pt;
+    font-weight: 800;
+    color: #0d9488;
+    white-space: nowrap;
+  }
+  .guide-box {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 3.5px solid #1e3a8a;
+    padding: 10px 12px;
+    border-radius: 0 4px 4px 0;
+    margin-top: 10px;
+  }
+  .guide-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .guide-badge {
+    background: #1e3a8a;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .guide-title {
+    font-size: 8pt;
+    font-weight: 800;
+    color: #0f172a;
+  }
+  .guide-text {
+    font-size: 7.5pt;
+    color: #334155;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  /* Cards & Grids */
+  .callout-banner {
+    background: #eff6ff;
+    border-left: 3.5px solid #2563eb;
+    padding: 7px 10px;
+    font-size: 7.8pt;
+    line-height: 1.35;
+    color: #1e40af;
+    margin-bottom: 10px;
+    border-radius: 0 3px 3px 0;
+  }
+  .three-col-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .feature-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    padding: 8px 10px;
+    border-radius: 4px;
+  }
+  .card-tag {
+    font-size: 6.5pt;
+    font-weight: 800;
+    color: #0d9488;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+  .card-head {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+  }
+  .card-body {
+    font-size: 7.2pt;
+    color: #334155;
+    line-height: 1.32;
+    margin: 0;
+  }
+  .sub-section {
+    margin-top: 8px;
+  }
+  .sub-heading {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Tables */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.2pt;
+    line-height: 1.3;
+    margin: 4px 0 8px 0;
+  }
+  .data-table th {
+    background: #0f172a;
+    color: #ffffff;
+    font-weight: 750;
+    text-align: left;
+    padding: 4px 6px;
+    border: 1px solid #334155;
+    font-size: 7.2pt;
+  }
+  .data-table td {
+    padding: 3.5px 5px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+    color: #1e293b;
+  }
+  .data-table tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  /* Badges & Status */
+  .status-pill {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 6.5pt;
+    font-weight: 750;
+    text-transform: uppercase;
+  }
+  .status-conf {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+  }
+  .status-inf {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+  }
+  .status-unk {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
+  }
+  .status-fail {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+
+  .summary-stat-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-number {
+    display: block;
+    font-size: 14pt;
+    font-weight: 900;
+    color: #38bdf8;
+    line-height: 1;
+  }
+  .stat-label {
+    display: block;
+    font-size: 6.5pt;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .evidence-legend {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .legend-badge {
+    font-size: 6.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .conf-badge { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .inf-badge { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .unk-badge { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+
+  /* Persona Card */
+  .persona-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 10px;
+    margin-bottom: 7px;
+  }
+  .persona-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .persona-role {
+    font-size: 6.5pt;
+    font-weight: 800;
+    color: #0d9488;
+    letter-spacing: 0.05em;
+  }
+  .persona-name {
+    font-size: 9pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .persona-badge {
+    font-size: 6.5pt;
+    font-weight: 750;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 1.5px 6px;
+    border-radius: 3px;
+    border: 1px solid #bae6fd;
+  }
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .persona-subhead {
+    font-size: 6.8pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    text-transform: uppercase;
+  }
+  .persona-text {
+    font-size: 7.2pt;
+    color: #334155;
+    margin: 0 0 2px 0;
+    line-height: 1.3;
+  }
+  .persona-list {
+    margin: 1px 0 2px 12px;
+    padding: 0;
+    font-size: 7pt;
+    color: #334155;
+    line-height: 1.25;
+  }
+
+  .two-col-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .persona-mini-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+  .mini-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+  .mini-name {
+    font-size: 8pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 2px 0;
+  }
+  .mini-text {
+    font-size: 7pt;
+    color: #334155;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  /* User Journeys */
+  .journey-container {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 8px 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  .journey-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+  }
+  .journey-id {
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 6.8pt;
+    font-weight: 800;
+    padding: 1.5px 5px;
+    border-radius: 2px;
+  }
+  .journey-title {
+    font-size: 9pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .journey-user {
+    font-size: 6.8pt;
+    font-weight: 700;
+    color: #0d9488;
+  }
+  .journey-desc {
+    font-size: 7.2pt;
+    color: #64748b;
+    margin: 0 0 6px 0;
+  }
+  .journey-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .step-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 3px;
+    padding: 5px 6px;
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+  }
+  .step-num {
+    background: #1e3a8a;
+    color: #ffffff;
+    font-size: 6.8pt;
+    font-weight: 800;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content {
+    font-size: 6.8pt;
+    line-height: 1.25;
+    color: #334155;
+  }
+  .journey-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    background: #f1f5f9;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 6.8pt;
+    line-height: 1.25;
+    color: #334155;
+  }
+
+  /* Feature Suite Box */
+  .feature-suite-box {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+  .suite-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+  }
+  .suite-num {
+    background: #0d9488;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .suite-title {
+    font-size: 8.8pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .suite-desc {
+    font-size: 7.2pt;
+    color: #64748b;
+    margin: 0 0 4px 0;
+    line-height: 1.25;
+  }
+
+  /* Lifecycles & Rules */
+  .lifecycle-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .lifecycle-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+  .lifecycle-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .lifecycle-badge {
+    background: #1e3a8a;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .lifecycle-title {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+    font-size: 7pt;
+    color: #64748b;
+  }
+  .flow-node {
+    display: inline-block;
+    padding: 1.5px 5px;
+    border-radius: 2px;
+    font-size: 6.5pt;
+    font-weight: 750;
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+  }
+  .node-active {
+    background: #ecfdf5;
+    color: #047857;
+    border-color: #6ee7b7;
+  }
+  .node-fail {
+    background: #fef2f2;
+    color: #b91c1c;
+    border-color: #fca5a5;
+  }
+  .lifecycle-rules {
+    font-size: 7pt;
+    line-height: 1.32;
+    color: #334155;
+    margin: 0;
+  }
+
+  /* Statute Boxes */
+  .statute-box {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+  .statute-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .statute-tag {
+    background: #b45309;
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .statute-title {
+    font-size: 8.8pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .statute-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .statute-sub {
+    font-size: 7.2pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin: 0 0 2px 0;
+    text-transform: uppercase;
+  }
+  .statute-text {
+    font-size: 7.2pt;
+    line-height: 1.35;
+    color: #334155;
+    margin: 0;
+  }
+
+  /* Roadmap Phases */
+  .phase-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .phase-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+  .phase-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .phase-badge {
+    color: #ffffff;
+    font-size: 6.5pt;
+    font-weight: 800;
+    padding: 1.5px 6px;
+    border-radius: 2px;
+  }
+  .badge-p1 { background: #1e3a8a; }
+  .badge-p2 { background: #0d9488; }
+  .badge-p3 { background: #b45309; }
+  .badge-p4 { background: #4f46e5; }
+  .phase-title {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .phase-details {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 8px;
+  }
+  .phase-list {
+    margin: 2px 0 2px 12px;
+    padding: 0;
+    font-size: 7pt;
+    line-height: 1.25;
+    color: #334155;
+  }
+  .phase-gate {
+    font-size: 6.8pt;
+    line-height: 1.3;
+    color: #475569;
+    background: #f1f5f9;
+    padding: 5px 6px;
+    border-radius: 3px;
+    border-left: 2.5px solid #0f172a;
+    margin: 0;
+  }
+
+  /* Gaps & Glossary */
+  .gaps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .gap-card {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 3px;
+    padding: 6px 8px;
+    font-size: 6.8pt;
+    line-height: 1.28;
+    color: #78350f;
+  }
+  .gap-card strong {
+    display: block;
+    font-size: 7.2pt;
+    color: #92400e;
+    margin-bottom: 2px;
+  }
+  .action-list {
+    margin: 4px 0 0 12px;
+    padding: 0;
+    font-size: 7.2pt;
+    line-height: 1.3;
+    color: #334155;
+  }
+
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .glossary-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 3px;
+    padding: 4px 6px;
+    font-size: 6.8pt;
+    line-height: 1.28;
+    color: #334155;
+  }
+  .glossary-item strong {
+    display: block;
+    color: #0f172a;
+    font-size: 7.2pt;
+    margin-bottom: 1px;
+  }
+
+  .concluding-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 3.5px solid #16a34a;
+    padding: 8px 10px;
+    border-radius: 0 4px 4px 0;
+  }
+  .concluding-title {
+    font-size: 8.5pt;
+    font-weight: 800;
+    color: #15803d;
+    margin: 0 0 3px 0;
+  }
+  .concluding-text {
+    font-size: 7.2pt;
+    line-height: 1.32;
+    color: #166534;
+    margin: 0 0 4px 0;
+  }
+
+  .callout-box-blue {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-left: 3.5px solid #2563eb;
+    padding: 8px 10px;
+    border-radius: 0 4px 4px 0;
+  }
+
+    body { background: white; margin: 0; padding: 0; }
+    .page { margin: 0; box-shadow: none; }
+  </style>
+</head>
+<body>
+
+    <div class="page" id="page-18">
+      <div class="page-header">
+        <span class="header-left">TEXAS PROPERTY SEARCH &amp; MANAGEMENT PLATFORM</span>
+        <span class="header-right">SECTION 7: TEXAS-SPECIFIC DATA & REGULATION (PART 2)</span>
+      </div>
+      <div class="page-content">
+        
+      <div class="section-title-group">
+        <div class="section-badge">SECTION 07 CONTINUED</div>
+        <h2 class="section-heading">Texas-Specific Data Architecture &amp; Regulatory Landscape (Part 2)</h2>
+      </div>
+
+      <div class="statute-box">
+        <div class="statute-header">
+          <span class="statute-tag">LEGAL DOCTRINE 04</span>
+          <h3 class="statute-title">The Split Estate: Dominant Mineral Rights &amp; Surface Rights</h3>
+        </div>
+        <div class="statute-grid">
+          <div class="statute-col">
+            <h4 class="statute-sub">Texas Mineral Estate Supremacy</h4>
+            <p class="statute-text">
+              In Texas, real estate is severed into the <em>Surface Estate</em> and the <em>Mineral Estate</em>. Under Texas legal doctrine, the mineral 
+              estate is <strong>dominant</strong>. The mineral owner or their oil/gas lessee has the legal right to use as much of the surface as reasonably 
+              necessary to extract oil, gas, and minerals without the surface owner's permission.
+            </p>
+          </div>
+          <div class="statute-col">
+            <h4 class="statute-sub">Railroad Commission (RRC) GIS Overlays</h4>
+            <p class="statute-text">
+              The platform integrates open public GIS data layers from the <strong>Railroad Commission of Texas (RRC)</strong>, displaying: 
+              active and permitted oil/gas wells, plugged dry holes, gathering pipelines, and major transmission corridors across every parcel. 
+              This alerts surface buyers to active drilling rigs, pipeline easements, and mineral operations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statute-box" style="margin-top: 8px;">
+        <div class="statute-header">
+          <span class="statute-tag">TAXING ENTITIES 05</span>
+          <h3 class="statute-title">Municipal Utility Districts (MUDs) &amp; Mandatory Notices</h3>
+        </div>
+        <div class="statute-grid">
+          <div class="statute-col">
+            <h4 class="statute-sub">Overlapping Infrastructure Debt</h4>
+            <p class="statute-text">
+              Texas contains over 1,200 active Municipal Utility Districts (MUDs), Emergency Service Districts (ESDs), and Fresh Water Supply Districts. 
+              MUDs issue voter-approved bonds to finance water, sewer, and drainage infrastructure in suburban subdivisions, levying substantial 
+              additional property taxes (often adding 0.5% to 1.5% to the annual tax rate).
+            </p>
+          </div>
+          <div class="statute-col">
+            <h4 class="statute-sub">Statutory MUD Notice Generation</h4>
+            <p class="statute-text">
+              Under Texas Water Code § 49.452, sellers must provide buyers with a statutory MUD disclosure notice detailing tax rates, outstanding bond debt, 
+              and standby fees prior to contract execution. Failure to disclose grants the buyer rescission rights. The platform automatically identifies 
+              MUD boundaries and auto-generates the required statutory disclosure notice.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statute-box" style="margin-top: 8px;">
+        <div class="statute-header">
+          <span class="statute-tag">COASTAL HAZARDS &amp; HOUSING STATUTES 06</span>
+          <h3 class="statute-title">Coastal Windstorm (TWIA) &amp; Texas Residential Tenancies</h3>
+        </div>
+        <div class="statute-grid">
+          <div class="statute-col">
+            <h4 class="statute-sub">Texas Windstorm Insurance (TWIA)</h4>
+            <p class="statute-text">
+              Properties in Texas's 14 coastal counties and portions of Harris County (east of Hwy 146) are excluded from standard private hurricane wind 
+              coverage. They must obtain coverage through the <strong>Texas Windstorm Insurance Association (TWIA)</strong>, requiring WPI-8 building code 
+              certificates. The platform displays coastal catastrophe zone designations and TWIA certification indicators.
+            </p>
+          </div>
+          <div class="statute-col">
+            <h4 class="statute-sub">Texas Property Code Chapter 92</h4>
+            <p class="statute-text">
+              Residential leasing in Texas is strictly governed by Texas Property Code Chapter 92. Key mandates include: strict 30-day security deposit 
+              accounting deadlines with treble damages for bad-faith retention; mandatory keyless deadbolts and window latches; and certified mail repair 
+              notice protocols. The platform's digital lease suite builds these exact statutory protections into every digital agreement.
+            </p>
+          </div>
+        </div>
+      </div>
+    
+      </div>
+      <div class="page-footer">
+        <span class="footer-left">CONFIDENTIAL &amp; PROPRIETARY — PREPARED FOR EXECUTIVE REVIEW</span>
+        <span class="footer-center">NOVEMBER 2026</span>
+        <span class="footer-right">Page 18 of 22</span>
+      </div>
+    </div>
+</body>
+</html>
