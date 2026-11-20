@@ -29,7 +29,7 @@ def generate_web_dashboard():
     # Convert Decimals/Floats for JSON serialization
     for r in rows:
         for k, v in r.items():
-            if hasattr(v, '__float__'):
+            if hasattr(v, '__float__') and not isinstance(v, (int, float, bool)):
                 r[k] = float(v)
 
     html_content = f"""<!DOCTYPE html>
@@ -70,7 +70,7 @@ def generate_web_dashboard():
 
         /* Navbar */
         nav {{
-            background: rgba(21, 29, 47, 0.85);
+            background: rgba(21, 29, 47, 0.9);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
             padding: 16px 36px;
@@ -96,21 +96,61 @@ def generate_web_dashboard():
             color: var(--accent-blue);
             border: 1px solid rgba(56, 189, 248, 0.3);
             font-size: 0.75rem;
-            padding: 3px 8px;
+            padding: 3px 10px;
             border-radius: 9999px;
             font-weight: 600;
         }}
 
-        /* Container */
-        .container {{
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 28px 24px;
-            flex: 1;
-            width: 100%;
+        .api-links {{
+            display: flex;
+            gap: 12px;
+            align-items: center;
         }}
 
-        /* KPI Header Cards */
+        .api-link-btn {{
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }}
+
+        .api-link-btn:hover {{
+            background: var(--accent-blue);
+            color: #0b0f19;
+        }}
+
+        .api-link-btn-green {{
+            background: rgba(74, 222, 128, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }}
+
+        .api-link-btn-green:hover {{
+            background: var(--accent-green);
+            color: #0b0f19;
+        }}
+
+        /* Layout */
+        .container {{
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            width: 100%;
+            flex: 1;
+        }}
+
+        /* KPI Cards */
         .kpi-grid {{
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -177,28 +217,17 @@ def generate_web_dashboard():
             border-color: var(--accent-blue);
         }}
 
-        .select-filter {{
-            background: #0b0f19;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 14px;
-            color: var(--text-main);
-            font-size: 0.9rem;
-            outline: none;
-            cursor: pointer;
-        }}
-
         .pill-group {{
             display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
         }}
 
         .pill {{
             background: #0b0f19;
-            border: 1px solid var(--border);
             color: var(--text-muted);
-            padding: 8px 14px;
+            border: 1px solid var(--border);
+            padding: 8px 16px;
             border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -206,10 +235,21 @@ def generate_web_dashboard():
             transition: all 0.2s;
         }}
 
-        .pill.active {{
-            background: var(--accent-blue);
-            color: #0b0f19;
+        .pill:hover, .pill.active {{
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent-blue);
             border-color: var(--accent-blue);
+        }}
+
+        .select-filter {{
+            background: #0b0f19;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
         }}
 
         /* Property Cards Grid */
@@ -222,7 +262,7 @@ def generate_web_dashboard():
         .prop-card {{
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -230,44 +270,45 @@ def generate_web_dashboard():
         }}
 
         .prop-card:hover {{
-            transform: translateY(-4px);
-            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+            border-color: rgba(56, 189, 248, 0.4);
         }}
 
         .prop-badge-bar {{
-            padding: 14px 18px 0;
+            padding: 12px 16px 8px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }}
 
         .tag {{
-            display: inline-block;
             font-size: 0.72rem;
             font-weight: 700;
             padding: 3px 8px;
             border-radius: 6px;
             text-transform: uppercase;
         }}
-        .tag-zillow {{ background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }}
-        .tag-loopnet {{ background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }}
-        .tag-parcels {{ background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3); }}
+
+        .tag-zillow {{ background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); }}
+        .tag-loopnet {{ background: rgba(251, 191, 36, 0.15); color: var(--accent-amber); }}
+        .tag-parcels {{ background: rgba(74, 222, 128, 0.15); color: var(--accent-green); }}
 
         .state-pill {{
-            font-size: 0.75rem;
-            font-weight: 700;
+            background: #0b0f19;
+            border: 1px solid var(--border);
             color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2px 6px;
+            font-size: 0.75rem;
+            padding: 2px 8px;
             border-radius: 4px;
+            font-weight: 600;
         }}
 
         .prop-body {{
-            padding: 14px 18px 18px;
+            padding: 12px 16px 16px 16px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
             flex: 1;
+            gap: 8px;
         }}
 
         .prop-price {{
@@ -277,26 +318,30 @@ def generate_web_dashboard():
         }}
 
         .prop-title {{
-            font-size: 0.95rem;
-            font-weight: 600;
-            line-height: 1.4;
+            font-size: 1.05rem;
+            font-weight: 700;
             color: var(--text-main);
+            line-height: 1.3;
         }}
 
         .prop-location {{
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
         }}
 
         .specs-row {{
             display: flex;
-            gap: 14px;
-            font-size: 0.85rem;
+            gap: 12px;
+            background: #0b0f19;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-top: 4px;
+        }}
+
+        .specs-item {{
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin: 8px 0;
-            padding: 8px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }}
 
         .specs-item strong {{
@@ -305,10 +350,11 @@ def generate_web_dashboard():
 
         .prop-footer {{
             margin-top: auto;
-            padding-top: 6px;
+            padding-top: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
         }}
 
         .owner-desc {{
@@ -317,7 +363,7 @@ def generate_web_dashboard():
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 200px;
+            max-width: 170px;
         }}
 
         .view-btn {{
@@ -329,12 +375,78 @@ def generate_web_dashboard():
             font-size: 0.8rem;
             font-weight: 600;
             border: 1px solid rgba(56, 189, 248, 0.3);
+            cursor: pointer;
             transition: all 0.2s;
         }}
 
         .view-btn:hover {{
             background: var(--accent-blue);
             color: #0b0f19;
+        }}
+
+        /* Modal Overlay */
+        .modal-overlay {{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }}
+
+        .modal-overlay.active {{
+            display: flex;
+        }}
+
+        .modal-content {{
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }}
+
+        .close-modal {{
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }}
+
+        .close-modal:hover {{
+            color: var(--text-main);
+        }}
+
+        .modal-table {{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.9rem;
+        }}
+
+        .modal-table td {{
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }}
+
+        .modal-table td:first-child {{
+            color: var(--text-muted);
+            width: 38%;
+            font-weight: 600;
         }}
     </style>
 </head>
@@ -343,10 +455,14 @@ def generate_web_dashboard():
     <nav>
         <div class="brand">
             <span>🏛️</span> US Real Estate Intelligence
-            <span class="brand-badge">PostgreSQL Live Data</span>
+            <span class="brand-badge">⚡ Live API Ready</span>
         </div>
-        <div style="font-size: 0.85rem; color: var(--text-muted);">
-            Total Nationwide Database: <strong style="color: var(--text-main);" id="totalCount">{len(rows)}</strong> Properties
+        <div class="api-links">
+            <a href="/docs" target="_blank" class="api-link-btn">Swagger Docs ↗</a>
+            <a href="/api/v1/properties?limit=10" target="_blank" class="api-link-btn-green">REST API JSON ↗</a>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-left: 6px;">
+                Total Database: <strong style="color: var(--text-main);" id="totalCount">{len(rows)}</strong> Properties
+            </div>
         </div>
     </nav>
 
@@ -410,6 +526,18 @@ def generate_web_dashboard():
 
     </div>
 
+    <!-- Property Detail Modal -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h2 id="modalTitle" style="font-size: 1.35rem; margin-bottom: 6px;">Property Details</h2>
+            <div id="modalPrice" style="font-size: 1.6rem; font-weight: 800; color: var(--accent-green); margin-bottom: 16px;"></div>
+            <table class="modal-table" id="modalTable">
+                <!-- Dynamically populated -->
+            </table>
+        </div>
+    </div>
+
     <script>
         const rawProperties = {json.dumps(rows)};
         let activeSource = 'all';
@@ -440,7 +568,7 @@ def generate_web_dashboard():
                 card.className = 'prop-card';
 
                 const sourceTagClass = p.source === 'zillow' ? 'tag-zillow' : p.source === 'loopnet' ? 'tag-loopnet' : 'tag-parcels';
-                const sourceLabel = p.source === 'zillow' ? 'Zillow' : p.source === 'loopnet' ? 'LoopNet' : 'LandGlide CAD';
+                const sourceLabel = p.source === 'zillow' ? 'Zillow' : p.source === 'loopnet' ? 'LoopNet' : 'LandGlide';
 
                 let priceDisplay = p.price ? formatCurrency(p.price) : (p.lease_rate ? p.lease_rate : (p.tax_assessed_value ? 'Assessed: ' + formatCurrency(p.tax_assessed_value) : 'Off-Market'));
 
@@ -477,7 +605,7 @@ def generate_web_dashboard():
                         </div>
                         <div class="prop-footer">
                             <span class="owner-desc">${{p.owner_name ? '👤 ' + p.owner_name : (p.broker_name ? '🏢 ' + p.broker_name : '')}}</span>
-                            ${{p.url ? `<a href="${{p.url}}" target="_blank" class="view-btn">View Listing ↗</a>` : ''}}
+                            <button class="view-btn" onclick="openDetail(${{p.id}})">Details & API →</button>
                         </div>
                     </div>
                 `;
@@ -511,6 +639,37 @@ def generate_web_dashboard():
             }});
 
             renderCards(filtered);
+        }}
+
+        function openDetail(id) {{
+            const p = rawProperties.find(x => x.id === id);
+            if (!p) return;
+
+            document.getElementById('modalTitle').innerText = p.title || p.address || 'Real Estate Asset Details';
+            document.getElementById('modalPrice').innerText = p.price ? formatCurrency(p.price) : (p.lease_rate || 'Contact Broker');
+
+            const table = document.getElementById('modalTable');
+            table.innerHTML = `
+                <tr><td>Source Platform</td><td>${{p.source.toUpperCase()}}</td></tr>
+                <tr><td>Asset External ID</td><td>${{p.external_id}}</td></tr>
+                <tr><td>Property Type</td><td>${{p.property_type || 'Residential'}}</td></tr>
+                <tr><td>Listing Status</td><td>${{p.listing_status || 'Active'}}</td></tr>
+                <tr><td>Street Address</td><td>${{p.address || '-'}}</td></tr>
+                <tr><td>City, State ZIP</td><td>${{p.city || '-'}}, ${{p.state || '-'}} ${{p.zip_code || ''}}</td></tr>
+                <tr><td>Bedrooms / Bathrooms</td><td>${{p.beds || '-'}} Beds / ${{p.baths || '-'}} Baths</td></tr>
+                <tr><td>Square Footage</td><td>${{p.sqft ? p.sqft.toLocaleString() + ' SqFt' : '-'}}</td></tr>
+                <tr><td>Lot Size (Acres)</td><td>${{p.lot_size_acres ? p.lot_size_acres + ' Acres' : '-'}}</td></tr>
+                <tr><td>County Tax Value</td><td>${{p.tax_assessed_value ? formatCurrency(p.tax_assessed_value) : '-'}}</td></tr>
+                <tr><td>Registered Owner</td><td>${{p.owner_name || 'N/A'}}</td></tr>
+                <tr><td>Listing Broker / Agent</td><td>${{p.broker_name || 'N/A'}}</td></tr>
+                <tr><td>Custom API Endpoint</td><td><a href="/api/v1/properties/${{p.id}}" target="_blank" style="color: var(--accent-blue);">/api/v1/properties/${{p.id}} ↗</a></td></tr>
+            `;
+
+            document.getElementById('detailModal').classList.add('active');
+        }}
+
+        function closeModal() {{
+            document.getElementById('detailModal').classList.remove('active');
         }}
 
         // Initial Load
