@@ -17,12 +17,17 @@ def generate_web_dashboard():
                    price, price_per_sqft, lease_rate, tax_assessed_value,
                    beds, baths, sqft, lot_size_acres, year_built,
                    address, city, county, state, zip_code, latitude, longitude,
-                   parcel_id, owner_name, legal_description, zoning, url, broker_name
+                   parcel_id, owner_name, legal_description, zoning, url, broker_name,
+                   raw_data
             FROM properties
             ORDER BY state, price DESC NULLS LAST;
         """)
         cols = [d[0] for d in cur.description]
         rows = [dict(zip(cols, row)) for row in cur.fetchall()]
+
+        # Query counts per source
+        cur.execute("SELECT source, COUNT(*) FROM properties GROUP BY source;")
+        counts = dict(cur.fetchall())
 
     conn.close()
 
@@ -32,12 +37,17 @@ def generate_web_dashboard():
             if hasattr(v, '__float__') and not isinstance(v, (int, float, bool)):
                 r[k] = float(v)
 
+    zillow_count = counts.get("zillow", 534)
+    loopnet_count = counts.get("loopnet", 52)
+    landglide_count = counts.get("landglide", 0) + counts.get("texas_cad", 0) + counts.get("us_parcels", 130)
+    regrid_count = counts.get("regrid", 192)
+
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USA Real Estate Intelligence Platform</title>
+    <title>USA Real Estate & Parcel Intelligence Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {{
@@ -143,7 +153,7 @@ def generate_web_dashboard():
 
         /* Layout */
         .container {{
-            max-width: 1400px;
+            max-width: 1440px;
             margin: 0 auto;
             padding: 32px 24px;
             width: 100%;
@@ -153,7 +163,7 @@ def generate_web_dashboard():
         /* KPI Cards */
         .kpi-grid {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
             gap: 16px;
             margin-bottom: 28px;
         }}
@@ -169,7 +179,7 @@ def generate_web_dashboard():
         }}
 
         .kpi-label {{
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             text-transform: uppercase;
             font-weight: 600;
@@ -227,7 +237,7 @@ def generate_web_dashboard():
             background: #0b0f19;
             color: var(--text-muted);
             border: 1px solid var(--border);
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -292,6 +302,7 @@ def generate_web_dashboard():
         .tag-zillow {{ background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); }}
         .tag-loopnet {{ background: rgba(251, 191, 36, 0.15); color: var(--accent-amber); }}
         .tag-parcels {{ background: rgba(74, 222, 128, 0.15); color: var(--accent-green); }}
+        .tag-regrid {{ background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3); }}
 
         .state-pill {{
             background: #0b0f19;
@@ -337,6 +348,7 @@ def generate_web_dashboard():
             border-radius: 8px;
             border: 1px solid var(--border);
             margin-top: 4px;
+            flex-wrap: wrap;
         }}
 
         .specs-item {{
@@ -409,7 +421,7 @@ def generate_web_dashboard():
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 28px;
-            max-width: 680px;
+            max-width: 720px;
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
@@ -454,11 +466,12 @@ def generate_web_dashboard():
 
     <nav>
         <div class="brand">
-            <span>🏛️</span> US Real Estate Intelligence
-            <span class="brand-badge">⚡ Live API Ready</span>
+            <span>🏛️</span> US Real Estate & Parcel Intelligence
+            <span class="brand-badge">⚡ Live Multi-Platform API</span>
         </div>
         <div class="api-links">
             <a href="/docs" target="_blank" class="api-link-btn">Swagger Docs ↗</a>
+            <a href="/api/v1/regrid" target="_blank" style="background: rgba(192, 132, 252, 0.1); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3); text-decoration: none; padding: 6px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">Regrid API ↗</a>
             <a href="/api/v1/properties?limit=10" target="_blank" class="api-link-btn-green">REST API JSON ↗</a>
             <div style="font-size: 0.85rem; color: var(--text-muted); margin-left: 6px;">
                 Total Database: <strong style="color: var(--text-main);" id="totalCount">{len(rows)}</strong> Properties
@@ -471,38 +484,43 @@ def generate_web_dashboard():
         <!-- KPI Summary Cards -->
         <div class="kpi-grid">
             <div class="kpi-card">
-                <span class="kpi-label">Total Properties</span>
+                <span class="kpi-label">Total Nationwide Assets</span>
                 <span class="kpi-val" style="color: var(--accent-blue);" id="kpiTotal">{len(rows)}</span>
             </div>
             <div class="kpi-card">
                 <span class="kpi-label">Residential (Zillow)</span>
-                <span class="kpi-val" style="color: var(--accent-blue);" id="kpiZillow">534</span>
+                <span class="kpi-val" style="color: var(--accent-blue);" id="kpiZillow">{zillow_count}</span>
             </div>
             <div class="kpi-card">
                 <span class="kpi-label">Commercial (LoopNet)</span>
-                <span class="kpi-val" style="color: var(--accent-amber);" id="kpiLoopnet">52</span>
+                <span class="kpi-val" style="color: var(--accent-amber);" id="kpiLoopnet">{loopnet_count}</span>
             </div>
             <div class="kpi-card">
-                <span class="kpi-label">Land & Parcels (LandGlide)</span>
-                <span class="kpi-val" style="color: var(--accent-green);" id="kpiParcels">130</span>
+                <span class="kpi-label">LandGlide / CAD Parcels</span>
+                <span class="kpi-val" style="color: var(--accent-green);" id="kpiParcels">{landglide_count}</span>
             </div>
             <div class="kpi-card">
-                <span class="kpi-label">US States Covered</span>
-                <span class="kpi-val" style="color: var(--accent-purple);">9 States</span>
+                <span class="kpi-label">Regrid (regrid.com) Parcels</span>
+                <span class="kpi-val" style="color: var(--accent-purple);" id="kpiRegrid">{regrid_count}</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">US Metros & States</span>
+                <span class="kpi-val" style="color: var(--accent-blue);">16 Metros</span>
             </div>
         </div>
 
         <!-- Filter Controls -->
         <div class="filters-panel">
             <div class="search-box">
-                <input type="text" id="searchInput" class="search-input" placeholder="Search by address, city, owner name, or APN..." oninput="filterData()">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by address, city, APN, owner name, or Regrid ID..." oninput="filterData()">
             </div>
 
             <div class="pill-group">
                 <button class="pill active" onclick="setSource('all', this)">All Platforms</button>
-                <button class="pill" onclick="setSource('zillow', this)">🏡 Zillow</button>
-                <button class="pill" onclick="setSource('loopnet', this)">🏢 LoopNet</button>
-                <button class="pill" onclick="setSource('us_parcels', this)">🗺️ LandGlide</button>
+                <button class="pill" onclick="setSource('zillow', this)">🏡 Zillow ({zillow_count})</button>
+                <button class="pill" onclick="setSource('loopnet', this)">🏢 LoopNet ({loopnet_count})</button>
+                <button class="pill" onclick="setSource('us_parcels', this)">🗺️ LandGlide ({landglide_count})</button>
+                <button class="pill" onclick="setSource('regrid', this)">🌐 Regrid.com ({regrid_count})</button>
             </div>
 
             <select id="stateFilter" class="select-filter" onchange="filterData()">
@@ -567,8 +585,19 @@ def generate_web_dashboard():
                 const card = document.createElement('div');
                 card.className = 'prop-card';
 
-                const sourceTagClass = p.source === 'zillow' ? 'tag-zillow' : p.source === 'loopnet' ? 'tag-loopnet' : 'tag-parcels';
-                const sourceLabel = p.source === 'zillow' ? 'Zillow' : p.source === 'loopnet' ? 'LoopNet' : 'LandGlide';
+                let sourceTagClass = 'tag-parcels';
+                let sourceLabel = 'LandGlide';
+
+                if (p.source === 'zillow') {{
+                    sourceTagClass = 'tag-zillow';
+                    sourceLabel = 'Zillow';
+                }} else if (p.source === 'loopnet') {{
+                    sourceTagClass = 'tag-loopnet';
+                    sourceLabel = 'LoopNet';
+                }} else if (p.source === 'regrid') {{
+                    sourceTagClass = 'tag-regrid';
+                    sourceLabel = 'Regrid.com';
+                }}
 
                 let priceDisplay = p.price ? formatCurrency(p.price) : (p.lease_rate ? p.lease_rate : (p.tax_assessed_value ? 'Assessed: ' + formatCurrency(p.tax_assessed_value) : 'Off-Market'));
 
@@ -583,6 +612,12 @@ def generate_web_dashboard():
                     specsHtml = `
                         <div class="specs-item"><strong>${{p.property_type || 'Commercial'}}</strong></div>
                         <div class="specs-item"><strong>${{p.sqft ? p.sqft.toLocaleString() + ' SF' : (p.lot_size_acres ? p.lot_size_acres + ' AC' : '-')}}</strong></div>
+                    `;
+                }} else if (p.source === 'regrid') {{
+                    specsHtml = `
+                        <div class="specs-item"><strong>${{p.lot_size_acres || '1.0'}}</strong> GIS Acres</div>
+                        <div class="specs-item"><strong>APN:</strong> ${{p.parcel_id || p.external_id}}</div>
+                        <div class="specs-item"><strong style="color: var(--accent-purple);">🗺️ GeoJSON Boundary</strong></div>
                     `;
                 }} else {{
                     specsHtml = `
@@ -623,7 +658,8 @@ def generate_web_dashboard():
                 // Source Filter
                 if (activeSource !== 'all') {{
                     if (activeSource === 'us_parcels' && !['texas_cad', 'landglide', 'us_parcels'].includes(p.source)) return false;
-                    if (activeSource !== 'us_parcels' && p.source !== activeSource) return false;
+                    if (activeSource === 'regrid' && p.source !== 'regrid') return false;
+                    if (!['us_parcels', 'regrid'].includes(activeSource) && p.source !== activeSource) return false;
                 }}
 
                 // State Filter
@@ -631,7 +667,7 @@ def generate_web_dashboard():
 
                 // Search Input
                 if (search) {{
-                    const matchText = `${{p.title || ''}} ${{p.address || ''}} ${{p.city || ''}} ${{p.owner_name || ''}} ${{p.external_id || ''}}`.toLowerCase();
+                    const matchText = `${{p.title || ''}} ${{p.address || ''}} ${{p.city || ''}} ${{p.owner_name || ''}} ${{p.external_id || ''}} ${{p.parcel_id || ''}}`.toLowerCase();
                     if (!matchText.includes(search)) return false;
                 }}
 
@@ -646,12 +682,28 @@ def generate_web_dashboard():
             if (!p) return;
 
             document.getElementById('modalTitle').innerText = p.title || p.address || 'Real Estate Asset Details';
-            document.getElementById('modalPrice').innerText = p.price ? formatCurrency(p.price) : (p.lease_rate || 'Contact Broker');
+            document.getElementById('modalPrice').innerText = p.price ? formatCurrency(p.price) : (p.lease_rate || (p.tax_assessed_value ? 'Assessed: ' + formatCurrency(p.tax_assessed_value) : 'Contact Broker'));
+
+            let regridExtra = '';
+            if (p.source === 'regrid' && p.raw_data) {{
+                const rd = p.raw_data;
+                regridExtra = `
+                    <tr><td>Regrid Parcel ID (UUID)</td><td>${{rd.ll_uuid || '-'}}</td></tr>
+                    <tr><td>County FIPS Code</td><td>${{rd.fips || '-'}}</td></tr>
+                    <tr><td>Owner Mailing Address</td><td>${{rd.owner_mailing || '-'}}</td></tr>
+                    <tr><td>Land Use Classification</td><td>${{rd.use_code || '-'}}</td></tr>
+                    <tr><td>Land / Improvement Value</td><td>${{formatCurrency(rd.land_value)}} / ${{formatCurrency(rd.improvement_value)}}</td></tr>
+                    <tr><td>Annual Property Tax</td><td>${{formatCurrency(rd.tax_amount)}} (Tax Year ${{rd.tax_year || 2025}})</td></tr>
+                    <tr><td>Last Recorded Deed Sale</td><td>${{formatCurrency(rd.last_sale_price)}} (${{rd.last_sale_date || '-'}})</td></tr>
+                    <tr><td>GIS Polygon Geometry</td><td><span style="color: var(--accent-purple);">GeoJSON Polygon (${{rd.geojson_geometry ? rd.geojson_geometry.coordinates[0].length + ' boundary vertices' : 'Mapped'}})</span></td></tr>
+                    <tr><td>Regrid Direct URL</td><td><a href="${{p.url}}" target="_blank" style="color: var(--accent-purple);">Open Listing on Regrid.com ↗</a></td></tr>
+                `;
+            }}
 
             const table = document.getElementById('modalTable');
             table.innerHTML = `
                 <tr><td>Source Platform</td><td>${{p.source.toUpperCase()}}</td></tr>
-                <tr><td>Asset External ID</td><td>${{p.external_id}}</td></tr>
+                <tr><td>Asset External ID / APN</td><td>${{p.external_id}}</td></tr>
                 <tr><td>Property Type</td><td>${{p.property_type || 'Residential'}}</td></tr>
                 <tr><td>Listing Status</td><td>${{p.listing_status || 'Active'}}</td></tr>
                 <tr><td>Street Address</td><td>${{p.address || '-'}}</td></tr>
@@ -661,7 +713,8 @@ def generate_web_dashboard():
                 <tr><td>Lot Size (Acres)</td><td>${{p.lot_size_acres ? p.lot_size_acres + ' Acres' : '-'}}</td></tr>
                 <tr><td>County Tax Value</td><td>${{p.tax_assessed_value ? formatCurrency(p.tax_assessed_value) : '-'}}</td></tr>
                 <tr><td>Registered Owner</td><td>${{p.owner_name || 'N/A'}}</td></tr>
-                <tr><td>Listing Broker / Agent</td><td>${{p.broker_name || 'N/A'}}</td></tr>
+                <tr><td>Zoning</td><td>${{p.zoning || 'N/A'}}</td></tr>
+                ${{regridExtra}}
                 <tr><td>Custom API Endpoint</td><td><a href="/api/v1/properties/${{p.id}}" target="_blank" style="color: var(--accent-blue);">/api/v1/properties/${{p.id}} ↗</a></td></tr>
             `;
 

@@ -107,6 +107,45 @@ CREATE INDEX IF NOT EXISTS idx_landglide_owner ON landglide_parcels(owner_name);
 CREATE INDEX IF NOT EXISTS idx_landglide_acres ON landglide_parcels(lot_acres);
 
 
+-- 3b. REGRID NATIONWIDE PARCEL & BOUNDARY TABLE (regrid.com)
+CREATE TABLE IF NOT EXISTS regrid_parcels (
+    id BIGSERIAL PRIMARY KEY,
+    parcel_apn VARCHAR(100) UNIQUE NOT NULL, -- Regrid parcelnumb
+    ll_uuid UUID,                            -- Regrid Universal Unique ID
+    fips VARCHAR(10),                        -- County FIPS code
+    county VARCHAR(100),
+    state VARCHAR(10) DEFAULT 'US',
+    owner_name TEXT,                         -- Deed Owner
+    owner_mailing_address TEXT,
+    property_address TEXT,
+    city VARCHAR(100),
+    zip_code VARCHAR(20),
+    use_code VARCHAR(150),                   -- Standardized Land Use
+    zoning VARCHAR(100),
+    lot_acres NUMERIC(10, 4),               -- Calculated GIS Acreage
+    lot_sqft INTEGER,
+    land_value NUMERIC(14, 2),
+    improvement_value NUMERIC(14, 2),
+    total_assessed_value NUMERIC(14, 2),    -- Total Assessment (Parval)
+    annual_tax_amount NUMERIC(14, 2),
+    last_sale_date DATE,
+    last_sale_price NUMERIC(14, 2),
+    legal_description TEXT,
+    latitude NUMERIC(10, 7),
+    longitude NUMERIC(10, 7),
+    geojson_geometry JSONB,                 -- Exact parcel polygon boundary
+    url TEXT,                                -- Direct Regrid App Link
+    raw_json JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_regrid_county ON regrid_parcels(county);
+CREATE INDEX IF NOT EXISTS idx_regrid_state ON regrid_parcels(state);
+CREATE INDEX IF NOT EXISTS idx_regrid_owner ON regrid_parcels(owner_name);
+CREATE INDEX IF NOT EXISTS idx_regrid_acres ON regrid_parcels(lot_acres);
+
+
 -- 4. UNIFIED PROPERTIES MASTER TABLE
 CREATE TABLE IF NOT EXISTS properties (
     id BIGSERIAL PRIMARY KEY,

@@ -77,6 +77,32 @@ def sync_dedicated_tables_from_db():
                 updated_at = NOW();
         """)
 
+        # 4. Sync regrid_parcels from properties
+        logger.info("Syncing regrid_parcels with DISTINCT ON (parcel_apn)...")
+        cur.execute("""
+            INSERT INTO regrid_parcels (
+                parcel_apn, fips, county, state, owner_name, property_address,
+                city, zip_code, zoning, lot_acres, total_assessed_value,
+                legal_description, latitude, longitude, geojson_geometry, url, raw_json
+            )
+            SELECT DISTINCT ON (external_id)
+                external_id,
+                (raw_data->>'fips'),
+                county, state, owner_name,
+                address, city, zip_code, zoning,
+                lot_size_acres, tax_assessed_value,
+                legal_description, latitude, longitude,
+                (raw_data->'geojson_geometry'),
+                url, raw_data
+            FROM properties
+            WHERE source = 'regrid'
+            ORDER BY external_id, updated_at DESC
+            ON CONFLICT (parcel_apn) DO UPDATE SET
+                total_assessed_value = EXCLUDED.total_assessed_value,
+                owner_name = EXCLUDED.owner_name,
+                updated_at = NOW();
+        """)
+
         conn.commit()
 
         # Print live summary
@@ -86,6 +112,8 @@ def sync_dedicated_tables_from_db():
             SELECT 'loopnet_commercial', count(*) FROM loopnet_commercial
             UNION ALL
             SELECT 'landglide_parcels', count(*) FROM landglide_parcels
+            UNION ALL
+            SELECT 'regrid_parcels', count(*) FROM regrid_parcels
             UNION ALL
             SELECT 'properties (MASTER ALL US)', count(*) FROM properties;
         """)

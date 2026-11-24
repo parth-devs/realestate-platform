@@ -321,6 +321,67 @@ def get_landglide_parcels(county: Optional[str] = None, owner_name: Optional[str
             records = [r for r in records if (r.get("state") or "").upper() == state.upper()]
         return {"count": len(records), "results": records[offset:offset+limit]}
 
+@app.get("/api/v1/regrid", tags=["Platform APIs"])
+def get_regrid_parcels(
+    county: Optional[str] = None,
+    owner_name: Optional[str] = None,
+    state: Optional[str] = None,
+    zoning: Optional[str] = None,
+    min_acres: Optional[float] = None,
+    max_acres: Optional[float] = None,
+    limit: int = 50,
+    offset: int = 0
+):
+    """
+    Search and retrieve Regrid (regrid.com) nationwide parcel data,
+    including APN, owner details, tax valuations, GIS acreage, zoning,
+    and GeoJSON boundary polygon coordinates.
+    """
+    try:
+        query = "SELECT * FROM regrid_parcels WHERE 1=1"
+        params = []
+        if county:
+            query += " AND county ILIKE %s"
+            params.append(f"%{county}%")
+        if owner_name:
+            query += " AND owner_name ILIKE %s"
+            params.append(f"%{owner_name}%")
+        if state:
+            query += " AND state = %s"
+            params.append(state.upper())
+        if zoning:
+            query += " AND zoning ILIKE %s"
+            params.append(f"%{zoning}%")
+        if min_acres is not None:
+            query += " AND lot_acres >= %s"
+            params.append(min_acres)
+        if max_acres is not None:
+            query += " AND lot_acres <= %s"
+            params.append(max_acres)
+
+        query += " ORDER BY lot_acres DESC NULLS LAST LIMIT %s OFFSET %s;"
+        params.extend([limit, offset])
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(query, params)
+                items = [clean_record(r) for r in cur.fetchall()]
+        return {"count": len(items), "platform": "regrid.com", "results": items}
+    except Exception:
+        records = [r for r in get_bundled_properties() if r.get("source") == "regrid"]
+        if county:
+            records = [r for r in records if county.lower() in (r.get("county") or "").lower()]
+        if owner_name:
+            records = [r for r in records if owner_name.lower() in (r.get("owner_name") or "").lower()]
+        if state:
+            records = [r for r in records if (r.get("state") or "").upper() == state.upper()]
+        if zoning:
+            records = [r for r in records if zoning.lower() in (r.get("zoning") or "").lower()]
+        if min_acres is not None:
+            records = [r for r in records if (r.get("lot_size_acres") or 0) >= min_acres]
+        if max_acres is not None:
+            records = [r for r in records if (r.get("lot_size_acres") or 0) <= max_acres]
+        return {"count": len(records), "platform": "regrid.com", "results": records[offset:offset+limit]}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("api.main:app", host="0.0.0.0", port=8080, reload=True)

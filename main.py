@@ -6,6 +6,7 @@ from database.db import db
 from collectors.zillow import ZillowCollector
 from collectors.loopnet import LoopNetCollector
 from collectors.us_parcels import USParcelCollector
+from collectors.regrid import RegridCollector
 
 logger.remove()
 logger.add(
@@ -26,6 +27,7 @@ def run_pipeline(sources: list[str], markets: list[dict]):
         "landglide": USParcelCollector(),
         "texas_cad": USParcelCollector(),
         "us_parcels": USParcelCollector(),
+        "regrid": RegridCollector(),
     }
 
     total_scraped = 0
