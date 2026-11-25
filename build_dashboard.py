@@ -34,13 +34,23 @@ def generate_web_dashboard():
     conn.close()
 
     # Clean & compact records for fast client-side rendering
+    keep_raw_keys = {
+        "ll_uuid", "fips", "owner_mailing", "use_code",
+        "land_value", "improvement_value", "tax_amount", "tax_year",
+        "last_sale_date", "last_sale_price", "geojson_geometry",
+        "zestimate", "cap_rate", "exemptions"
+    }
     rows = []
     for r in raw_rows:
         cleaned = {}
         for k, v in r.items():
             if v is None:
                 continue
-            if hasattr(v, "__float__") and not isinstance(v, (int, float, bool)):
+            if k == "raw_data" and isinstance(v, dict):
+                compact_raw = {rk: rv for rk, rv in v.items() if rk in keep_raw_keys and rv is not None}
+                if compact_raw:
+                    cleaned[k] = compact_raw
+            elif hasattr(v, "__float__") and not isinstance(v, (int, float, bool)):
                 cleaned[k] = float(v)
             else:
                 cleaned[k] = v
@@ -274,7 +284,7 @@ def generate_web_dashboard():
 
         /* Right Floating Parcel Inspector Drawer */
         .inspector-drawer {
-            position: absolute; top: 14px; right: 14px; bottom: 72px; width: 390px;
+            position: absolute; top: 62px; right: 14px; bottom: 94px; width: 385px;
             background: var(--bg-panel); backdrop-filter: blur(20px);
             border: 1px solid var(--border-bright); border-radius: 16px;
             z-index: 1100; display: flex; flex-direction: column;
@@ -331,9 +341,9 @@ def generate_web_dashboard():
 
         /* Map Floating Layer Switcher + Measure Banner */
         .layer-switcher {
-            position: absolute; bottom: 20px; right: 14px; z-index: 1000;
+            position: absolute; top: 14px; right: 14px; z-index: 1000;
             background: var(--bg-panel); backdrop-filter: blur(14px);
-            border: 1px solid var(--border); border-radius: 12px; padding: 5px;
+            border: 1px solid var(--border); border-radius: 12px; padding: 4px;
             display: flex; gap: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .layer-opt {
@@ -351,11 +361,13 @@ def generate_web_dashboard():
 
         /* Map Legend Pill */
         .map-legend {
-            position: absolute; bottom: 20px; left: 400px; z-index: 990;
+            position: absolute; bottom: 16px; left: 398px; z-index: 990;
             background: var(--bg-panel); backdrop-filter: blur(12px);
             border: 1px solid var(--border); border-radius: 999px;
-            padding: 6px 14px; display: flex; gap: 14px; font-size: 0.73rem; color: var(--text-muted);
+            padding: 6px 14px; display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.72rem; color: var(--text-muted);
+            max-width: calc(100vw - 470px); transition: left 0.25s ease;
         }
+        .left-dock.collapsed ~ .map-legend { left: 16px; max-width: calc(100vw - 90px); }
         .leg-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; }
 
         /* Analytics & Grid View */
@@ -439,7 +451,7 @@ def generate_web_dashboard():
         <div class="brand">
             <div class="brand-logo">🛰️</div>
             <span>GeoEstate Intelligence</span>
-            <span class="pg-pill"><span class="pulse-dot"></span> __TOTAL_COUNT__ PG Assets • 50 States</span>
+            <span class="pg-pill" id="apiStatusPill"><span class="pulse-dot"></span> __TOTAL_COUNT__ Assets • 50 States</span>
         </div>
 
         <div class="view-switcher">
@@ -574,8 +586,8 @@ def generate_web_dashboard():
                 <div class="insp-header">
                     <button class="insp-close" onclick="closeInspector()">&times;</button>
                     <div id="inspBadges" style="display:flex; gap:6px; align-items:center;"></div>
-                    <h2 class="insp-title" id="inspTitle">Property Details</h2>
-                    <div class="insp-price" id="inspPrice">$0</div>
+                    <h2 class="insp-title" id="inspTitle">Select a property</h2>
+                    <div class="insp-price" id="inspPrice"></div>
                 </div>
                 <div class="insp-body">
                     <div class="stat-tiles" id="inspStatTiles"></div>
@@ -583,14 +595,14 @@ def generate_web_dashboard():
                     <div id="inspGeoSection" style="display:none;">
                         <div style="font-size:0.74rem; color:var(--text-muted); font-weight:600; margin-bottom:6px; display:flex; justify-content:space-between;">
                             <span>GIS POLYGON BOUNDARY (GEOJSON)</span>
-                            <a href="#" onclick="copySelectedGeoJSON(event)" style="color:var(--accent-cyan); text-decoration:none;">Copy JSON</a>
+                            <button type="button" onclick="copySelectedGeoJSON(event)" style="background:none; border:none; color:var(--accent-cyan); font-size:0.74rem; font-weight:600; cursor:pointer;">Copy JSON</button>
                         </div>
                         <div class="geojson-box" id="inspGeoBox"></div>
                     </div>
                 </div>
                 <div class="insp-footer">
-                    <a href="#" id="inspApiLink" target="_blank" class="btn-action">PG API JSON ↗</a>
-                    <a href="#" id="inspSourceLink" target="_blank" class="btn-action highlight">Open Listing ↗</a>
+                    <a href="/api/v1/properties" id="inspApiLink" target="_blank" class="btn-action">PG API JSON ↗</a>
+                    <a href="/api/v1/regrid" id="inspSourceLink" target="_blank" class="btn-action highlight">Open Listing ↗</a>
                 </div>
             </aside>
         </div>
@@ -686,9 +698,14 @@ def generate_web_dashboard():
                     maxZoom: 19
                 })
             ]),
-            dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                maxZoom: 19, attribution: '&copy; CARTO & OpenStreetMap'
-            }),
+            dark: L.layerGroup([
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                    maxNativeZoom: 16, maxZoom: 19, attribution: 'Powered by Esri'
+                }),
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+                    maxNativeZoom: 16, maxZoom: 19
+                })
+            ]),
             street: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19, attribution: '&copy; OpenStreetMap'
             })
@@ -1156,10 +1173,10 @@ def generate_web_dashboard():
         function renderAnalyticsBars() {
             const total = ALL_PROPERTIES.length || 1;
             const sources = [
-                { name: 'Zillow', count: __ZILLOW_COUNT__, color: '#38bdf8' },
-                { name: 'Regrid.com', count: __REGRID_COUNT__, color: '#c084fc' },
-                { name: 'LandGlide', count: __LAND_COUNT__, color: '#34d399' },
-                { name: 'LoopNet', count: __LOOPNET_COUNT__, color: '#fbbf24' }
+                { name: 'Zillow', count: __ZILLOW_RAW__, color: '#38bdf8' },
+                { name: 'Regrid.com', count: __REGRID_RAW__, color: '#c084fc' },
+                { name: 'LandGlide', count: __LAND_RAW__, color: '#34d399' },
+                { name: 'LoopNet', count: __LOOPNET_RAW__, color: '#fbbf24' }
             ];
             document.getElementById('sourceBars').innerHTML = sources.map(s => `
                 <div class="bar-row">
@@ -1177,6 +1194,21 @@ def generate_web_dashboard():
                     <span class="bar-num">${st.count.toLocaleString()}</span>
                 </div>
             `).join('');
+        }
+
+        async function checkApiStatus() {
+            const pill = document.getElementById('apiStatusPill');
+            if (!pill) return;
+            try {
+                const resp = await fetch('/api/v1/health');
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const dbLabel = data.database === 'PostgreSQL 16' ? 'PG 16 Live' : 'Cloud Store';
+                    pill.innerHTML = `<span class="pulse-dot"></span> __TOTAL_COUNT__ (${dbLabel}) • 50 States`;
+                }
+            } catch (e) {
+                // Keep static snapshot indicator if opened directly from file://
+            }
         }
 
         function renderGridCards() {
@@ -1236,6 +1268,7 @@ def generate_web_dashboard():
         // Initial Render
         renderAnalyticsBars();
         applyFilters(false);
+        checkApiStatus();
     </script>
 </body>
 </html>
@@ -1248,6 +1281,10 @@ def generate_web_dashboard():
         .replace("__LOOPNET_COUNT__", f"{loopnet_count:,}")
         .replace("__LAND_COUNT__", f"{landglide_count:,}")
         .replace("__REGRID_COUNT__", f"{regrid_count:,}")
+        .replace("__ZILLOW_RAW__", str(zillow_count))
+        .replace("__LOOPNET_RAW__", str(loopnet_count))
+        .replace("__LAND_RAW__", str(landglide_count))
+        .replace("__REGRID_RAW__", str(regrid_count))
         .replace("__COMPACT_JSON__", compact_json)
         .replace("__TOP_STATES_JSON__", top_states_json)
     )

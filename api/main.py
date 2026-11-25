@@ -111,17 +111,24 @@ def get_analytics_stats():
         records = get_bundled_properties()
         sources = {}
         states = {}
+        prices = []
         for r in records:
             s = r.get("source", "unknown")
             sources[s] = sources.get(s, 0) + 1
             st = r.get("state", "US")
             states[st] = states.get(st, 0) + 1
+            if r.get("price") is not None:
+                prices.append(float(r["price"]))
+
+        avg_p = round(sum(prices) / len(prices), 2) if prices else 0.0
+        max_p = max(prices) if prices else 0.0
+        tot_v = round(sum(prices), 2) if prices else 0.0
 
         return {
             "total_properties": len(records),
-            "sources_breakdown": [{"source": k, "count": v} for k, v in sources.items()],
-            "states_breakdown": [{"state": k, "count": v} for k, v in states.items()],
-            "financial_summary": {"avg_price": 750000, "max_price": 5000000, "total_volume": 150000000}
+            "sources_breakdown": sorted([{"source": k, "count": v} for k, v in sources.items()], key=lambda x: x["count"], reverse=True),
+            "states_breakdown": sorted([{"state": k, "count": v} for k, v in states.items()], key=lambda x: x["count"], reverse=True),
+            "financial_summary": {"avg_price": avg_p, "max_price": max_p, "total_volume": tot_v}
         }
 
 @app.get("/api/v1/properties", tags=["Properties"])
@@ -200,9 +207,21 @@ def list_properties(
             if state and state.lower() != "all" and r.get("state") != state.upper():
                 continue
 
+            if city and city.lower() not in (r.get("city") or "").lower():
+                continue
+
+            if property_type and property_type.lower() not in (r.get("property_type") or "").lower():
+                continue
+
+            if min_price is not None and (r.get("price") is None or float(r["price"]) < min_price):
+                continue
+
+            if max_price is not None and (r.get("price") is None or float(r["price"]) > max_price):
+                continue
+
             if search:
                 s = search.lower()
-                m = f"{r.get('title','')} {r.get('address','')} {r.get('city','')} {r.get('owner_name','')}".lower()
+                m = f"{r.get('title','')} {r.get('address','')} {r.get('city','')} {r.get('owner_name','')} {r.get('external_id','')}".lower()
                 if s not in m:
                     continue
 
