@@ -57,7 +57,8 @@ def get_bundled_properties() -> list[dict]:
             data = json.loads(STORE_FILE.read_text(encoding="utf-8"))
             records = list(data.values())
             for idx, r in enumerate(records, 1):
-                r["id"] = idx
+                if not r.get("id"):
+                    r["id"] = idx
             return records
         except Exception:
             return []
@@ -381,6 +382,76 @@ def get_regrid_parcels(
         if max_acres is not None:
             records = [r for r in records if (r.get("lot_size_acres") or 0) <= max_acres]
         return {"count": len(records), "platform": "regrid.com", "results": records[offset:offset+limit]}
+
+@app.get("/api/v1/geojson", tags=["Spatial GIS"])
+def get_geojson_features(
+    source: Optional[str] = Query(None),
+    state: Optional[str] = Query(None),
+    limit: int = Query(500, ge=1, le=5000)
+):
+    """Returns a standard GeoJSON FeatureCollection (Polygon boundaries for parcels, Points for listings)."""
+    rows = []
+    try:
+        query = "SELECT id, source, external_id, title, property_type, price, tax_assessed_value, lot_size_acres, address, city, county, state, parcel_id, owner_name, zoning, latitude, longitude, raw_data FROM properties WHERE latitude IS NOT NULL AND longitude IS NOT NULL"
+        params = []
+        if source and source.lower() != "all":
+            if source == "us_parcels":
+                query += " AND source IN ('texas_cad', 'landglide', 'us_parcels')"
+            else:
+                query += " AND source = %s"
+                params.append(source)
+        if state and state.lower() != "all":
+            query += " AND state = %s"
+            params.append(state.upper())
+        query += " LIMIT %s;"
+        params.append(limit)
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(query, params)
+                rows = [clean_record(r) for r in cur.fetchall()]
+    except Exception:
+        for r in get_bundled_properties():
+            if r.get("latitude") is None or r.get("longitude") is None:
+                continue
+            if source and source.lower() != "all":
+                if source == "us_parcels" and r.get("source") not in ["texas_cad", "landglide", "us_parcels"]:
+                    continue
+                elif source != "us_parcels" and r.get("source") != source:
+                    continue
+            if state and state.lower() != "all" and r.get("state") != state.upper():
+                continue
+            rows.append(r)
+            if len(rows) >= limit:
+                break
+
+    features = []
+    for r in rows:
+        raw = r.get("raw_data") if isinstance(r.get("raw_data"), dict) else {}
+        geom = raw.get("geojson_geometry") or {
+            "type": "Point",
+            "coordinates": [float(r["longitude"]), float(r["latitude"])]
+        }
+        features.append({
+            "type": "Feature",
+            "id": r.get("id"),
+            "geometry": geom,
+            "properties": {
+                "id": r.get("id"),
+                "source": r.get("source"),
+                "external_id": r.get("external_id"),
+                "title": r.get("title"),
+                "address": r.get("address"),
+                "city": r.get("city"),
+                "county": r.get("county"),
+                "state": r.get("state"),
+                "price": r.get("price"),
+                "tax_assessed_value": r.get("tax_assessed_value"),
+                "lot_size_acres": r.get("lot_size_acres"),
+                "owner_name": r.get("owner_name"),
+                "zoning": r.get("zoning")
+            }
+        })
+    return {"type": "FeatureCollection", "count": len(features), "features": features}
 
 if __name__ == "__main__":
     import uvicorn
