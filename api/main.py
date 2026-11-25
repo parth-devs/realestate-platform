@@ -138,8 +138,13 @@ def list_properties(
     state: Optional[str] = Query(None),
     city: Optional[str] = Query(None),
     property_type: Optional[str] = Query(None),
+    listing_status: Optional[str] = Query(None),
+    zoning: Optional[str] = Query(None),
+    owner_name: Optional[str] = Query(None),
     min_price: Optional[float] = Query(None),
     max_price: Optional[float] = Query(None),
+    min_acres: Optional[float] = Query(None),
+    max_acres: Optional[float] = Query(None),
     limit: int = Query(100, ge=1, le=500),
     offset: int = Query(0, ge=0)
 ):
@@ -148,9 +153,9 @@ def list_properties(
         params = []
 
         if search:
-            query += " AND (title ILIKE %s OR address ILIKE %s OR city ILIKE %s OR owner_name ILIKE %s OR external_id ILIKE %s)"
+            query += " AND (title ILIKE %s OR address ILIKE %s OR city ILIKE %s OR owner_name ILIKE %s OR external_id ILIKE %s OR parcel_id ILIKE %s)"
             term = f"%{search}%"
-            params.extend([term, term, term, term, term])
+            params.extend([term, term, term, term, term, term])
 
         if source:
             if source == "us_parcels":
@@ -167,17 +172,37 @@ def list_properties(
             query += " AND city ILIKE %s"
             params.append(f"%{city}%")
 
-        if property_type:
+        if property_type and property_type.lower() != "all":
             query += " AND property_type ILIKE %s"
             params.append(f"%{property_type}%")
 
+        if listing_status and listing_status.lower() != "all":
+            query += " AND listing_status = %s"
+            params.append(listing_status)
+
+        if zoning and zoning.lower() != "all":
+            query += " AND zoning ILIKE %s"
+            params.append(f"%{zoning}%")
+
+        if owner_name:
+            query += " AND owner_name ILIKE %s"
+            params.append(f"%{owner_name}%")
+
         if min_price is not None:
-            query += " AND price >= %s"
+            query += " AND COALESCE(price, tax_assessed_value) >= %s"
             params.append(min_price)
 
         if max_price is not None:
-            query += " AND price <= %s"
+            query += " AND COALESCE(price, tax_assessed_value) <= %s"
             params.append(max_price)
+
+        if min_acres is not None:
+            query += " AND lot_size_acres >= %s"
+            params.append(min_acres)
+
+        if max_acres is not None:
+            query += " AND lot_size_acres <= %s"
+            params.append(max_acres)
 
         count_query = query.replace("SELECT * FROM", "SELECT COUNT(*) FROM")
         query += " ORDER BY id DESC LIMIT %s OFFSET %s;"
@@ -210,18 +235,34 @@ def list_properties(
             if city and city.lower() not in (r.get("city") or "").lower():
                 continue
 
-            if property_type and property_type.lower() not in (r.get("property_type") or "").lower():
+            if property_type and property_type.lower() != "all" and property_type.lower() not in (r.get("property_type") or "").lower():
                 continue
 
-            if min_price is not None and (r.get("price") is None or float(r["price"]) < min_price):
+            if listing_status and listing_status.lower() != "all" and r.get("listing_status") != listing_status:
                 continue
 
-            if max_price is not None and (r.get("price") is None or float(r["price"]) > max_price):
+            if zoning and zoning.lower() != "all" and zoning.lower() not in (r.get("zoning") or "").lower():
+                continue
+
+            if owner_name and owner_name.lower() not in (r.get("owner_name") or "").lower():
+                continue
+
+            val = r.get("price") if r.get("price") is not None else r.get("tax_assessed_value")
+            if min_price is not None and (val is None or float(val) < min_price):
+                continue
+
+            if max_price is not None and (val is None or float(val) > max_price):
+                continue
+
+            if min_acres is not None and (r.get("lot_size_acres") is None or float(r["lot_size_acres"]) < min_acres):
+                continue
+
+            if max_acres is not None and (r.get("lot_size_acres") is None or float(r["lot_size_acres"]) > max_acres):
                 continue
 
             if search:
                 s = search.lower()
-                m = f"{r.get('title','')} {r.get('address','')} {r.get('city','')} {r.get('owner_name','')} {r.get('external_id','')}".lower()
+                m = f"{r.get('title','')} {r.get('address','')} {r.get('city','')} {r.get('owner_name','')} {r.get('external_id','')} {r.get('parcel_id','')}".lower()
                 if s not in m:
                     continue
 
