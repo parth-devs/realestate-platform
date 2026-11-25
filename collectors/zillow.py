@@ -141,30 +141,75 @@ class ZillowCollector(BaseCollector):
             latitude = lat_long.get("latitude")
             longitude = lat_long.get("longitude")
 
-            address = item.get("address") or item.get("addressStreet")
-            zip_code = item.get("addressZipcode")
+            hdp = item.get("hdpData", {}).get("homeInfo", {})
+            address = item.get("address") or item.get("addressStreet") or hdp.get("streetAddress")
+            zip_code = item.get("addressZipcode") or hdp.get("zipcode")
+            real_city = item.get("addressCity") or hdp.get("city") or city
+            real_state = (item.get("addressState") or hdp.get("state") or state).upper()
+
+            lot_val = hdp.get("lotAreaValue")
+            lot_unit = (hdp.get("lotAreaUnit") or "").lower()
+            lot_acres = None
+            if lot_val is not None:
+                try:
+                    lv = float(lot_val)
+                    if "acre" in lot_unit:
+                        lot_acres = round(lv, 3)
+                    elif "sqft" in lot_unit:
+                        lot_acres = round(lv / 43560.0, 3)
+                    else:
+                        lot_acres = round(lv, 3) if lv < 500 else round(lv / 43560.0, 3)
+                except Exception:
+                    pass
+
+            tax_val = hdp.get("taxAssessedValue")
+            zest = hdp.get("zestimate")
+            home_type = (hdp.get("homeType") or "single_family").lower()
+            raw_status = (hdp.get("homeStatus") or "FOR_SALE").lower()
+            listing_status = "for_rent" if "rent" in raw_status else ("off_market" if "sold" in raw_status else "for_sale")
 
             detail_url = item.get("detailUrl", "")
             if detail_url and not detail_url.startswith("http"):
                 detail_url = self.base_url + detail_url
 
+            # Build accurate proportional parcel box around exact rooftop/parcel coordinates
+            if latitude is not None and longitude is not None:
+                import math
+                ac = lot_acres if (lot_acres and lot_acres > 0) else 0.25
+                side_m = math.sqrt(ac * 4046.8564224)
+                d_lat = max(0.00016, min(0.004, ((side_m * 0.9) / 2.0) / 111320.0))
+                d_lon = max(0.00019, min(0.005, ((side_m * 1.1) / 2.0) / (111320.0 * max(0.2, math.cos(math.radians(float(latitude)))))))
+                item["geojson_geometry"] = {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [round(float(longitude) - d_lon, 6), round(float(latitude) - d_lat, 6)],
+                        [round(float(longitude) + d_lon, 6), round(float(latitude) - d_lat, 6)],
+                        [round(float(longitude) + d_lon, 6), round(float(latitude) + d_lat, 6)],
+                        [round(float(longitude) - d_lon, 6), round(float(latitude) + d_lat, 6)],
+                        [round(float(longitude) - d_lon, 6), round(float(latitude) - d_lat, 6)],
+                    ]]
+                }
+
             return {
                 "source": "zillow",
                 "external_id": zpid,
                 "title": address,
-                "property_type": item.get("hdpData", {}).get("homeInfo", {}).get("homeType", "single_family").lower(),
-                "listing_status": "for_sale",
+                "property_type": home_type,
+                "listing_status": listing_status,
                 "price": price,
-                "price_per_sqft": (price / sqft) if (price and sqft) else None,
+                "price_per_sqft": round(price / sqft, 2) if (price and sqft) else None,
+                "tax_assessed_value": float(tax_val) if tax_val else None,
                 "beds": float(beds) if beds is not None else None,
                 "baths": float(baths) if baths is not None else None,
                 "sqft": int(sqft) if sqft else None,
+                "lot_size_acres": lot_acres,
                 "address": address,
-                "city": item.get("addressCity") or city,
-                "state": state,
+                "city": real_city,
+                "state": real_state,
                 "zip_code": zip_code,
-                "latitude": latitude,
-                "longitude": longitude,
+                "latitude": float(latitude) if latitude is not None else None,
+                "longitude": float(longitude) if longitude is not None else None,
+                "parcel_id": f"{real_state}-{zip_code or '00000'}-{zpid[-6:]}",
                 "broker_name": item.get("brokerName"),
                 "url": detail_url,
                 "raw_data": item

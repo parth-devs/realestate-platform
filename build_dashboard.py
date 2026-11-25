@@ -7,7 +7,7 @@ def normalize_category(prop_type: str | None) -> str:
     if not prop_type:
         return "Residential"
     pt = prop_type.lower()
-    if "land" in pt or "vacant" in pt or "ag" in pt or "parcel" in pt:
+    if "lot" in pt or "land" in pt or "vacant" in pt or "ag" in pt or "parcel" in pt:
         return "Land & Vacant"
     if "industrial" in pt or "warehouse" in pt:
         return "Industrial"
