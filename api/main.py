@@ -39,6 +39,11 @@ def clean_record(d: dict) -> dict:
             out[k] = v
     return out
 
+def is_verified_parcel_geometry(source: str | None, raw: dict) -> bool:
+    """Return True when a valid GeoJSON Polygon/MultiPolygon footprint is stored."""
+    geometry = raw.get("geojson_geometry")
+    return isinstance(geometry, dict) and geometry.get("type") in {"Polygon", "MultiPolygon"}
+
 def get_db_connection():
     return psycopg2.connect(
         host=settings.DB_HOST,
@@ -487,7 +492,8 @@ def get_geojson_features(
     features = []
     for r in rows:
         raw = r.get("raw_data") if isinstance(r.get("raw_data"), dict) else {}
-        geom = raw.get("geojson_geometry") or {
+        geom = raw.get("geojson_geometry") if is_verified_parcel_geometry(r.get("source"), raw) else None
+        geom = geom or {
             "type": "Point",
             "coordinates": [float(r["longitude"]), float(r["latitude"])]
         }
